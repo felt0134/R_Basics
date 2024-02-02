@@ -1,56 +1,178 @@
 ---
-title: "Week_4_Operators"
+title: "Tutorial"
 output: learnr::tutorial
 runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+# library(remotes)
+# remotes::install_github("rstudio/gradethis")
 library(learnr)
+library(gradethis)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+## Operators and names 
 
-## Topic 1
+`Operators` are symbols that perform logical or mathematical manipulations (or operations' on values or variables in data. Operators that perform calculations, such as addition, are `arithmetic operators'. The symbols for these are intuitive:
 
-### Exercise 
+*Arithmetic operators:*
 
-*Here's a simple exercise with an empty code chunk provided for entering the answer.*
+* `+` does addition
+* `-` does subtraction
+* `*` does multiplication
+* `/` does division
+* `^` Does 'to the power of` (e.g., to square or cube a value)
 
-Write the R code required to add two plus two:
+In R, we often will want to `assign` a value (and eventually a dataset!) a `name`. This is useful because once we do this, we can store the value in the `Global Environment`, allowing us to reference this value for later use. We can use an operator called the `assignment operator` to do this.
+
+*Assignment operator:*
+
+* `<-` assigns a value a name
+
+You can think of this as an arrow, pointing to what name a value corresponds to. Pay attention to the sequence of this code:
+
+*If we run this code, R will return the value 75:*
+```{r demo, exercise=TRUE}
+
+75
+
+```
+
+*We can `assign` this value a name. Typically we want this name to be descriptive of the value or have some 'syntactic sugar':*
+```{r demo_assign, exercise=TRUE}
+
+seventy_five <- 75
+
+```
+
+*We can also can add more sugar by `commenting`our data using `#`. Anything following this symbol will not run as code, but will be visible, and is typically used to describe what you are doing.*
+```{r demo_comment, exercise=TRUE}
+
+#I am creating a variable called seventy_five
+seventy_five <- 75
+
+```
+
+*Notice R returns nothing when we run the above code. What is happening here is that R has stored the value 75 with the name seventy_five. Now we can reference this name to return the value 75 (run the code and see what happens). Naming objects is a way we can store them:*
+```{r demo_comment_return, exercise=TRUE}
+
+#I am creating a variable called seventy_five
+seventy_five <- 75
+
+#return the value
+seventy_five
+
+```
+
+Modify the above blocks of code to see for yourself.
+
+## Problem Set
+
+*Let's start out by using arithmetic operators to do some calculations*
+
+Write the R code required to add two plus two
 
 ```{r two-plus-two, exercise=TRUE}
 
 ```
 
-### Exercise with Code
+```{r two-plus-two-hint-1}
 
-*Here's an exercise with some prepopulated code as well as `exercise.lines = 5` to provide a bit more initial room to work.*
+This is just like using a calculator!
 
-Now write a function that adds any two numbers and then call it:
-
-```{r add-function, exercise=TRUE, exercise.lines = 5}
-add <- function() {
-  
-}
 ```
 
-## Topic 2
+Write the R code required to calculate 10 divided by 5
 
-### Exercise with Hint
+```{r divide, exercise=TRUE}
 
-*Here's an exercise where the chunk is pre-evaluated via the `exercise.eval` option (so the user can see the default output we'd like them to customize). We also add a "hint" to the correct solution via the chunk immediate below labeled `print-limit-hint`.*
-
-Modify the following code to limit the number of rows printed to 5:
-
-```{r print-limit, exercise=TRUE, exercise.eval=TRUE}
-mtcars
 ```
 
-```{r print-limit-hint}
-head(mtcars)
+*Now we want to be able to assign a name to the outputs of our calculations so we can store them*
+
+Assign the value of your previous calculation to the name `two`, then print the output:
+
+```{r name-divide, exercise=TRUE}
+
+
+
 ```
 
-### Quiz
+```{r name-divide-hint-1}
+
+ Can you remember the special operator we use to assign names to objects?
+
+```
+
+```{r name-divide-solution}
+two <- 10/5
+two
+```
+
+```{r name-divide-check}
+
+grade_this_code()
+
+```
+
+Create another named objected called twenty_five that is 5 squared
+
+```{r name-square, exercise=TRUE}
+
+
+
+```
+
+```{r name-square-hint}
+
+Use the `^` operator 
+
+```
+
+```{r name-square-solution}
+
+twenty_five <- 5^2
+
+```
+
+```{r name-square-check}
+
+grade_this_code()
+
+```
+
+*Named objects can interact with each other. Calculate a third object*
+
+Finally, multiply `two` by `twenty_five` and name this calculation
+`fifty`. Print so that the new object returns the value of the calculation.
+
+```{r name-multiply, exercise=TRUE}
+
+
+
+```
+
+```{r name-multiply-hint}
+
+Because the named objects are just numbers, they will behave as such
+
+```
+
+```{r name-multiply-solution}
+
+fifty <- five*twenty_five
+fifty
+
+```
+
+```{r name-multiply-check}
+
+grade_this_code()
+
+```
+
+## Quiz
 
 *You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
 
@@ -58,17 +180,17 @@ Some questions to verify that you understand the purposes of various base and re
 
 ```{r quiz}
 quiz(
-  question("Which package contains functions for installing other R packages?",
-    answer("base"),
-    answer("tools"),
-    answer("utils", correct = TRUE),
-    answer("codetools")
+  question("When you assign a name to an object, where does that object get stored?",
+    answer("In a Script"),
+    answer("In the Console"),
+    answer("In the Global Environment", correct = TRUE),
+    answer("In the Help/Plots")
   ),
-  question("Which of the R packages listed below are used to create plots?",
-    answer("lattice", correct = TRUE),
-    answer("tools"),
-    answer("stats"),
-    answer("grid", correct = TRUE)
+  question("What is the purpose of the `<-` operator?",
+    answer("to prevent a line of code from running"),
+    answer("add two values"),
+    answer("compare two values"),
+    answer("assign a name to a value", correct = TRUE)
   )
 )
 ```
