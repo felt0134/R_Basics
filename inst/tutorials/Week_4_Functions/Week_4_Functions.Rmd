@@ -2,6 +2,8 @@
 title: "Vectors and Functions"
 output: learnr::tutorial
 runtime: shiny_prerendered
+description: "Introduction to the use of vectors and functions in R"
+
 ---
 
 ```{r setup, include=FALSE}
@@ -10,6 +12,17 @@ runtime: shiny_prerendered
 library(learnr)
 library(gradethis)
 knitr::opts_chunk$set(echo = FALSE)
+
+# tutorial_event_recorder <- function(tutorial_id, tutorial_version,
+#                                     user_id, event, data) {
+# cat(tutorial_id, " (", tutorial_version, "): ", user_id , "\n", sep = "")
+# cat("event: ", event, "\n", sep = "")
+# }
+# options(tutorial.event_recorder = tutorial_event_recorder)
+# if(interactive()){
+#       write_answers(paste0(getwd(), "/", "outfile.pdf"), sess,is_test = F)
+# }
+
 ```
 
 ## Vectors
@@ -326,6 +339,7 @@ grade_this_code()
 ## Quiz
 
 ```{r quiz}
+
 learnr:: quiz(
   question("True or False, all values in an atomic vector must be composed of the same data type",
     answer("True",correct = TRUE),
@@ -349,4 +363,24 @@ learnr:: quiz(
   )
   
   )
+
 ```
+
+## Submit
+
+### *Important*: to submit your answers, please generate your hash code, copy it into the decoder, and then decode it into a table. Please copy and save the table in a word document and submit to the D2L assignment for credit. We are actively working to making this last step easier, so thanks for bearing with us!
+
+*Ignore the directions below for submitting to the google link (it doesn't go anywhere)*
+
+```{r context="server"}
+
+learnrhash::encoder_logic()
+learnrhash::decoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui()
+learnrhash::decoder_ui()
+```
+
+All done!
