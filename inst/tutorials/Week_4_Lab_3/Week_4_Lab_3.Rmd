@@ -718,4 +718,23 @@ grade_this( {
     message = "Your solution has been submitted for grading.") })
 ```
 
+## Submit
+
+### *Important*: to submit your answers, please generate your hash code, copy it into the decoder, and then decode it into a table. Please copy and save the table in a word document and submit to the D2L assignment for credit. We are actively working on making this last step easier, so thanks for bearing with us!
+
+*Ignore the directions below for submitting to the google link (it doesn't go anywhere)*
+
+```{r context="server"}
+
+learnrhash::encoder_logic()
+learnrhash::decoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui()
+learnrhash::decoder_ui()
+```
+
+All done!
+
 Nice work.  You are done with Lab 3!

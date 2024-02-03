@@ -44,7 +44,7 @@ When we say `data type`, we mean the type of information a variable is stored as
 
 In R, we can use the `:` operator to rapidly create a numeric sequence. Run the code below to see the output.
 
-```{r sequence_demo, exercise=TRUE}
+```{r demo_sequence, exercise=TRUE}
 
 #create a sequence of 1 to 10 that increases by values of 1
 1:10
@@ -52,7 +52,7 @@ In R, we can use the `:` operator to rapidly create a numeric sequence. Run the 
 ```
 
 Of course, we can assign this sequence a name, and then it will get stored as that name for later use. Run the code below to see the output.
-```{r sequence_demo_2, exercise=TRUE}
+```{r demo_sequence_2, exercise=TRUE}
 
 #create a sequence of 1 to 10 that increases by values of 1
 sequence <- 1:10
@@ -72,7 +72,7 @@ A function has three basic characteristics:
 
 Before going any further run this simple piece of code using the `?` operator.
 
-```{r combine_demo, exercise=TRUE}
+```{r demo_combine, exercise=TRUE}
 
 #use the help tool to explore the c() function in R
 ?c
@@ -81,7 +81,7 @@ Before going any further run this simple piece of code using the `?` operator.
 
 The output should be a somewhat weird version of the help tab, but it contains all the essential information. The `c()` function combines (or concatenates) values into a vector. This allows us to create all sorts of vectors. Run the code below to create an (atomic) character vector:
 
-```{r combine_demo_2, exercise=TRUE}
+```{r demo_combine_2, exercise=TRUE}
 
 c("R","is","the","best")
 
@@ -91,7 +91,7 @@ Notice how each value is separated by  a comma. Commas separate each argument in
 
 
 We can also add vectors together if we so wish. Adding two vectors together highlights an important behavior of data in R called `recycling`. If we added two vectors together that had different lengths, what do you think might happen? First let's add two vectors of the same length together. Run the code below:
-```{r recyling_demo, exercise=TRUE}
+```{r demo_recyling, exercise=TRUE}
 
 vector_1 <- c(1,1,1,1)
 vector_2 <- c(2,2,2,2)
@@ -102,7 +102,7 @@ vector_1 + vector_2
 
 The above line of code contains a ton of concepts of R already: operators, functions, and vectors. What R does is add the first value of the first vector to the first value of the second vector, and so on. This works well when we have vectors of equal lengths, but what happens when we have vectors of different lengths? Run the code below.
 
-```{r recyling_demo_2, exercise=TRUE}
+```{r demo_recyling_2, exercise=TRUE}
 
 vector_3 <- c(1,2,3,4)
 vector_4 <- c(0,1)
@@ -121,7 +121,7 @@ What happened is called `recycling` and is an important behavior of functions in
 * `hist()`: create a histogram or a frequency distribution of values in a vector
 
 
-```{r functions_demo, exercise=TRUE}
+```{r demo_functions, exercise=TRUE}
 
 #create a specific sequence of values
 seq(from = 1, to = 20, by = 4)
@@ -133,7 +133,7 @@ Notice the use of the `=` operator. This is how we pass values into functions fo
 *it is also good practice to use the `<-` operator specifically for assigning objects names, and the `=` operator for specifying what values will be passed into a function, for a given argument.
 
 Now let's try the `mean()` function to calculate the average of all values in the vector. Run the code below:
-```{r functions_demo_2, exercise=TRUE}
+```{r demo_functions_2, exercise=TRUE}
 
 #create a specific sequence of values and name it
 toy_sequence <- seq(from = 1, to = 20, by = 4)
@@ -156,7 +156,7 @@ Before proceeding, use the `?` operator to learn more about the `plot()` functio
 
 If we want to see at how two variables correlate with each other, we can use the `plot()` function, which comes standard in the 'base' version of R. Run the code chunk below: 
 
-```{r functions_demo_3, exercise=TRUE}
+```{r demo_functions_3, exercise=TRUE}
 
 #create a specific sequence of values and name it
 toy_sequence <- seq(from = 1, to = 20, by = 4)
@@ -175,7 +175,7 @@ Modify the above code by changing how many values are in the first vector (by va
 
 Last but not least, we may also want to visualize the distribution of values in a vector; how frequent is each value? To highlight this, we can generate a toy `normal distribution`, which is the shape of a bell and thus called a bell curve. This is a common distribution the emerges when you have lots of data. For example, if you were to take the height out of every person in the world, a bell-shaped distributed would emerge. We can generate a toy normal distribution using the `rnorm()` function. Use the `?` operator learn more about this function.
 
-```{r functions_demo_4, exercise=TRUE}
+```{r demo_functions_4, exercise=TRUE}
 
 #create a vector that is normally distributed, with a length of 20, a mean of 10, and a standard deviation of 2
 normal_1 <- rnorm(n = 20,mean = 10, sd = 2)
@@ -187,7 +187,7 @@ hist(normal_1)
 
 That doesn't quite like a nice 'bell' that was promised. What if we increase the length of the vector and thus the 'sample size' to 200 values?
 
-```{r functions_demo_5, exercise=TRUE}
+```{r demo_functions_5, exercise=TRUE}
 
 #create a vector that is normally distributed, with a length of 200, a mean of 10, and a standard deviation of 2
 normal_2 <- rnorm(n = 200,mean = 10, sd = 2)
@@ -203,23 +203,23 @@ Ah, that is much better. Now let's do some practice questions.
 
 Use the `:` operator to create a vector that ranges from 10 to 20 in intervals of 1.
 
-```{r vector_practice, exercise=TRUE}
+```{r problem_vector, exercise=TRUE}
 
 ```
 
-```{r vector_practice-hint}
+```{r problem_vector-hint}
 
 You can do this in one line of code without any functions
 
 ```
 
-```{r vector_practice-solution}
+```{r problem_vector-solution}
 
 10:20
 
 ```
 
-```{r vector_practice-check}
+```{r problem_vector-check}
 
 grade_this_code()
 
@@ -227,23 +227,23 @@ grade_this_code()
 
 Write the R code to create a vector that ranges from 0 to 100 in intervals of 25.
 
-```{r vector_practice_2, exercise=TRUE}
+```{r problem_vector_2, exercise=TRUE}
 
 ```
 
-```{r vector_practice_2-hint}
+```{r problem_vector_2-hint}
 
 Remember the function needed to create a sequence?
 
 ```
 
-```{r vector_practice-2-solution}
+```{r problem_vector-2-solution}
 
 seq(from = 0,to = 100,by = 25)
 
 ```
 
-```{r vector_practice_2-check}
+```{r problem_vector_2-check}
 
 grade_this_code()
 
@@ -251,26 +251,26 @@ grade_this_code()
 
 Add the R code to the code below that will add alternating values of 0 and 1 to the vector named toy_vector. Use the `?` operator to see what the `rep()` function does. 
 
-```{r vector_practice_3, exercise=TRUE}
+```{r problem_vector_3, exercise=TRUE}
 
 zeros <- rep(0,20)
 
 ```
 
-```{r vector_practice_3-hint}
+```{r problem_vector_3-hint}
 
 Remember how recycling works?
 
 ```
 
-```{r vector_practice_3-solution}
+```{r problem_vector_3-solution}
 
 zeros <- rep(0,20)
 zeros + 0:1
 
 ```
 
-```{r vector_practice_3-check}
+```{r problem_vector_3-check}
 
 grade_this_code()
 
@@ -278,26 +278,26 @@ grade_this_code()
 
 Write the R code needed to create a vector named 'class_name' that spells out ENSC311 when you print its name, with each individual letter being a value in the vector. Print the name to see the output.
 
-```{r vector_practice_4,exercise=TRUE}
+```{r problem_vector_4,exercise=TRUE}
 
 
 
 ```
 
-```{r vector_practice_4-hint}
+```{r problem_vector_4-hint}
 
 Remember to use the c() function and to use character vectors
 
 ```
 
-```{r vector_practice_4-solution}
+```{r problem_vector_4-solution}
 
 class_name <- c("E","N","S","C","3","1","1")
 class_name
 
 ```
 
-```{r vector_practice_4-check}
+```{r problem_vector_4-check}
 
 grade_this_code()
 
@@ -306,32 +306,32 @@ grade_this_code()
 Write the R code the needed to create a vector that is normally distributed containing 500 values, has a mean of 5000, and has a standard deviation of 50. Assign this vector the name 'normal_vector' and then create a historgram this vector's distribution of values.
 
 
-```{r vector_practice_5,exercise=TRUE}
+```{r problem_vector_5,exercise=TRUE}
 
 
 
 ```
 
-```{r vector_practice_5-hint-1}
+```{r problem_vector_5-hint-1}
 
 remember the function you use to create a toy normal distribution of values?
 
 ```
 
-```{r vector_practice_5-hint-2}
+```{r problem_vector_5-hint-2}
 
 Remember that you can insert the name of a vector in the hist() function
 
 ```
 
-```{r vector_practice_5-solution}
+```{r problem_vector_5-solution}
 
 normal_vector <- rnorm(n = 500,mean = 5000,sd = 50)
 hist(normal_vector)
 
 ```
 
-```{r vector_practice_5-check}
+```{r problem_vector_5-check}
 
 grade_this_code()
 

@@ -75,11 +75,11 @@ Modify the above blocks of code to see for yourself.
 
 Write the R code required to add two plus two
 
-```{r two-plus-two, exercise=TRUE}
+```{r problem_two-plus-two, exercise=TRUE}
 
 ```
 
-```{r two-plus-two-hint-1}
+```{r problem_two-plus-two-hint-1}
 
 This is just like using a calculator!
 
@@ -87,7 +87,7 @@ This is just like using a calculator!
 
 Write the R code required to calculate 10 divided by 5
 
-```{r divide, exercise=TRUE}
+```{r problem_divide, exercise=TRUE}
 
 ```
 
@@ -95,24 +95,24 @@ Write the R code required to calculate 10 divided by 5
 
 Assign the value of your previous calculation to the name `two`, then print the output:
 
-```{r name-divide, exercise=TRUE}
+```{r problem_name-divide, exercise=TRUE}
 
 
 
 ```
 
-```{r name-divide-hint-1}
+```{r problem_name-divide-hint-1}
 
  Can you remember the special operator we use to assign names to objects?
 
 ```
 
-```{r name-divide-solution}
+```{r problem_name-divide-solution}
 two <- 10/5
 two
 ```
 
-```{r name-divide-check}
+```{r problem_name-divide-check}
 
 grade_this_code()
 
@@ -120,25 +120,25 @@ grade_this_code()
 
 Create another named objected called twenty_five that is 5 squared
 
-```{r name-square, exercise=TRUE}
+```{r problem_name-square, exercise=TRUE}
 
 
 
 ```
 
-```{r name-square-hint}
+```{r problem_name-square-hint}
 
 Use the `^` operator 
 
 ```
 
-```{r name-square-solution}
+```{r problem_name-square-solution}
 
 twenty_five <- 5^2
 
 ```
 
-```{r name-square-check}
+```{r problem_name-square-check}
 
 grade_this_code()
 
@@ -149,26 +149,26 @@ grade_this_code()
 Finally, multiply `two` by `twenty_five` and name this calculation
 `fifty`. Print so that the new object returns the value of the calculation.
 
-```{r name-multiply, exercise=TRUE}
+```{r problem_name-multiply, exercise=TRUE}
 
 
 
 ```
 
-```{r name-multiply-hint}
+```{r problem_name-multiply-hint}
 
 Because the named objects are just numbers, they will behave as such
 
 ```
 
-```{r name-multiply-solution}
+```{r problem_name-multiply-solution}
 
 fifty <- five*twenty_five
 fifty
 
 ```
 
-```{r name-multiply-check}
+```{r problem_name-multiply-check}
 
 grade_this_code()
 
