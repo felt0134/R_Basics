@@ -179,7 +179,7 @@ grade_this_code()
 Some questions to verify that you understand the purposes of various base and recommended R packages:
 
 ```{r quiz}
-quiz(
+learnr::quiz(
   question("When you assign a name to an object, where does that object get stored?",
     answer("In a Script"),
     answer("In the Console"),

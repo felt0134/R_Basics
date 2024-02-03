@@ -18,13 +18,13 @@ A `Vector` is a sequences of values, composed of the same `data type`, of a give
 
 When we say `length`, we mean the number of values in the sequence. The vector 1,2,3 has length = 3 because it has three values in the sequence, and the vector 1,2,3,4 has length = 4 because it has 4 values in the sequence.
 
-When we say `data type`, we mean the type of information a variable is stored as. There are multiple data types that a vector can stored asf. Importantly, a vector is  composed of the *same* data type. We call this an ‘atomic vector’.
+When we say `data type`, we mean the type of information a variable is stored as. There are multiple data types that a vector can be stored as. Importantly, a vector is  composed of the *same* data type. We call this an ‘atomic vector’.
 
-*The key data types you will need to know include:*
+*For now, the key data types you will need to know include:*
 
 * numeric: numbers that are either real (double) or integers (integer). These do not have quotations. 
 
-* character: text that come in quotations. Character vectors are composed strings, which are used to represent text as opposed to numbers. By putting a letter, word, symbol, or number in quotations, you are converting it to a character, or string.
+* character: text that come in quotations. Character vectors are composed of strings, which are used to represent text as opposed to numbers. By putting a letter, word, symbol, or number in quotations, you are converting it to a character, or string.
 
 * logical: one of two values: T or F to represent true or false
 
@@ -53,8 +53,8 @@ Almost everything you do in R will require, to some extent, the use of functions
 A function has three basic characteristics:
 
 * A function has a name that is typically descriptive in some form of what it does.
-* Bounded parentheses to the right of the name the contain everything that will be 'passed' into the function. THis is in contrast to operators, where whatever is being operated on can be on either side of the symbol - case in point the `:` operator to create a sequence. 
-* Arguments that define the parameters that will be fed as inputs to the function, which are needed for the function to return an output. All arguments are contained in the parentheses.
+* Bounded parentheses to the right of the name that contain everything that will be 'passed' into the function. This is in contrast to operators, where whatever is being operated on can be on either side of the symbol - case in point the `:` operator to create a sequence. 
+* Arguments that define the parameters that will be fed as inputs to the function, which are needed for the function to return an output. All arguments are contained in the bounded parentheses.
 
 Before going any further run this simple piece of code using the `?` operator.
 
@@ -86,7 +86,7 @@ vector_1 + vector_2
 
 ```
 
-The above line of code contains a ton of concepts of R already: operators, functions, and vectors. What R does is add the first value of the first vector to the first value of the second vector, and so on. This works well when we have vectors of equal lengths, but what happens when we have vectors of different lengths? Run the code below"
+The above line of code contains a ton of concepts of R already: operators, functions, and vectors. What R does is add the first value of the first vector to the first value of the second vector, and so on. This works well when we have vectors of equal lengths, but what happens when we have vectors of different lengths? Run the code below.
 
 ```{r recyling_demo_2, exercise=TRUE}
 
@@ -97,14 +97,14 @@ vector_3 + vector_3
 
 ```
 
-What happened is that the values in vector_4 got recycled, and thus when it came to find a third value to add to vector_3, vector_4 just went on and repeated itself starting from the beginning back to the first value of the sequence, 0.
+What happened is called `recycling` and is an important behavior of functions in R, in that the values in vector_4 got "recycled". When it came to find a third value to add to vector_3, vector_4 just went on and repeated itself starting from the beginning back to the first value of the sequence, 0. This is also what is happaneing if we were to simply just add 1 to vector_3; 1 would be added to every value of vector_3 because we are constantly recycling the value of 1.
 
 *Let's look at some other functions we can use the vectors:*
 
 * `seq()`: create a sequence of values in a specific interval
 * `mean()`: calculate the mean of a vector
 * `plot()`: plot 
-* `hist()`: create a historgram or a frequency distribution of values in a vector
+* `hist()`: create a histogram or a frequency distribution of values in a vector
 
 
 ```{r functions_demo, exercise=TRUE}
@@ -118,170 +118,206 @@ Notice the use of the `=` operator. This is how we pass values into functions fo
 
 *it is also good practice to use the `<-` operator specifically for assigning objects names, and the `=` operator for specifying what values will be passed into a function, for a given argument.
 
-Now let's try the `mean` function to calculate the average of all values in the vector. Runt he code below:
+Now let's try the `mean()` function to calculate the average of all values in the vector. Run the code below:
 ```{r functions_demo_2, exercise=TRUE}
 
 #create a specific sequence of values and name it
 toy_sequence <- seq(from = 1, to = 20, by = 4)
+
+#calculate the mean of the sequence
 mean(toy_sequence)
 
 ```
 
-What we did here was actually pass the name of vector we created (a sequence of value) into the mean() function. We can do this because we have stored this vector in our Global Environment, but can reference it as shorthand with the name we have assigned it.
+What we did here was pass the *name* of the vector we created (toy_sequence) into the `mean()` function. We can do this because we have stored this vector in our Global Environment, but can reference it as shorthand using the name we have assigned it.
 
-*STOPPED HERE*
+R is also excellent for data visualization, and we can make all sorts of plots using...you guessed it, functions!
 
-*Arithmetic operators:*
+Two types of plots we will focus on here:
 
-* `+` does addition
-* `-` does subtraction
-* `*` does multiplication
-* `/` does division
-* `^` Does 'to the power of` (e.g., to square or cube a value)
+* Relationship between two variables (an "x-y" plot), using two vectors
+* Distribution or frequency of values in one vector
 
-In R, we often will want to `assign` a value (and eventually a dataset!) a `name`. This is useful because once we do this, we can store the value in the `Global Environment`, allowing us to reference this value for later use. We can use an operator called the `assignment operator` to do this.
+Before proceeding, use the `?` operator to learn more about the `plot()` function.
 
-*Assignment operator:*
+If we want to see at how two variables correlate with each other, we can use the `plot()` function, which comes standard in the 'base' version of R. Run the code chunk below: 
 
-* `<-` assigns a value a name
+```{r functions_demo_3, exercise=TRUE}
 
-You can think of this as an arrow, pointing to what name a value corresponds to. Pay attention to the sequence of this code:
+#create a specific sequence of values and name it
+toy_sequence <- seq(from = 1, to = 20, by = 4)
 
-*If we run this code, R will return the value 75:*
-```{r demo, exercise=TRUE}
+#multiply every value in toy_sequence by 0.5 (this is a type of recycling!)
+toy_sequence_halved <- toy_sequence*0.5
 
-75
-
-```
-
-*We can `assign` this value a name. Typically we want this name to be descriptive of the value or have some 'syntactic sugar':*
-```{r demo_assign, exercise=TRUE}
-
-seventy_five <- 75
+#plot the relationship between the two:
+plot(x = toy_sequence, y = toy_sequence_halved)
 
 ```
 
-*We can also can add more sugar by `commenting`our data using `#`. Anything following this symbol will not run as code, but will be visible, and is typically used to describe what you are doing.*
-```{r demo_comment, exercise=TRUE}
+The `plot()` function is good for visualizing how two variables correlate with each other: *"how does variable Y change with variable X?*" 
 
-#I am creating a variable called seventy_five
-seventy_five <- 75
+Modify the above code by changing how many values are in the first vector (by varying the interval length in the 'by' argument) and see how things change.
 
-```
+Last but not least, we may also want to visualize the distribution of values in a vector; how frequent is each value? To highlight this, we can generate a toy `normal distribution`, which is the shape of a bell and thus called a bell curve. This is a common distribution the emerges when you have lots of data. For example, if you were to take the height out of every person in the world, a bell-shaped distributed would emerge. We can generate a toy normal distribution using the `rnorm()` function. Use the `?` operator learn more about this function.
 
-*Notice R returns nothing when we run the above code. What is happening here is that R has stored the value 75 with the name seventy_five. Now we can reference this name to return the value 75 (run the code and see what happens). Naming objects is a way we can store them:*
-```{r demo_comment_return, exercise=TRUE}
+```{r functions_demo_4, exercise=TRUE}
 
-#I am creating a variable called seventy_five
-seventy_five <- 75
+#create a vector that is normally distributed, with a length of 20, a mean of 10, and a standard deviation of 2
+normal_1 <- rnorm(n = 20,mean = 10, sd = 2)
 
-#return the value
-seventy_five
+#plot the distribution of values:
+hist(normal_1)
 
 ```
 
-Modify the above blocks of code to see for yourself.
+That doesn't quite like a nice 'bell' that was promised. What if we increase the length of the vector and thus the 'sample size' to 200 values?
+
+```{r functions_demo_5, exercise=TRUE}
+
+#create a vector that is normally distributed, with a length of 200, a mean of 10, and a standard deviation of 2
+normal_2 <- rnorm(n = 200,mean = 10, sd = 2)
+
+#plot the distribution of values:
+hist(normal_2)
+
+```
+
+Ah, that is much better. Now let's do some practice questions.
 
 ## Problem Set
 
-*Let's start out by using arithmetic operators to do some calculations*
+Use the `:` operator to create a vector that ranges from 10 to 20 in intervals of 1.
 
-Write the R code required to add two plus two
-
-```{r two-plus-two, exercise=TRUE}
+```{r vector_practice, exercise=TRUE}
 
 ```
 
-```{r two-plus-two-hint-1}
+```{r vector_practice-hint}
 
-This is just like using a calculator!
-
-```
-
-Write the R code required to calculate 10 divided by 5
-
-```{r divide, exercise=TRUE}
+You can do this in one line of code without any functions
 
 ```
 
-*Now we want to be able to assign a name to the outputs of our calculations so we can store them*
+```{r vector_practice-solution}
 
-Assign the value of your previous calculation to the name `two`, then print the output:
-
-```{r name-divide, exercise=TRUE}
-
-
+10:20
 
 ```
 
-```{r name-divide-hint-1}
-
- Can you remember the special operator we use to assign names to objects?
-
-```
-
-```{r name-divide-solution}
-two <- 10/5
-two
-```
-
-```{r name-divide-check}
+```{r vector_practice-check}
 
 grade_this_code()
 
 ```
 
-Create another named objected called twenty_five that is 5 squared
+Write the R code to create a vector that ranges from 0 to 100 in intervals of 25.
 
-```{r name-square, exercise=TRUE}
-
-
+```{r vector_practice_2, exercise=TRUE}
 
 ```
 
-```{r name-square-hint}
+```{r vector_practice_2-hint}
 
-Use the `^` operator 
-
-```
-
-```{r name-square-solution}
-
-twenty_five <- 5^2
+Remember the function needed to create a sequence?
 
 ```
 
-```{r name-square-check}
+```{r vector_practice-2-solution}
+
+seq(from = 0,to = 100,by = 25)
+
+```
+
+```{r vector_practice_2-check}
 
 grade_this_code()
 
 ```
 
-*Named objects can interact with each other. Calculate a third object*
+Add the R code to the code below that will add alternating values of 0 and 1 to the vector named toy_vector. Use the `?` operator to see what the `rep()` function does. 
 
-Finally, multiply `two` by `twenty_five` and name this calculation
-`fifty`. Print so that the new object returns the value of the calculation.
+```{r vector_practice_3, exercise=TRUE}
 
-```{r name-multiply, exercise=TRUE}
+zeros <- rep(0,20)
+
+```
+
+```{r vector_practice_3-hint}
+
+Remember how recycling works?
+
+```
+
+```{r vector_practice_3-solution}
+
+zeros <- rep(0,20)
+zeros + 0:1
+
+```
+
+```{r vector_practice_3-check}
+
+grade_this_code()
+
+```
+
+Write the R code needed to create a vector named 'class_name' that spells out ENSC311 when you print its name, with each individual letter being a value in the vector. Print the name to see the output.
+
+```{r vector_practice_4,exercise=TRUE}
 
 
 
 ```
 
-```{r name-multiply-hint}
+```{r vector_practice_4-hint}
 
-Because the named objects are just numbers, they will behave as such
-
-```
-
-```{r name-multiply-solution}
-
-fifty <- five*twenty_five
-fifty
+Remember to use the c() function and to use character vectors
 
 ```
 
-```{r name-multiply-check}
+```{r vector_practice_4-solution}
+
+class_name <- c("E","N","S","C","3","1","1")
+class_name
+
+```
+
+```{r vector_practice_4-check}
+
+grade_this_code()
+
+```
+
+Write the R code the needed to create a vector that is normally distributed containing 500 values, has a mean of 5000, and has a standard deviation of 50. Assign this vector the name 'normal_vector' and then create a historgram this vector's distribution of values.
+
+
+```{r vector_practice_5,exercise=TRUE}
+
+
+
+```
+
+```{r vector_practice_5-hint-1}
+
+remember the function you use to create a toy normal distribution of values?
+
+```
+
+```{r vector_practice_5-hint-2}
+
+Remember that you can insert the name of a vector in the hist() function
+
+```
+
+```{r vector_practice_5-solution}
+
+normal_vector <- rnorm(n = 500,mean = 5000,sd = 50)
+hist(normal_vector)
+
+```
+
+```{r vector_practice_5-check}
 
 grade_this_code()
 
@@ -289,23 +325,28 @@ grade_this_code()
 
 ## Quiz
 
-*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
-
-Some questions to verify that you understand the purposes of various base and recommended R packages:
-
 ```{r quiz}
-quiz(
-  question("When you assign a name to an object, where does that object get stored?",
-    answer("In a Script"),
-    answer("In the Console"),
-    answer("In the Global Environment", correct = TRUE),
-    answer("In the Help/Plots")
+learnr:: quiz(
+  question("True or False, all values in an atomic vector must be composed of the same data type",
+    answer("True",correct = TRUE),
+    answer("False")
   ),
-  question("What is the purpose of the `<-` operator?",
-    answer("to prevent a line of code from running"),
-    answer("add two values"),
-    answer("compare two values"),
-    answer("assign a name to a value", correct = TRUE)
+  question("What does the c() function do?",
+    answer("prevents a line of code from running"),
+    answer("adds two vectors together"),
+    answer("combines values in a sequence to create a vector",correct = TRUE),
+    answer("creates a sequence of values according to a range and interval")
+  ),
+   question("True or False, you can add two vectors of different lengths together",
+    answer("True",correct = TRUE),
+    answer("False")
+  ),
+  question("In the question above, what concept is this an example of?",
+    answer("Concatinating"),
+    answer("Recycling",correct = TRUE),
+    answer("An operation"),
+    answer("A function")
   )
-)
+  
+  )
 ```
