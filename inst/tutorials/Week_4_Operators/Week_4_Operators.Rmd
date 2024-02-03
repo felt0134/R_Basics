@@ -10,6 +10,7 @@ description: "Introduction to using operaters in R"
 # remotes::install_github("rstudio/gradethis")
 library(learnr)
 library(gradethis)
+library(learnrhash)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -198,7 +199,7 @@ learnr::quiz(
 
 ## Submit
 
-### *Important*: to submit your answers, please generate your hash code, copy it into the decoder, and then decode it into a table. Please copy and save the table in a word document and submit to the D2L assignment for credit. We are actively working to making this last step easier, so thanks for bearing with us!
+### *Important*: to submit your answers, please generate your hash code, copy it into the decoder, and then decode it into a table. Please copy and save the table in a word document and submit to the D2L assignment for credit. We are actively working on making this last step easier, so thanks for bearing with us!
 
 *Ignore the directions below for submitting to the google link (it doesn't go anywhere)*
 
