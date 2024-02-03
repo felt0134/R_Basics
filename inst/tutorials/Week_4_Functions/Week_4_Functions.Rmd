@@ -107,7 +107,6 @@ What happened is that the values in vector_4 got recycled, and thus when it came
 * `hist()`: create a historgram or a frequency distribution of values in a vector
 
 
-
 ```{r functions_demo, exercise=TRUE}
 
 #create a specific sequence of values
@@ -117,7 +116,20 @@ seq(from = 1, to = 20, by = 4)
 
 Notice the use of the `=` operator. This is how we pass values into functions for a given argument. Notice also how I have specified the names of the arguments. For now this is good practice, but eventually you might realize that R can know which argument you mean by the location of value you are passing into the function.
 
-*it is also good practice to use the `<-` operator specifically for assigning objects names, anf the `=` operator for specifying what values will be passed into a function, for a given argument.
+*it is also good practice to use the `<-` operator specifically for assigning objects names, and the `=` operator for specifying what values will be passed into a function, for a given argument.
+
+Now let's try the `mean` function to calculate the average of all values in the vector. Runt he code below:
+```{r functions_demo_2, exercise=TRUE}
+
+#create a specific sequence of values and name it
+toy_sequence <- seq(from = 1, to = 20, by = 4)
+mean(toy_sequence)
+
+```
+
+What we did here was actually pass the name of vector we created (a sequence of value) into the mean() function. We can do this because we have stored this vector in our Global Environment, but can reference it as shorthand with the name we have assigned it.
+
+*STOPPED HERE*
 
 *Arithmetic operators:*
 
