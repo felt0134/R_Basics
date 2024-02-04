@@ -85,9 +85,41 @@ This is just like using a calculator!
 
 ```
 
+```{r problem_two-plus-two-solution}
+
+2 + 2
+
+```
+
+```{r problem_two-plus-two-check}
+
+grade_this_code()
+
+```
+
 Write the R code required to calculate 10 divided by 5
 
 ```{r problem_divide, exercise=TRUE}
+
+
+
+```
+
+```{r problem_divide-hint}
+
+Use the slash symbol
+
+```
+
+```{r problem_divide-solution}
+
+10/5
+
+```
+
+```{r problem_divide-check}
+
+grade_this_code()
 
 ```
 

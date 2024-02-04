@@ -11,10 +11,10 @@ devtools::install_github("felt0134/R_Basics")
 ?install_github
 
 
-remotes::install_github("dtkaplan/submitr")
-devtools::install_github("rundel/learnrhash")
-library(learnrhash)
-install.packages("tutorial.helpers")
+# remotes::install_github("dtkaplan/submitr")
+# devtools::install_github("rundel/learnrhash")
+# library(learnrhash)
+# install.packages("tutorial.helpers")
 
 
 
