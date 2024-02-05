@@ -16,5 +16,10 @@ devtools::install_github("felt0134/R_Basics")
 # library(learnrhash)
 # install.packages("tutorial.helpers")
 
+# to setup in a new R workspace:
+install.packages("learnr")
+remotes::install_github("rstudio/gradethis")
+devtools::install_github("rundel/learnrhash")
+devtools::install_github("felt0134/R_Basics")
 
 

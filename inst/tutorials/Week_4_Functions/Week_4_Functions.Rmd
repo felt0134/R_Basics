@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Vectors
 
-A `Vector` is a sequences of values, composed of the same `data type`, of a given `length`.
+A `Vector` is a sequence of values, composed of the same `data type`, of a given `length`.
 
 When we say `length`, we mean the number of values in the sequence. The vector 1,2,3 has length = 3 because it has three values in the sequence, and the vector 1,2,3,4 has length = 4 because it has 4 values in the sequence.
 
