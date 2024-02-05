@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Operators and names 
 
-`Operators` are symbols that perform logical or mathematical manipulations (or operations' on values or variables in data. Operators that perform calculations, such as addition, are `arithmetic operators'. The symbols for these are intuitive:
+`Operators` are symbols that perform logical or mathematical manipulations (or operations) on values or variables in data. Operators that perform calculations, such as addition, are `arithmetic operators'. The symbols for these are intuitive:
 
 *Arithmetic operators:*
 
@@ -34,21 +34,21 @@ In R, we often will want to `assign` a value (and eventually a dataset!) a `name
 
 You can think of this as an arrow, pointing to what name a value corresponds to. Pay attention to the sequence of this code:
 
-*If we run this code, R will return the value 75:*
+*If we run this code, R will return the value 75. Go ahead and run the code!*
 ```{r demo, exercise=TRUE}
 
 75
 
 ```
 
-*We can `assign` this value a name. Typically we want this name to be descriptive of the value or have some 'syntactic sugar':*
+*We can `assign` this value a name. Typically we want this name to be descriptive of the value or have some 'syntactic sugar'. Run the code and see what (if any) the output is:*
 ```{r demo_assign, exercise=TRUE}
 
 seventy_five <- 75
 
 ```
 
-*We can also can add more sugar by `commenting`our data using `#`. Anything following this symbol will not run as code, but will be visible, and is typically used to describe what you are doing.*
+*We can also can add more syntactic sugar by `commenting`our data using `#`. Anything following this symbol will not run as code, but will be visible, and is typically used to describe what you are doing.*
 ```{r demo_comment, exercise=TRUE}
 
 #I am creating a variable called seventy_five
@@ -56,7 +56,7 @@ seventy_five <- 75
 
 ```
 
-*Notice R returns nothing when we run the above code. What is happening here is that R has stored the value 75 with the name seventy_five. Now we can reference this name to return the value 75 (run the code and see what happens). Naming objects is a way we can store them:*
+*Notice that R returns nothing when we run the above code. What is happening here is that R has stored the value 75 with the name seventy_five. Now we can reference this name to return the value 75. Naming objects is thus a way we can store them. Run the code and see what happens:*
 ```{r demo_comment_return, exercise=TRUE}
 
 #I am creating a variable called seventy_five
@@ -67,13 +67,13 @@ seventy_five
 
 ```
 
-Modify the above blocks of code to see for yourself.
+Modify the above blocks of code with different names and values to see for yourself.
 
 ## Problem Set
 
 *Let's start out by using arithmetic operators to do some calculations*
 
-Write the R code required to add two plus two
+Write the R code required to add two plus two.
 
 ```{r problem_two-plus-two, exercise=TRUE}
 
@@ -97,7 +97,7 @@ grade_this_code()
 
 ```
 
-Write the R code required to calculate 10 divided by 5
+Write the R code required to calculate 10 divided by 5.
 
 ```{r problem_divide, exercise=TRUE}
 
@@ -125,7 +125,7 @@ grade_this_code()
 
 *Now we want to be able to assign a name to the outputs of our calculations so we can store them*
 
-Assign the value of your previous calculation to the name `two`, then print the output:
+Assign the value of your previous calculation to the name `two`, then print the output.
 
 ```{r problem_name-divide, exercise=TRUE}
 
@@ -150,7 +150,7 @@ grade_this_code()
 
 ```
 
-Create another named objected called twenty_five that is 5 squared
+Create another named objected called twenty_five that is 5 squared.
 
 ```{r problem_name-square, exercise=TRUE}
 
@@ -176,10 +176,10 @@ grade_this_code()
 
 ```
 
-*Named objects can interact with each other. Calculate a third object*
+*Named objects can interact with each other. Let's calculate a third object.*
 
-Finally, multiply `two` by `twenty_five` and name this calculation
-`fifty`. Print so that the new object returns the value of the calculation.
+Finally, multiply `two` by `twenty_five` and name this calculation as a third value called
+`fifty`. Print it so that the new object returns the value of the calculation.
 
 ```{r problem_name-multiply, exercise=TRUE}
 
@@ -231,9 +231,9 @@ learnr::quiz(
 
 ## Submit
 
-### *Important*: to submit your answers, please generate your hash code, copy it into the decoder, and then decode it into a table. Please copy and save the table in a word document and submit to the D2L assignment for credit. We are actively working on making this last step easier, so thanks for bearing with us!
+### *Important*: to submit your answers, please press `generate` to create you unique code, copy the code into the box under 'hash to decode', and then press `decode` to turn your code it into a table summarizing your tutorial answers. Please copy the table in a word document, save it, and submit it to the D2L Operators assignment for credit. We are actively working on making this last submission step better and easier, so thanks for bearing with us!
 
-*Ignore the directions below for submitting to the google link (it doesn't go anywhere)*
+*Ignore the directions below for submitting to the google link (it doesn't go anywhere)!*
 
 ```{r context="server"}
 
@@ -246,4 +246,4 @@ learnrhash::encoder_ui()
 learnrhash::decoder_ui()
 ```
 
-All done!
+All done! Please submit your table in a word document to the D2L assignment.

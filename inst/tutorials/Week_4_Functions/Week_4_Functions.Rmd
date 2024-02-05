@@ -68,7 +68,7 @@ A function has three basic characteristics:
 
 * A function has a name that is typically descriptive in some form of what it does.
 * Bounded parentheses to the right of the name that contain everything that will be 'passed' into the function. This is in contrast to operators, where whatever is being operated on can be on either side of the symbol - case in point the `:` operator to create a sequence. 
-* Arguments that define the parameters that will be fed as inputs to the function, which are needed for the function to return an output. All arguments are contained in the bounded parentheses.
+* Arguments that define the parameters that will be fed as inputs to the function, which are needed for the function to *return* an output. All arguments are contained in the bounded parentheses.
 
 Before going any further run this simple piece of code using the `?` operator.
 
@@ -111,7 +111,7 @@ vector_3 + vector_3
 
 ```
 
-What happened is called `recycling` and is an important behavior of functions in R, in that the values in vector_4 got "recycled". When it came to find a third value to add to vector_3, vector_4 just went on and repeated itself starting from the beginning back to the first value of the sequence, 0. This is also what is happaneing if we were to simply just add 1 to vector_3; 1 would be added to every value of vector_3 because we are constantly recycling the value of 1.
+What happened is called `recycling` and is an important behavior of vectors in R, in that the values in vector_4 got "recycled". When it came to finding a third value to add to vector_3, vector_4 just went on and repeated itself starting from the beginning back to the first value of the sequence, 0. This is also what is happening if we were to simply just add 1 to vector_3; 1 would be added to every value of vector_3 because we are constantly recycling the value of 1 (since it is, in effect, a vector of length 1!)
 
 *Let's look at some other functions we can use the vectors:*
 
@@ -173,7 +173,7 @@ The `plot()` function is good for visualizing how two variables correlate with e
 
 Modify the above code by changing how many values are in the first vector (by varying the interval length in the 'by' argument) and see how things change.
 
-Last but not least, we may also want to visualize the distribution of values in a vector; how frequent is each value? To highlight this, we can generate a toy `normal distribution`, which is the shape of a bell and thus called a bell curve. This is a common distribution the emerges when you have lots of data. For example, if you were to take the height out of every person in the world, a bell-shaped distributed would emerge. We can generate a toy normal distribution using the `rnorm()` function. Use the `?` operator learn more about this function.
+Last but not least, we may also want to visualize the distribution of values in a vector; how frequent is each value? To highlight this, we can generate a toy `normal distribution`, which is the shape of a bell and thus called a bell curve. This is a common distribution the emerges when you have lots of data. For example, if you were to take the height of every person in the world, a bell-shaped distributed would emerge. We can generate a toy normal distribution using the `rnorm()` function. Use the `?` operator learn more about this function.
 
 ```{r demo_functions_4, exercise=TRUE}
 
@@ -249,7 +249,7 @@ grade_this_code()
 
 ```
 
-Add the R code to the code below that will add alternating values of 0 and 1 to the vector named toy_vector. Use the `?` operator to see what the `rep()` function does. 
+Add the R code to the code below (under 'zeros <- rep(0,20)') that will add alternating values of 0 and 1 to the vector named toy_vector. Use the `?` operator to see what the `rep()` function does. 
 
 ```{r problem_vector_3, exercise=TRUE}
 
@@ -303,7 +303,7 @@ grade_this_code()
 
 ```
 
-Write the R code the needed to create a vector that is normally distributed containing 500 values, has a mean of 5000, and has a standard deviation of 50. Assign this vector the name 'normal_vector' and then create a historgram this vector's distribution of values.
+Write the R code the needed to create a vector that is normally distributed containing 500 values, has a mean of 5000, and has a standard deviation of 50. Assign this vector the name 'normal_vector' and then create a histogram of this vector's distribution of values.
 
 
 ```{r problem_vector_5,exercise=TRUE}
@@ -342,7 +342,7 @@ grade_this_code()
 ```{r quiz}
 
 learnr:: quiz(
-  question("True or False, all values in an atomic vector must be composed of the same data type",
+  question("True or False, all values in an atomic vector are composed of the same data type",
     answer("True",correct = TRUE),
     answer("False")
   ),
@@ -369,9 +369,9 @@ learnr:: quiz(
 
 ## Submit
 
-### *Important*: to submit your answers, please generate your hash code, copy it into the decoder, and then decode it into a table. Please copy and save the table in a word document and submit to the D2L assignment for credit. We are actively working on making this last step easier, so thanks for bearing with us!
+### *Important*: to submit your answers, please press `generate` to create you unique code, copy the code into the box under 'hash to decode', and then press `decode` to turn your code it into a table summarizing your tutorial answers. Please copy the table in a word document, save it, and submit it to the D2L Vectors and Functions assignment for credit. We are actively working on making this last submission step better and easier, so thanks for bearing with us!
 
-*Ignore the directions below for submitting to the google link (it doesn't go anywhere)*
+*Ignore the directions below for submitting to the google link (it doesn't go anywhere)!*
 
 ```{r context="server"}
 
@@ -384,4 +384,4 @@ learnrhash::encoder_ui()
 learnrhash::decoder_ui()
 ```
 
-All done!
+All done! Please submit your table in a word document to the D2L assignment.
