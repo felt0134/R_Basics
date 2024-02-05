@@ -178,8 +178,7 @@ grade_this_code()
 
 *Named objects can interact with each other. Let's calculate a third object.*
 
-Finally, multiply `two` by `twenty_five` and name this calculation as a third value called
-`fifty`. Print it so that the new object returns the value of the calculation.
+Finally, multiply `two` by `twenty_five` and name this calculation as a third value called `fifty`. Print it so that the new object returns the value of the calculation. For now, you will have to 're-assign' each value its name, as tutorials do not carry over this type of information across different code chunks.
 
 ```{r problem_name-multiply, exercise=TRUE}
 
@@ -187,7 +186,7 @@ Finally, multiply `two` by `twenty_five` and name this calculation as a third va
 
 ```
 
-```{r problem_name-multiply-hint}
+```{r problem_name-multiply-hint-1}
 
 Because the named objects are just numbers, they will behave as such
 
@@ -195,7 +194,9 @@ Because the named objects are just numbers, they will behave as such
 
 ```{r problem_name-multiply-solution}
 
-fifty <- five*twenty_five
+two <- 10/5
+twenty_five <- 5^2
+fifty <- two*twenty_five
 fifty
 
 ```
