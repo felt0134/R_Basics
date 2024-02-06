@@ -14,7 +14,9 @@ library(gradethis)
 library(learnrhash)
 knitr::opts_chunk$set(echo = FALSE)
 
-options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
+# options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
+
+options(tutorial.storage = learnr::filesystem_storage(getwd()))
 
 # tutorial_event_recorder <- function(tutorial_id, tutorial_version,
 #                                     user_id, event, data) {
