@@ -14,6 +14,8 @@ library(gradethis)
 library(learnrhash)
 knitr::opts_chunk$set(echo = FALSE)
 
+options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
+
 # tutorial_event_recorder <- function(tutorial_id, tutorial_version,
 #                                     user_id, event, data) {
 # cat(tutorial_id, " (", tutorial_version, "): ", user_id , "\n", sep = "")
@@ -71,7 +73,6 @@ A function has three basic characteristics:
 * Arguments that define the parameters that will be fed as inputs to the function, which are needed for the function to *return* an output. All arguments are contained in the bounded parentheses.
 
 Before going any further run this simple piece of code using the `?` operator.
-
 ```{r demo_combine, exercise=TRUE}
 
 #use the help tool to explore the c() function in R
@@ -90,7 +91,7 @@ c("R","is","the","best")
 Notice how each value is separated by  a comma. Commas separate each argument in a function, and here each value is treated as an argument. 
 
 
-We can also add vectors together if we so wish. Adding two vectors together highlights an important behavior of data in R called `recycling`. If we added two vectors together that had different lengths, what do you think might happen? First let's add two vectors of the same length together. Run the code below:
+We can also add vectors together if we so wish. Adding two vectors together highlights an important behavior of data (and specifically vectors) in R called `recycling`. If we added two vectors together that had different lengths, what do you think might happen? First let's add two vectors of the same length together. Run the code below:
 ```{r demo_recyling, exercise=TRUE}
 
 vector_1 <- c(1,1,1,1)
@@ -107,7 +108,7 @@ The above line of code contains a ton of concepts of R already: operators, funct
 vector_3 <- c(1,2,3,4)
 vector_4 <- c(0,1)
 
-vector_3 + vector_3
+vector_3 + vector_4
 
 ```
 
@@ -117,7 +118,7 @@ What happened is called `recycling` and is an important behavior of vectors in R
 
 * `seq()`: create a sequence of values in a specific interval
 * `mean()`: calculate the mean of a vector
-* `plot()`: plot 
+* `plot()`: plot the relationship between two variables
 * `hist()`: create a histogram or a frequency distribution of values in a vector
 
 
@@ -130,9 +131,9 @@ seq(from = 1, to = 20, by = 4)
 
 Notice the use of the `=` operator. This is how we pass values into functions for a given argument. Notice also how I have specified the names of the arguments. For now this is good practice, but eventually you might realize that R can know which argument you mean by the location of value you are passing into the function.
 
-*it is also good practice to use the `<-` operator specifically for assigning objects names, and the `=` operator for specifying what values will be passed into a function, for a given argument.
+*It is also good practice to use the `<-` operator specifically for assigning objects names, and the `=` operator for specifying what values will be passed into a function, for a given argument.
 
-Now let's try the `mean()` function to calculate the average of all values in the vector. Run the code below:
+Now let's try the `mean()` function to calculate the average of all values in a vector. Run the code below:
 ```{r demo_functions_2, exercise=TRUE}
 
 #create a specific sequence of values and name it
@@ -152,7 +153,7 @@ Two types of plots we will focus on here:
 * Relationship between two variables (an "x-y" plot), using two vectors
 * Distribution or frequency of values in one vector
 
-Before proceeding, use the `?` operator to learn more about the `plot()` function.
+Before proceeding, use the `?` operator to learn more about the `plot()` function (e.g., ?plot). Feel to to run that code in the console and see what happens.
 
 If we want to see at how two variables correlate with each other, we can use the `plot()` function, which comes standard in the 'base' version of R. Run the code chunk below: 
 
@@ -169,7 +170,7 @@ plot(x = toy_sequence, y = toy_sequence_halved)
 
 ```
 
-The `plot()` function is good for visualizing how two variables correlate with each other: *"how does variable Y change with variable X?*" 
+Notice how, much like adding two vectors, plotting the relationship between two vectors goes in sequence. For example, the second value of toy_sequence will be plotted against the second value of toy_sequence_halved, and so on. The `plot()` function is good for visualizing how two variables correlate with each other: *"how does variable Y change with variable X?*" 
 
 Modify the above code by changing how many values are in the first vector (by varying the interval length in the 'by' argument) and see how things change.
 
@@ -237,7 +238,7 @@ Remember the function needed to create a sequence?
 
 ```
 
-```{r problem_vector-2-solution}
+```{r problem_vector_2-solution}
 
 seq(from = 0,to = 100,by = 25)
 
@@ -249,7 +250,7 @@ grade_this_code()
 
 ```
 
-Add the R code to the code below (under 'zeros <- rep(0,20)') that will add alternating values of 0 and 1 to the vector named toy_vector. Use the `?` operator to see what the `rep()` function does. 
+Add the R code to the code below (under 'zeros <- rep(0,20)') that will add alternating values of 0 and 1 to the vector named zeros. Use the `?` operator to see what the `rep()` function does. 
 
 ```{r problem_vector_3, exercise=TRUE}
 
