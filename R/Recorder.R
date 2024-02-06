@@ -1,4 +1,16 @@
 
+#' Recorder Function
+#'
+#' @param tutorial_id 
+#' @param tutorial_version 
+#' @param user_id 
+#' @param event 
+#' @param data 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 recorder <- function(tutorial_id, tutorial_version, user_id, event, data) {
   tut_dir <- tut_directory()
   if(!file.exists(tut_dir)) dir.create(tut_dir)
