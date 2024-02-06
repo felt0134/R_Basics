@@ -1,13 +1,10 @@
-#' my_function
-#' 
-#' A function to print the words "New function!"
+
+#' Test function
 #'
-#' @return A character vector
+#' @return
 #' @export
 #'
 #' @examples
-#' my_function()
-
 my_function <- function(){
   print("New function!")
 }

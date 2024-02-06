@@ -21,5 +21,5 @@ install.packages("learnr")
 remotes::install_github("rstudio/gradethis")
 devtools::install_github("rundel/learnrhash")
 devtools::install_github("felt0134/R_Basics")
-
+RBasics::my_function()
 
