@@ -101,7 +101,7 @@ vector_1 + vector_2
 
 ```
 
-The above line of code contains a ton of concepts of R already: operators, functions, and vectors. What R does is add the first value of the first vector to the first value of the second vector, and so on. This works well when we have vectors of equal lengths, but what happens when we have vectors of different lengths? Run the code below.
+The above line of code contains a ton of R concepts already: operators, functions, and vectors. What R does is add the first value of the first vector to the first value of the second vector, and so on. This works well when we have vectors of equal lengths, but what happens when we have vectors of different lengths? Run the code below.
 
 ```{r demo_recyling_2, exercise=TRUE}
 
