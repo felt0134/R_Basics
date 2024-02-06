@@ -151,8 +151,8 @@ Try making this histogram yourself, using `rnorm(n)` (which generates a vector o
 ```
 
 ```{r basic_histogram-solution}
-normal_draw <- rnorm(10000)
-hist(normal_draw)
+normal_draw <- rnorm(n = 10000)
+hist(x = normal_draw)
 ```
 
 ```{r basic_histogram-code-check}
@@ -184,10 +184,10 @@ HINT: If you are getting an unexpected error, you might need to enter `?sample` 
 # Solution...
 twelve_sided <- 1:12
 many_rolls <- sample(
-  twelve_sided, 
-  50, 
+  x = twelve_sided, 
+  size = 50, 
   replace = TRUE)
-hist(many_rolls)
+hist(x = many_rolls)
 ```
 
 ```{r roll_the_dice_50-code-check}
@@ -216,12 +216,12 @@ In the sandbox below...
 ```{r roll_the_dice_50_breaks-solution}
 twelve_sided <- 1:12
 many_rolls <- sample(
-  twelve_sided, 
-  50, 
+  x = twelve_sided, 
+  size = 50, 
   replace = TRUE)
 hist(
-  many_rolls, 
-  breaks = seq(0.5, 12.5, 1))
+  x = many_rolls, 
+  breaks = seq(from = 0.5,to = 12.5,by = 1))
 ```
 
 ```{r roll_the_dice_50_breaks-code-check}
@@ -242,12 +242,12 @@ grade_code()
 ```{r roll_the_dice_10000-solution}
 twelve_sided <- 1:12
 many_rolls <- sample(
-  twelve_sided, 
-  100000, 
+  x = twelve_sided, 
+  size = 100000, 
   replace = TRUE)
 hist(
-  many_rolls, 
-  breaks = seq(0.5, 12.5, 1))
+  x = many_rolls, 
+  breaks = seq(from = 0.5,to = 12.5,by = 1))
 ```
 
 ```{r roll_the_dice_10000-code-check}
@@ -281,7 +281,7 @@ quiz(
 
 ## Custom functions
 
-R provides thousands of functions that we use to perform many different tasks. Sometimes, though, we might want to create a function that performs a task of our own choosing.
+R provides thousands of functions that we use to perform many different tasks. Sometimes, though, we might want to create a function that performs a task of our own choosing. We can do this using another function that is called... `function()`. See below for an example.
 
 ### Create a function with the Pythagorean theorum
 
@@ -293,16 +293,18 @@ $$
 c = \sqrt{a^2 + b^2}
 $$
 
-So we can create a function that accepts the parameters `a` and `b`.  We can put code inside the function to calculate `c` from any values of `a` and `b` that a user passes to the function.  Then we can specify that `c` is the value returned by the function.  
+So we can create a function that accepts the parameters `a` and `b`.  We can put code inside the function to calculate `c` from any values of `a` and `b` that a user passes to the function. Then we can specify that `c` is the value returned by the function.  
 
-We can assign that function to any name we like, but descriptive names make our code more readable.  In this case, we'll assign the function to the name `hypotenuse`.
+We can assign that function to any name we like, but descriptive names make our code more readable (syntatic sugar!). In this case, we'll assign the function to the name `hypotenuse`.
 
-The function just described has been created for you below. The code between `{` and `}` is code that is executed when you call the function.  However, note that the calculations inside the function (between `{` and `}`) are *not quite* correct.  
+The function just described has been created for you below. The arguments for our custom function are specified inside the `function()` function, while the code between `{` and `}` is code that is executed when you call (or run) the function. The 'return()` function inside the brackets is run last and holds what will be the output (or be "returned") by the function you create.
+
+However, note that the calculations inside the function below (between `{` and `}`) are *not quite* correct...think about the correct equation!
 
 - Find and fix the error in the code...
 - Then modify the last line to calculate the hypotenuse of a triangle where leg `a` is 3 units (inches, cm, m, or whatever) and leg `b` is 4 units.
 
-Also, take a little time to consider `function(a, b)` in the first line.  Notice how the parameters required by the new function are defined simply by including their names in the parenthesis after `function()`.
+Take a little more time to consider `function(a, b)` in the first line.  Notice how the arguments required by the new function are defined simply by including their names in the parenthesis after `function()`.
 
 ```{r hypotenuse, exercise=TRUE}
 hypotenuse <- function(a, b) {
@@ -330,7 +332,7 @@ grade_code()
 
 It would be simpler to simulate rolling a die if we had a function we could call to perform the simulation.  So let's create a function called `roll_die()` that can simulate 1 or more rolls of a die of any number of sides!
 
-The function `roll_die()` should accept two parameters -- `n` (the number of rolls to simulate) and `sides` (the number of sides on the die).  The default value of `sides` should be `6`. (Notice in the code below how to define the default value of `6` when you define the parameters for the function.)
+The function `roll_die()` should accept two arguments -- `n` (the number of rolls to simulate) and `sides` (the number of sides on the die).  The default value of `sides` should be `6`. (Notice in the code below how to define the default value of `6` when you define the parameters for the function.)
 
 The following code is a start.  Follow the bullet points below to fill in the body of the function (between `{` and `}`).  Then, run the last line of the code in the box below to see if the function produces the expected results.
 
@@ -353,7 +355,7 @@ roll_die(n = 5)
 ```{r roll_die-solution}
 roll_die <- function(n, sides = 6) {
   side_values <- 1:sides
-  rolls <- sample(side_values, n, replace = TRUE)
+  rolls <- sample(x = side_values,size = n, replace = TRUE)
   return(rolls)
 }
 
@@ -385,7 +387,7 @@ grade_code()
 
 Now lets create a function called `roll_two_dice()` that rolls two dice at the same time and sums the result.
 
-The function will again accept two parameters -- `n` and `sides`.  This time, however, `sides` will accept a vector of length 2 -- the first value in the vector is the number of sides on the first die, and the second value in the vector is the number of dice on the second die!  
+The function will again accept two arguments -- `n` and `sides`.  This time, however, `sides` will accept a vector of length 2 -- the first value in the vector is the number of sides on the first die, and the second value in the vector is the number of dice on the second die!  
 
 Notice in the code below that you will have to define the parameters and default values within `function()`.
 
@@ -405,6 +407,12 @@ roll_two_dice <- function(____) {
 
 # test your function with these lines of code
 roll_two_dice(n = 10)
+```
+
+```{r roll_two_dice-hint}
+
+Remember, this function will require using and placing the `roll_die()` function you previously created inside the `{` and `}` brackets of the new function.
+
 ```
 
 ```{r roll_two_dice-solution}
@@ -433,7 +441,7 @@ For a 20-sided die, the breaks are `c(0.5, 1.5, 2.5, ... , 19.5, 20.5)`
 
 For *two* 6-sided dice, the lowest roll is 2 and the highest is 12, so the breaks are `c(1.5, 2.5, 3.5, ... , 11.5, 12.5)`
 
-This could get tedious!  Wouldn't it be nice to have a function that can calculate the breaks this for us?  Well... let's write one!
+This could get tedious!  Wouldn't it be nice to have a function that can calculate the breaks for us?  Well... let's write one!
 
 ### Calculate histogram breaks
 
@@ -446,7 +454,7 @@ If you think about the examples above, there is a formula for calculating the br
 OK, then!  That's not too hard!  I've started you off with some code, below.  In the code:  
 
 - Note that `range(x)` returns a vector of length 2 containing the lowest and highest values found in `x`.  In other words, `range(1:6)` will return the equivalent of `c(1,6)`.
-- Fill in the blanks in the `seq()` function and run the code (see hint, below).  Look carefully at the output.  Is it right?
+- Fill in the blanks in the `seq()` function and run the code (see hint, below).  Look carefully at the output.  Is it right? Hint: it is not!
 - If not, think about what kind of error in the code might cause the output you get.
 - Find and fix any errors until the the function returns the correct breaks for both cases (the last two lines provided at the bottom of the code).
 
@@ -463,8 +471,8 @@ pretty_breaks <- function(x) {
 }
 
 # test your function with these lines of code
-pretty_breaks(1:6)
-pretty_breaks(2:12)
+pretty_breaks(x = 1:6)
+pretty_breaks(x = 2:12)
 ```
 
 ```{r breaks_function-solution}
@@ -473,7 +481,7 @@ pretty_breaks <- function(x) {
   # the range! I used vector arithmetic to add a negative 
   # and a positive value to the result from `range(x)`
   break_range <- range(x) + c(-0.5, 0.5)
-  breaks <- seq(break_range[1], break_range[2], 1)
+  breaks <- seq(from = break_range[1], to = break_range[2],by = 1)
   return(breaks)
 }
 
@@ -491,7 +499,7 @@ grade_code()
 Now that we can easily generate the `breaks` to make lovely histograms, lets look that some probability distributions!  We'll start with the PD for rolling two six-sided dice.
 
 - Use `roll_two_dice()` to simulate rolling a pair of six-sided dice 50 times; assign the result to the name `rolls`. 
-- Make a histogram of `rolls`; use `breaks = pretty_breaks(rolls)` when you call the `hist()` functionro
+- Make a histogram of `rolls`; use `breaks = pretty_breaks(rolls)` when you call the `hist()` function.
 - Run your code several times before submitting it and see what happens to your estimate of the PD for rolling two dice.
 
 ```{r hist_of_two_dice_50, exercise=TRUE, exercise.setup = "prepare_two_dice"}
@@ -588,7 +596,7 @@ In the sandbox below, use `rep()` to:
 ```
 
 ```{r permutations-solution}
-die1 <- rep(1:6, 6)
+die1 <- rep(1:6, times = 6)
 die2 <- rep(1:6, each = 6)
 ```
 
@@ -628,16 +636,16 @@ Look at dice values.  What you notice about the frequency of different numbers? 
 ```
 
 ```{r sort_permutations-solution}
-sort(dice_values)
+sort(x = dice_values)
 ```
 
 ```{r sort_permutations-code-check}
 grade_code()
 ```
 
-Huh.  There are lots of 7's, but only one 2 and one 12.  This means that lots of different permutations result in 7, but there is only one permutation that results in 2 and one that result in 12.
+Huh.  There are lots of 7's, but only one 2 and one 12.  This means that lots of different permutations result in two values adding up to 7, but there is only one permutation that results in 2 and one that result in 12. This is an example of the fundamental mechanism behind why a normal distribution (which is a common distribution) emerges.
 
-That makes sense!  All of the following permutations yield 7:  1+6, 2+5, 3+4, 4+3, 5+2, and 6+1.  The only way to get 2 is 1+1.  The only way to get 12 is 6+6.
+And if we look more closely, that makes sense!  All of the following permutations yield 7:  1+6, 2+5, 3+4, 4+3, 5+2, and 6+1.  The only way to get 2 is 1+1.  The only way to get 12 is 6+6.
 
 Finally, make a histogram of `dice_values`
 
@@ -651,7 +659,7 @@ Finally, make a histogram of `dice_values`
 ```{r hist_permutations-solution}
 hist(
   dice_values,
-  breaks = pretty_breaks(dice_values))
+  breaks = pretty_breaks(x = dice_values))
 ```
 
 ```{r hist_permutations-code-check}
@@ -664,12 +672,12 @@ Huh.  Apparently, the underlying probability distribution for rolling dice is th
 
 ### Let's check and see if we are right.
 
-This is the part of your lab that will be graded.  There are no solutions to look at, but you can go back to your prior answers to get help!
+*This is the part of your lab that will be graded*.  There are no solutions to look at, but you can go back to your prior answers to get help!
 
-Let's simulate 100000 rolls of a 4-sided die and a 10-sided die.
+*Q1: Let's simulate 100000 rolls of a 4-sided die and a 10-sided die.*
 
-- Use `roll_two_dice()` to perform the simulation.
-- Create a histogram of `rolls`
+- Use `roll_two_dice()` to perform the simulation. *(5 points)*
+- Create a histogram of `rolls`. *(5 points)*
 
 ```{r hist_4_10_permutations, exercise=TRUE, exercise.setup = "prepare_two_dice"}
 
@@ -688,7 +696,7 @@ grade_this( {
     message = "Your solution has been submitted for grading.") })
 ```
 
-Now, use `rep()` to calculate the permutations and plot a histogram of the results.  Here's what the permutation vectors look like:
+*Q2: Now, use `rep()` to calculate the permutations and plot a histogram of the results.*  Here's what the permutation vectors look like:
 
 ```{r}
 matrix(
@@ -699,7 +707,7 @@ matrix(
   dimnames = list(NULL, c("die1", "die2")))
 ```
 
-Using the table above as a guide, calculate the permutation vectors for the `die1` and `die2`, sum them, then make a histogram of the results.
+Using the table above as a guide, calculate the permutation vectors for the `die1` and `die2`, sum them, then make a histogram of the results. *(10 points)*
 
 ```{r hist_4_10_PD, exercise=TRUE, exercise.setup = "prepare_two_dice"}
 
