@@ -2,3 +2,4 @@
 
 export(recorder)
 export(submit_ENSC311)
+export(update_ENSC311)
