@@ -21,6 +21,6 @@
 # remotes::install_github("rstudio/gradethis")
 # devtools::install_github("rundel/learnrhash")
 # devtools::install_github("felt0134/R_Basics")
-remotes::install_github("gcpoole/tutorialize")
+#remotes::install_github("gcpoole/tutorialize")
 # RBasics::my_function()
 
