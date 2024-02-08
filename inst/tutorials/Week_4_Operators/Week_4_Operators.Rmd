@@ -12,9 +12,6 @@ library(learnr)
 library(gradethis)
 library(learnrhash)
 knitr::opts_chunk$set(echo = FALSE)
-gradethis::gradethis_setup()
-options(tutorial.event_recorder = tutorialize::recorder)
-options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
 ```
 
 ## Operators and names 
