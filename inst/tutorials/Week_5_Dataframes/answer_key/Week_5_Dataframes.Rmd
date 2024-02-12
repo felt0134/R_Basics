@@ -1,0 +1,245 @@
+---
+title: "Dataframes"
+tutorial:
+  id: "Week_5_Dataframes"
+output: 
+  learnr::tutorial:
+    progressive: true
+runtime: shiny_prerendered
+description: "Introducing the basics of dataframes of R"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+gradethis::gradethis_setup()
+options(tutorial.event_recorder = tutorialize::recorder)
+options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
+```
+
+## Dataframe Basics
+
+Dataframes are a core data structure in R, providing a tabular (or, table) structure for organizing and manipulating data. This tutorial will guide you through the fundamentals of dataframes in R.
+
+The best way to structure dataframes is by following the tidy approach. Do you remember the three 'rules' of tidy data?
+
+* Every column is a variable.
+* Every (unique) observation is a row.
+* Every value is a cell.
+
+Think about what criteria number 1 really is. If we were to look at one variable (or column) of a tidy data frame, what we are really doing is looking at an atomic vector, or, a sequence of values composed of the same data type. Think about the tabular data you have seen so far; is a column ever composed of different data types?
+
+How about an observation (or row?) in a data frame? Is this an atomic vector?
+
+```{r quiz_row}
+quiz(
+  question(
+    "Is a row in a dataframe an atomic vector?",
+    answer("Yes"),
+    answer("No", correct = TRUE))
+)
+```
+
+## Building a dataframe
+
+In reference to the quiz question, an observation (row) would not always qualify as an atomic vector, because the values across that sequence can be composed of different data types (think of categories versus numbers). So, it is is safe to assume that columns in a table are atomic vectors, but not necessary rows. *What this means is that dataframes are just combinations of atomic vectors (defined by the columns)*.
+
+Allow me to belabor the point. We can create a dataframe from scratch in R using the (you guessed it) `data.frame()` function. Take a look at this function by running ?data.frame in the console. The fundamental argument in the `data.frame()` function is one or more vectors, which define the variable (and thus) columns. Run the code below.
+
+```{r demo_dataframe, exercise = TRUE}
+
+# create a dataframe using two vectors as arguments
+toy_data <- data.frame(
+  
+  var_1 =  1:10,
+  var_2 = seq(from = 10, to = 100, by = 10)
+  
+)
+
+toy_data
+
+```
+
+We can create the same dataframe in a different way by first defining the vectors and then just passing their names into the `data.frame()` function. Run the code below.
+
+```{r demo_dataframe_2, exercise = TRUE}
+
+#create a dataframe using two vectors already assigned names
+var_1 <-  1:10
+var_2 <- seq(from = 10, to = 100, by = 10)
+
+toy_data <- data.frame(var_1,var_2)
+
+toy_data
+
+```
+
+Notice how these are numbers. We can also add character vectors into this. Run the code below.
+
+```{r demo_dataframe_3, exercise = TRUE}
+
+#create a dataframe with both numeric and character vectors
+mean_C_uptake <-  c(700,400,200)
+biome <- c("forest",'grassland','desert')
+
+biome_data <- data.frame(mean_C_uptake,biome)
+
+biome_data
+
+```
+
+## Plotting and viewing dataframes
+
+Often when we create or import data we will want to look at it or preview it. A key function that allows us to do so is the `head()` function, which allows us to preview the 'head' or 'top' of the dataframe by looking at the first X number of rows (while retaining the column header/variable names). Run ?head into the console to learn more.
+
+Let's say we have created a dataframe
+```{r demo_dataframe_4, exercise = TRUE}
+
+#create a dataframe using two numeric vectors
+var_1 <-  1:10
+var_2 <- seq(from = 10, to = 100, by = 10)
+
+toy_data <- data.frame(var_1,var_2)
+
+```
+
+We can use the `head()` function to preview the first two rows. Run the code below.
+
+```{r demo_dataframe_5, exercise = TRUE,exercise.setup = "demo_dataframe_4"}
+
+#look at the first two rows of the dataframe
+head(toy_data,2)
+
+```
+
+If you remember, we plot two vectors together:
+
+```{r demo_dataframe_6, exercise = TRUE}
+
+#create a specific sequence of values and name it
+toy_sequence <- seq(from = 1, to = 20, by = 4)
+
+#multiply every value in toy_sequence by 0.5 (this is a type of recycling!)
+toy_sequence_halved <- toy_sequence*0.5
+
+#plot the two vectors
+plot(x = toy_sequence, y = toy_sequence_halved)
+
+```
+
+Now, we can combine the two vectors into a dataframe, and plot them as well:
+
+```{r demo_dataframe_7, exercise = TRUE,exercise.setup = "demo_dataframe_6"}
+
+#combine the two vectors we previously created into a dataframe:
+toy_data_2 <- data.frame(vector_1 = toy_sequence,
+                         vector_2 = toy_sequence_halved)
+
+#plot vector_1 as a response to vector_2
+plot(vector_1 ~ vector_2,data = toy_data_2)
+```
+Notice how the arguments in the plot function have changed slightly to look more like a formula. Indeed, the `~` operator separates the right and left side of a formula, and is used in many statistical models in R. 
+
+## Problem set
+
+### Q1: Create a dataframe that has two columns. One column should be called `Letter` that is a character vector spelling out ENSC311, with a letter for each value. The other column should be called `Number` and should be a numeric vector ranging from 1 to 7, increasing by values of 1, and thus have a length of 7. Assign this dataframe the name `ENSC311`.
+```{r problem_dataframe_1, exercise = tutorialize}
+
+ENSC311 <- data.frame(
+  
+  Letter = c('E','N','S','C','3','1','1'),
+  Number = 1:7
+  
+)
+
+```
+
+### Q2: Below is code that will load a dataset of Old Faithful, called 'faithful', that R has as a dataset available in its base software to play around with. Use the `?` operator (run in the console) to learn more about this dataset, specifically its variables. Run the code below.
+
+```{r setup_problem_1, exercise = TRUE}
+
+data(faithful)
+
+```
+
+Q2A: Use the `head()` function to preview the first three rows of the faithful dataframe.
+
+```{r problem_dataframe_3, exercise = tutorialize}
+
+head(faithful,3)
+
+```
+
+Q2B: Use the `plot()` function and your understanding of the variables in the faithful dataframe to make an x-y plot that will answer this question: *How does the time between eruptions (put on x axis) influence the duration of eruptions (put on y axis)?*
+
+```{r problem_dataframe_4, exercise = tutorialize}
+
+plot(eruptions ~ waiting,data = faithful)
+
+```
+
+## Quiz 
+
+```{r quiz_tidy}
+quiz(
+  question(
+    "Which of the characteristics of tidy data is an atomic vector?",
+    answer("a variable/column",correct = TRUE),
+    answer("a row/observation"),
+    answer("a cell/value",correct = TRUE),
+    answer("none"))
+)
+```
+
+```{r quiz_dataframe}
+quiz(
+  question(
+    "What is the R function used to create a data frame from existing vectors?",
+    answer("create.df()"),
+    answer("df()"),
+    answer("data.frame()",correct = TRUE),
+    answer("str()"))
+  
+)
+```
+
+```{r quiz_head}
+quiz(
+  question(
+    "What code would you write to view the first three rows of a data frame called df?",
+    answer("view(df,3)"),
+    answer("summary(df,3)"),
+    answer("data.frame(df,3)"),
+    answer("head(df,3)",correct = TRUE))
+  
+)
+```
+
+## Submitting tutorial results
+
+*`view()`, `summary()`, and `str()` are all real R functions that are also great for understanding a dataframe. Use the `?` operator to learn more about each of them. Here is a short description of each:*
+
+* `view()` allows you to see the *entire* dataframe
+* `summary` provides a broader overview of the variables and basic summary statistics of them in a dataframe
+* `str()` provides information on the structure of an R object, including its dimensions, the type of data structure,variables, and data types.
+
+Great job!  You've completed the assignment for Lecture 6!  Now it's time to turn it in...
+
+In the console, enter the following (case sensitive):
+
+```{r, echo=TRUE, eval=FALSE}
+ENSC311::submit_ENSC311()
+```
+
+Your should see something like this:
+
+```{r}
+"Week_5_Dataframes_311_<Posit_Cloud_ID>"
+```
+
+where the end of the character string is an ID that Posit Cloud assigned you. As you do more tutorials, this list of tutorials you have run will get longer. You must pass the number that corresponds to this assignments. For example, *if* you wanted to turn in the first item on the list, you would enter: ENSC311::submit_ENSC311(1).
+
+A "submit_ENSC311_..." file will appear under the "Files" tab in the lower right pane of RStudio.  Check the box next to the submit file and choose "Export..." from the "More" dropdown on the bar at the top of the tab.  Download the file and sumbit it to D2L.
+
+That's it!  You're all done!
+
