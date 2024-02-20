@@ -12,6 +12,7 @@ description: "Practice problems for Exam II focused on the basics of R"
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(gradethis)
 knitr::opts_chunk$set(echo = FALSE)
 gradethis::gradethis_setup()
 options(tutorial.event_recorder = tutorialize::recorder)
@@ -98,7 +99,7 @@ grade_code()
 
 ```{r quiz_vectors}
 
-learnr:: quiz( 
+learnr::quiz( 
   question("What is the purpose of the `<-` operator?",
     answer("to prevent a line of code from running"),
     answer("add two values"),
@@ -245,7 +246,7 @@ grade_code()
 
 
 ```{r quiz_dataframes}
-quiz(
+learnr::quiz(
   question(
     "Which of the characteristics of tidy data is not an atomic vector?",
     answer("a variable/column"),
@@ -363,7 +364,7 @@ mean(iris$Sepal.Width)
 grade_code()
 ```
 
-Q7.5: Repeat question 7 but 'wrap' or 'nest' the mean function in the round() function to round the output to two decimal places.
+Q7_5: Repeat question 7 but 'wrap' or 'nest' the mean function in the round() function to round the output to two decimal places.
 ```{r problem_extraction_7_5, exercise=TRUE}
 
 ```
@@ -433,7 +434,7 @@ grade_code()
 ```
 
 ```{r quiz_extraction}
-quiz(
+learnr::quiz(
   question(
     "How would you extract the 20th value in a vector called 'secret_data'?",
     answer("secret_data(20)"),
@@ -446,30 +447,22 @@ quiz(
     answer("iris(,1)"),
     answer("iris[1]"),
     answer("iris[c(1,)]")),
-  quiz(
   question(
     "What is the function of the `$` operator?",
     answer("Add columns",correct = TRUE),
     answer("Extract rows"),
     answer("Extract columns",correct = TRUE),
-    answer("Extract from  avector"))
-  
-),
-quiz(
+    answer("Extract from  avector")),
   question(
     "True or False: the `[]` operator only works on vectors",
     answer("True"),
-    answer("False",correct = TRUE))
-  
-),
-quiz(
+    answer("False",correct = TRUE)),
   question(
     "True or False: the `$` operator only works on rows dataframes",
     answer("True"),
     answer("False",correct = TRUE))
-  
 )
-)
+
 ```
 
 ## Custom Functions Practice Problems
