@@ -511,3 +511,24 @@ my_range(iris$Petal.Length)
 ```{r problem_function_2-code-check}
 grade_code()
 ```
+## Submitting tutorial results
+
+Great job!  You've completed the assignment for Lecture 6!  Now it's time to turn it in...
+
+In the console, enter the following (case sensitive):
+
+```{r, echo=TRUE, eval=FALSE}
+ENSC311::submit_ENSC311()
+```
+
+Your should see something like this:
+
+```{r}
+"Week_6_Exam_Review_311_<Posit_Cloud_ID>"
+```
+
+where the end of the character string is an ID that Posit Cloud assigned you. As you do more tutorials, this list of tutorials you have run will get longer. You must pass the number that corresponds to this assignments. For example, *if* you wanted to turn in the first item on the list, you would enter: ENSC311::submit_ENSC311(1).
+
+A "submit_ENSC311_..." file will appear under the "Files" tab in the lower right pane of RStudio.  Check the box next to the submit file and choose "Export..." from the "More" dropdown on the bar at the top of the tab.  Download the file and submit it to D2L. *Do not change the name of the file*
+
+That's it!  You're all done!
