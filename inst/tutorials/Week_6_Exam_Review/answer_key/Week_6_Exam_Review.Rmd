@@ -18,7 +18,7 @@ options(tutorial.event_recorder = tutorialize::recorder)
 options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
 ```
 
-## Key Concepts to Review for Exam 1
+## Key Concepts to Review for Exam 2
 
 * *Atomic Vectors*, be able to define, identify, and apply them.
 * *Recycling*, be able to define, identify, and apply this concept to data.
