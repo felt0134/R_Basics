@@ -178,6 +178,8 @@ learnr::quiz(caption = '',
 
 ## Coding (53 points total)
 
+*Once in a while there may be a caution symbol when you are writing code. Ignore this, as it will do this even for correct code.*
+
 Q15: Create a numeric vector from 1 to 1000 that increases by values of 5. Name this vector "vector_1". (5 points)
 
 ```{r problem_1, exercise=TRUE, exercise.reveal_solution=FALSE}
