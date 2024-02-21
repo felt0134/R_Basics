@@ -192,7 +192,7 @@ vector_1 <- seq(from = 1,to = 1000,by = 5)
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your answer has been submitted") })
+    message = "Your solution has been submitted for grading.") })
 ```
 
 Q16: Use recycling to reduce every value in vector_1 by 50%. Name this new vector "vector_1_halved". Then, create an x-y plot with vector_1 on the x axis and vector_1_halved on the y axis. (10 points)
@@ -201,7 +201,7 @@ Q16: Use recycling to reduce every value in vector_1 by 50%. Name this new vecto
 vector_1 <- seq(from = 1, to = 1000, by = 5)
 ```
 
-```{r problem_2, exercise=TRUE}
+```{r problem_2, exercise=TRUE, exercise.reveal_solution=FALSE}
 
 ```
 
@@ -214,13 +214,13 @@ plot(vector_1,vector_1_halved)
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your answer has been submitted") })
+    message = "Your solution has been submitted for grading.") })
 ```
 
 
 Q17: Create a dataframe that is composed of three columns: 1) a column named 'Production' that is a numeric vector composed of the values 750,500,and 250, 2) a column named 'Precipitation' that is a numeric vector composed of the values 1200, 700, and 200, and 3) a column named 'Biome' that is a character vector composed of the values "Forest","Grassland", and "Desert". Assign this new dataframe the name "NPP". (20 points)
 
-```{r problem_3, exercise=TRUE}
+```{r problem_3, exercise=TRUE, exercise.reveal_solution=FALSE}
 
 ```
 
@@ -236,7 +236,7 @@ NPP <- data.frame(
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your answer has been submitted") })
+    message = "Your solution has been submitted for grading.") })
 ```
 
 Q18: Use an extraction operator to preview the first row of the NPP dataframe you created in Q17 (while retaining all column names). (2 points)
@@ -246,7 +246,7 @@ NPP <- data.frame(Production = c(750, 500, 250), Precipitation = c(1200,
     700, 200), Biome = c("Forest", "Grassland", "Desert"))
 ```
 
-```{r problem_4, exercise=TRUE}
+```{r problem_4, exercise=TRUE, exercise.reveal_solution=FALSE}
 
 ```
 
@@ -258,7 +258,7 @@ NPP[1,]
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your answer has been submitted") })
+    message = "Your solution has been submitted for grading.") })
 ```
 
 Q19: Use an extraction operator to add a new column to the NPP dataframe called 'RUE' that is calculated as production divided by precipitation. This variable describes how efficiently rainfall is used for plant growth. (5 points)
@@ -268,7 +268,7 @@ NPP <- data.frame(Production = c(750, 500, 250), Precipitation = c(1200,
     700, 200), Biome = c("Forest", "Grassland", "Desert"))
 ```
 
-```{r problem_5, exercise=TRUE}
+```{r problem_5, exercise=TRUE, exercise.reveal_solution=FALSE}
 
 ```
 
@@ -280,7 +280,7 @@ NPP$RUE <- NPP$Production/NPP$Precipitation
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your answer has been submitted") })
+    message = "Your solution has been submitted for grading.") })
 ```
 
 Q20: Using the NPP dataframe, create an x-y plot that depicts how RUE changes as *a function of* precipitation. You can use *either* of the two approaches (but, within the same function!) to do this that were discussed in class. (5 points)
@@ -291,7 +291,7 @@ NPP <- data.frame(Production = c(750, 500, 250), Precipitation = c(1200,
 NPP$RUE <- NPP$Production/NPP$Precipitation
 ```
 
-```{r problem_6, exercise=TRUE}
+```{r problem_6, exercise=TRUE, exercise.reveal_solution=FALSE}
 
 ```
 
@@ -304,11 +304,11 @@ plot(RUE ~ Precipitation,data = NPP)
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your answer has been submitted") })
+    message = "Your solution has been submitted for grading.") })
 ```
 
 Q21: Use the data() function to load in the iris dataframe that comes with R and then use both extraction and comparison operators to filter the iris dataframe to *just* the setosa species. Name this new dataframe iris_setosa. (6 points)
-```{r problem_7, exercise=TRUE}
+```{r problem_7, exercise=TRUE, exercise.reveal_solution=FALSE}
 
 ```
 
@@ -321,7 +321,7 @@ iris_setosa <- iris[iris$Species == 'setosa',]
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your answer has been submitted") })
+    message = "Your solution has been submitted for grading.") })
 ```
 
 ## Submitting your Exam
