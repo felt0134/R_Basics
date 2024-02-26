@@ -17,16 +17,17 @@ options(tutorial.event_recorder = tutorialize::recorder)
 options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
 ```
 
+## This is not written yet!
 
-## Long-term ecological research on Bison in the Great Plains
-
-
-
-## Another tidy function: summarise()
+### Long-term ecological research on Bison in the Great Plains
 
 
 
-## Refresher on the distinct() function
+### Another tidy function: summarise()
+
+
+
+### Refresher on the distinct() function
 
 
 What `%>%` does, ultimately, is *place the output of a function into the first argument of the next function*. Hence it unlocks the ability to "chain" function together and build a data analysis "pipeline". The pipe operator is especially useful with tidy functions (e.g., `filter()`) because the first argument you pass into these functions is a dataframe.
@@ -96,95 +97,6 @@ iris %>%
 
 Remember, *the pipe operator `%>%` places the output of a function (e.g., a dataframe) into the first argument of the next function*. 
 
-## Problem Set
-
-Q1: Use `%>%` to preview the first five rows of the faithful dataframe.
-```{r problem_1, exercise = tutorialize}
-faithful %>% head(5)
-```
-
-Q2: Use `%>%` to produce a summary of the faithful dataframe (use the summary() function).
-```{r problem_2, exercise = tutorialize}
-faithful %>% summary()
-```
-
-Q3: Use `%>%` to make an x-y plot of the relationship between eruptions (y axis) and waiting (x axis).
-```{r problem_3, exercise = tutorialize}
-faithful %>% plot(eruptions ~ waiting)
-```
-
-Q4: Use `%>%` to first filter the the faithful dataframe to eruptions *above* the mean eruption value *and then* plot it. 
-
-```{r problem_4, exercise = tutorialize}
-faithful %>% filter(eruptions > mean(eruptions)) %>%
-  plot(eruptions ~ waiting)
-```
-
-Q5: Repeat this, but now filter to values *below* the mean eruptions value. How do the relationships compare?
-```{r problem_5, exercise = tutorialize}
-faithful %>% dplyr::filter(eruptions < mean(eruptions)) %>%
-  plot(eruptions ~ waiting)
-```
-
-Q6: Now let's build a larger pipeline. First, use the library() function to load in an R package called "lterdatasampler", which is already installed. This package contains the hbr_maples dataframe in addition to many other ecological datasets from the Long-Term Ecological Research Network (LTER).
-```{r problem_6, exercise = tutorialize}
-library(lterdatasampler)
-```
-
-Q7: Then, use `%>%` to take a look at the hbr_maples dataframe using the head() and summary() functions.
-```{r problem_7, exercise = tutorialize,exercise.setup=problem_6}
-hbr_maples %>% head()
-hbr_maples %>% summary()
-```
-
-*How does investment in leaf mass versus area vary as a function of stem mass?*
-
-Q8: Use the pipe operator and tidy functions to create a pipeline that performs these operations, in the order list, that will create a new dataframe called 'tree_traits':
-
-* convert the corrected_leaf_area variable from units of meters to centimeters by dividing by 1000
-* reduce the columns to year,watershed,stem_dry_mass,leaf_dry_mass,corrected_leaf_area
-* filter the data to just the year 2003
-* create a new variable called LMA that calculates leaf mass per area by dividing leaf_dry_mass by corrected_leaf_area. This metric describes an evolutionary trade off between long-lived, rigid, stress tolerant leaves (e.g., a conifer tree) versus fast-growing, flimsy, and resource acquisitive leaves (e.g., an annual grass).
-* there is a clear LMA outlier; remove this by filtering out the *maximum* LMA value
-
-```{r problem_8, exercise = tutorialize,exercise.setup=problem_6}
-tree_traits <- hbr_maples %>%
-  dplyr::mutate(corrected_leaf_area = corrected_leaf_area/1000) %>%
-  dplyr::select(year,watershed,stem_dry_mass,leaf_dry_mass,corrected_leaf_area) %>%
-  dplyr::filter(year == 2003) %>% 
-  dplyr::mutate(LMA = leaf_dry_mass/corrected_leaf_area) %>%
-  dplyr::filter(LMA < max(LMA))
-```
-
-Q9: Now, make an x-y plot depicting the relationship between stem dry mass and leaf mass per area; How does LMA change as a function of stem dry mass?
-
-```{r problem_9, exercise = tutorialize,exercise.setup=problem_8}
-plot(LMA~stem_dry_mass,data = tree_traits)
-```
-
-
-```{r quiz_tidy}
-quiz(
-  question(
-    "What is the primary purpose of the %>% operator? ",
-    answer("Mathematical operations"),
-    answer("Extraction"),
-    answer("Comparison"),
-    answer("Filtering"),
-    answer("Chaining functions together",correct = TRUE)),
-  question(
-    "Where does %>% place the output of a function?",
-    answer("The second argument of the next function"),
-    answer("The first argument of the next function",correct = TRUE),
-    answer("The third argument of the next function"),
-    answer("In following line")),
-  question(
-    "True or False: %>% works on data sequentially",
-    answer("True",correct = TRUE),
-    answer("False"))
-)
-```
-
 ## Submitting tutorial results
 
 Great job!  You've completed the assignment!  Now it's time to turn it in...
@@ -198,7 +110,7 @@ ENSC311::submit_ENSC311()
 Your should see something like this:
 
 ```{r}
-"Week_7_piping_311_<Posit_Cloud_ID>"
+"Week_7_lab_311_<Posit_Cloud_ID>"
 ```
 
 where the end of the character string is an ID that Posit Cloud assigned you. As you do more tutorials, this list of tutorials you have run will get longer. You must pass the number that corresponds to this assignments. For example, *if* you wanted to turn in the first item on the list, you would enter: ENSC311::submit_ENSC311(1).
