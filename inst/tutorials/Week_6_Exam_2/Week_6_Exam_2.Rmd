@@ -178,8 +178,6 @@ learnr::quiz(caption = '',
 
 ## Coding (53 points total)
 
-*Once in a while there may be a caution symbol when you are writing code. Ignore this, as it will do this even for correct code.*
-
 Q15: Create a numeric vector from 1 to 1000 that increases by values of 5. Name this vector "vector_1". (5 points)
 
 ```{r problem_1, exercise=TRUE, exercise.reveal_solution=FALSE}
@@ -191,10 +189,7 @@ vector_1 <- seq(from = 1,to = 1000,by = 5)
 ```
 
 ```{r problem_1-code-check}
-grade_this( {
-  pass_if(
-    TRUE,
-    message = "Your solution has been submitted for grading.") })
+grade_code()
 ```
 
 Q16: Use recycling to reduce every value in vector_1 by 50%. Name this new vector "vector_1_halved". Then, create an x-y plot with vector_1 on the x axis and vector_1_halved on the y axis. (10 points)
@@ -213,10 +208,7 @@ plot(vector_1,vector_1_halved)
 ```
 
 ```{r problem_2-code-check}
-grade_this( {
-  pass_if(
-    TRUE,
-    message = "Your solution has been submitted for grading.") })
+grade_code()
 ```
 
 
@@ -235,10 +227,7 @@ NPP <- data.frame(
 ```
 
 ```{r problem_3-code-check}
-grade_this( {
-  pass_if(
-    TRUE,
-    message = "Your solution has been submitted for grading.") })
+grade_code()
 ```
 
 Q18: Use an extraction operator to preview the first row of the NPP dataframe you created in Q17 (while retaining all column names). (2 points)
@@ -257,10 +246,7 @@ NPP[1,]
 ```
 
 ```{r problem_4-code-check}
-grade_this( {
-  pass_if(
-    TRUE,
-    message = "Your solution has been submitted for grading.") })
+grade_code()
 ```
 
 Q19: Use an extraction operator to add a new column to the NPP dataframe called 'RUE' that is calculated as production divided by precipitation. This variable describes how efficiently rainfall is used for plant growth. (5 points)
@@ -279,10 +265,7 @@ NPP$RUE <- NPP$Production/NPP$Precipitation
 ```
 
 ```{r problem_5-code-check}
-grade_this( {
-  pass_if(
-    TRUE,
-    message = "Your solution has been submitted for grading.") })
+grade_code()
 ```
 
 Q20: Using the NPP dataframe, create an x-y plot that depicts how RUE changes as *a function of* precipitation. You can use *either* of the two approaches (but, within the same function!) to do this that were discussed in class. (5 points)
@@ -303,10 +286,7 @@ plot(RUE ~ Precipitation,data = NPP)
 ```
 
 ```{r problem_6-code-check}
-grade_this( {
-  pass_if(
-    TRUE,
-    message = "Your solution has been submitted for grading.") })
+grade_code()
 ```
 
 Q21: Use the data() function to load in the iris dataframe that comes with R and then use both extraction and comparison operators to filter the iris dataframe to *just* the setosa species. Name this new dataframe iris_setosa. (6 points)
@@ -320,10 +300,7 @@ iris_setosa <- iris[iris$Species == 'setosa',]
 ```
 
 ```{r problem_7-code-check}
-grade_this( {
-  pass_if(
-    TRUE,
-    message = "Your solution has been submitted for grading.") })
+grade_code()
 ```
 
 ## Submitting your Exam

@@ -1,0 +1,316 @@
+---
+title: "The Pipe Operator"
+tutorial:
+  id: "week_7_piping"
+output: 
+  learnr::tutorial:
+    progressive: true
+runtime: shiny_prerendered
+description: "Using the pipe operator to chain functions together"
+---
+<!-- File created by tutorialize.  Do not edit by hand. -->
+
+```{r setup, include=FALSE}
+library(learnr)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+gradethis::gradethis_setup()
+options(tutorial.event_recorder = tutorialize::recorder)
+options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
+```
+
+
+## The Pipe Operator
+
+It is often the case that, in data wrangling and analysis, we will need to perform multiple tasks, and perform them in a sequential way, in order to get to our 'end product'. For example, we may first want to calculate a new variable in a dataframe, *and then* filter the rows of that dataframe by a certain condition, *and then* remove unwanted columns, *and then* create a data summary or visualization, and so on...
+
+There is an operator that makes doing the *and then* of analyses much easier, faster, and less prone to error. It is called the pipe operator and it enables us to chain functions together, sequentially, in a process aptly named `piping`. The pipe operator is this:
+
+### `%>%`
+
+
+What `%>%` does, ultimately, is *place the output of a function into the first argument of the next function*. Hence it unlocks the ability to "chain" function together and build a data analysis "pipeline". The pipe operator is especially useful with tidy functions (e.g., `filter()`) because the first argument you pass into these functions is a dataframe.
+
+### Highlighting the utility of the pipe operator
+
+In the previous tutorial, we performed manipulations on the iris dataframe in a sequential way. You will often need to do sequential manipulations on dataframes and there are a couple ways to do this in practice. First, let's load in the iris dataframe.
+
+```{r demo_0_5, exercise = TRUE}
+data(iris)
+```
+
+One approach is to assign a new name to each intermediate dataframe created:
+
+```{r demo_1, exercise = TRUE,exercise.setup = "demo_0_5"}
+
+#create a new dataframe for each manipulation
+iris_1 <- dplyr::mutate(iris,Petal.Area = Petal.Length*Petal.Width)
+iris_2 <- dplyr::filter(iris_1,Petal.Area > mean(Petal.Area))
+iris_3 <- dplyr::select(iris_2,c(Species,Petal.Area))
+iris_4 <- dplyr::arrange(iris_3,desc(Petal.Area))
+head(iris_4,1)
+
+```
+
+The code above works, but we are left with a bunch of junk in our global environment: intermediate dataframes that we don't really need and that will eat up memory. In addition, we have to keep track of which dataframe name goes into which function. This is tedious and heightens the risk of errors. The less junk the better.
+
+We could alternatively just name every intermediary the same thing, but this is also less than ideal; it becomes easy to lose track of which version of the dataframe is which, especially when troubleshooting your code. This enhances this risk of errors.
+
+```{r demo_2, exercise = TRUE,exercise.setup = "demo_0_5"}
+
+#create a new dataframe for each manipulation, but keep the name the same
+iris <- dplyr::mutate(iris,Petal.Area = Petal.Length*Petal.Width)
+iris <- dplyr::filter(iris,Petal.Area > mean(Petal.Area))
+iris <- dplyr::select(iris,c(Species,Petal.Area))
+iris <- dplyr::arrange(iris,desc(Petal.Area))
+head(iris,1)
+
+```
+
+Finally, we could in theory get rid of named dataframe intermediates by 'nesting' or wrapping' functions within eachother, such that the functions follow an order of operations from inside to outside. In this case, the full function goes inside the first argument of the function it is 'nested' or 'wrapped' in. The code below does the same thing as the previous two code chunks and it works, but it is effectively unreadable. You want people to be able to understand your code, just like you want people to understand your writing of an essay or lab report.
+
+```{r demo_2_5, exercise = TRUE,exercise.setup = "demo_0_5"}
+
+#nest or wrap functions in eachother
+iris <- 
+  dplyr::arrange(
+    dplyr::select(
+      dplyr::filter(
+        dplyr::mutate(iris,Petal.Area = Petal.Length*Petal.Width),Petal.Area > mean(Petal.Area)),c(Species,Petal.Area)),desc(Petal.Area))
+   
+head(iris,1)
+
+```
+
+We can eliminate junk in our global environment and the risk of error while reducing the amount of code written and enhancing the speed of our analysis using the `%>%` pipe operator. Remember, this operator automatically places the output of a function (e.g., a dataframe) into the first argument of the next function.
+
+If we wanted to chain the first two functions together in the previous examples, it would look as
+such:
+```{r demo_3, exercise = TRUE}
+
+#Use %>% to chain functions together
+iris_filtered <- iris %>%  #places iris dataframe in first argument of mutate()
+  dplyr::mutate(Petal.Area = Petal.Length*Petal.Width) %>%
+  dplyr::filter(Petal.Area > mean(Petal.Area))
+
+#take a look
+head(iris_filtered,1)
+
+```
+
+Notice how there is now no longer a dataframe name passed into the first argument of *any* of the functions used; %>% is doing that for us automatically! Importantly, %>% is feeding each function (here, on the next line) whatever dataframe has been supplied/created (here, to the left of %>%). So, the mutate() function was supplied the original iris dataframe, whereas the filter() function was supplied the dataframe that the mutate() function produced (a dataframe with Petal.Area added as a column). Thus, the pipe operator is allowing us to 'chain' functions together and to peform their operations sequentially, while also enhancing code readability in a 'left-right' manor.
+
+If we want to add in the additional two tasks from the previous tutorial, it would look like this:
+
+
+```{r demo_4, exercise = TRUE}
+
+#Use %>% to chain functions together
+iris %>% 
+  dplyr::mutate(Petal.Area = Petal.Length*Petal.Width) %>% 
+  dplyr::filter(Petal.Area > mean(Petal.Area)) %>%
+  dplyr::select(c(Species,Petal.Area)) %>%
+  dplyr::arrange(desc(Petal.Area)) %>% #places the final product in head() function
+  head(1)
+  
+```
+
+Remember, *the pipe operator `%>%` places the output of a function (e.g., a dataframe) into the first argument of the next function*. 
+
+## Problem Set
+
+Q1: Use `%>%` and the head() function to preview the first five rows of the faithful dataframe.
+```{r problem_1, exercise=TRUE}
+
+```
+
+```{r problem_1-solution}
+faithful %>% head(5)
+```
+
+```{r problem_1-code-check}
+grade_code()
+```
+
+Q2: Use `%>%` and the summary() function to produce a summary of the faithful dataframe.
+```{r problem_2, exercise=TRUE}
+
+```
+
+```{r problem_2-solution}
+faithful %>% summary()
+```
+
+```{r problem_2-code-check}
+grade_code()
+```
+
+Q3: Use `%>%` and the plot() function to make an x-y plot of the relationship between eruptions (y axis) and waiting (x axis). Note that sometime %>% works with the base R plot() function (it works here), and sometimes it doesn't. We will resolve this when we dive into data visualization in the tidyverse.
+
+```{r problem_3, exercise=TRUE}
+
+```
+
+```{r problem_3-solution}
+faithful %>% plot(eruptions ~ waiting)
+```
+
+```{r problem_3-code-check}
+grade_code()
+```
+
+Q4: Use `%>%` to first filter the faithful dataframe to eruptions *above* the mean eruption value *and then* plot it. 
+
+```{r problem_4, exercise=TRUE}
+
+```
+
+```{r problem_4-solution}
+faithful %>% dplyr::filter(eruptions > mean(eruptions)) %>%
+  plot(eruptions ~ waiting)
+```
+
+```{r problem_4-code-check}
+grade_code()
+```
+
+Q5: Repeat this, but now filter to values *below* the mean eruptions value. How do the relationships compare?
+```{r problem_5, exercise=TRUE}
+
+```
+
+```{r problem_5-solution}
+faithful %>% dplyr::filter(eruptions < mean(eruptions)) %>%
+  plot(eruptions ~ waiting)
+```
+
+```{r problem_5-code-check}
+grade_code()
+```
+
+Q6: Now let's build a larger pipeline. First, use the library() function to load in an R package called "lterdatasampler", which is already installed. This package contains the hbr_maples dataframe in addition to many other ecological datasets from the Long-Term Ecological Research Network (LTER).
+```{r problem_6, exercise=TRUE}
+
+```
+
+```{r problem_6-solution}
+library(lterdatasampler)
+```
+
+```{r problem_6-code-check}
+grade_code()
+```
+
+Q7: Then, use `%>%` to take a look at the hbr_maples dataframe using the head() and summary() functions.
+```{r problem_7-setup}
+```
+
+```{r problem_7, exercise=TRUE}
+
+```
+
+```{r problem_7-solution}
+hbr_maples %>% head()
+hbr_maples %>% summary()
+```
+
+```{r problem_7-code-check}
+grade_code()
+```
+
+*How does investment in leaf mass versus area vary as a function of stem mass?*
+
+Q8: Use the pipe operator and tidy functions to create a pipeline that performs these operations, in the order list, that will create a new dataframe called 'tree_traits':
+
+* convert the corrected_leaf_area variable from units of meters to centimeters by dividing by 1000
+* reduce the columns to year,watershed,stem_dry_mass,leaf_dry_mass,corrected_leaf_area
+* filter the data to just the year 2003
+* create a new variable called LMA that calculates leaf mass per area by dividing leaf_dry_mass by corrected_leaf_area. This metric describes an evolutionary trade off between long-lived, rigid, stress tolerant leaves (e.g., a conifer tree) versus fast-growing, flimsy, and resource acquisitive leaves (e.g., an annual grass).
+* there is a clear LMA outlier; remove this by filtering out the *maximum* LMA value
+
+```{r problem_8-setup}
+```
+
+```{r problem_8, exercise=TRUE}
+
+```
+
+```{r problem_8-solution}
+tree_traits <- hbr_maples %>%
+  dplyr::mutate(corrected_leaf_area = corrected_leaf_area/1000) %>%
+  dplyr::select(year,watershed,stem_dry_mass,leaf_dry_mass,corrected_leaf_area) %>%
+  dplyr::filter(year == 2003) %>% 
+  dplyr::mutate(LMA = leaf_dry_mass/corrected_leaf_area) %>%
+  dplyr::filter(LMA < max(LMA))
+```
+
+```{r problem_8-code-check}
+grade_code()
+```
+
+Q9: Now, make an x-y plot depicting the relationship between stem dry mass and leaf mass per area; How does LMA change as a function of stem dry mass?
+
+```{r problem_9-setup}
+tree_traits <- hbr_maples %>% dplyr::mutate(corrected_leaf_area = corrected_leaf_area/1000) %>% 
+    dplyr::select(year, watershed, stem_dry_mass, leaf_dry_mass, 
+        corrected_leaf_area) %>% dplyr::filter(year == 2003) %>% 
+    dplyr::mutate(LMA = leaf_dry_mass/corrected_leaf_area) %>% 
+    dplyr::filter(LMA < max(LMA))
+```
+
+```{r problem_9, exercise=TRUE}
+
+```
+
+```{r problem_9-solution}
+plot(LMA~stem_dry_mass,data = tree_traits)
+```
+
+```{r problem_9-code-check}
+grade_code()
+```
+
+
+```{r quiz_tidy}
+quiz(
+  question(
+    "What is the primary purpose of the %>% operator? ",
+    answer("Mathematical operations"),
+    answer("Extraction"),
+    answer("Comparison"),
+    answer("Filtering"),
+    answer("Chaining functions together",correct = TRUE)),
+  question(
+    "Where does %>% place the output of a function in the tidyverse?",
+    answer("The second argument of the next function"),
+    answer("The first argument of the next function",correct = TRUE),
+    answer("The third argument of the next function"),
+    answer("In following line")),
+  question(
+    "True or False: %>% works on data sequentially",
+    answer("True",correct = TRUE),
+    answer("False"))
+)
+```
+
+## Submitting tutorial results
+
+Great job!  You've completed the assignment!  Now it's time to turn it in...
+
+In the console, enter the following (case sensitive):
+
+```{r, echo=TRUE, eval=FALSE}
+ENSC311::submit_ENSC311()
+```
+
+Your should see something like this:
+
+```{r}
+"Week_7_piping_311_<Posit_Cloud_ID>"
+```
+
+where the end of the character string is an ID that Posit Cloud assigned you. As you do more tutorials, this list of tutorials you have run will get longer. You must pass the number that corresponds to this assignments. For example, *if* you wanted to turn in the first item on the list, you would enter: ENSC311::submit_ENSC311(1).
+
+A "submit_ENSC311_..." file will appear under the "Files" tab in the lower right pane of RStudio.  Check the box next to the submit file and choose "Export..." from the "More" dropdown on the bar at the top of the tab.  Download the file and sumbit it to D2L.
+
+That's it!  You're all done!

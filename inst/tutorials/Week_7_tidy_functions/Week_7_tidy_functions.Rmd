@@ -1,0 +1,269 @@
+---
+title: "Tidy Functions"
+tutorial:
+  id: "Week_7_tidy_functions"
+output: 
+  learnr::tutorial:
+    progressive: true
+runtime: shiny_prerendered
+description: "Basic tidyverse functions for data wrangling"
+---
+<!-- File created by tutorialize.  Do not edit by hand. -->
+
+```{r setup, include=FALSE}
+library(learnr)
+knitr::opts_chunk$set(echo = FALSE)
+gradethis::gradethis_setup()
+options(tutorial.event_recorder = tutorialize::recorder)
+options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
+```
+
+## The Tidyverse
+
+The `tidyverse` is something you may hear when people talk about R, and is often contrasted with the 'base' R functions and operators we have been working with. The `tidyverse` is an `R package` that, in turn, is a collection of multiple R packages which contain 'opinionated' functions to work with data and to especially do `data wrangling`. As a refresher:
+
+* *Package*: an R package is a collection of functions, data, and other code that is bundled together for a specific purpose. It extends the functionality of the base R software that comes with the initial download of R. An example is the "raster" package, which contains functions to help you work with spatial data that come in the form of rasters.
+
+* *Data wrangling*: Data wrangling is the process of transforming data from its raw form into another form with the specific intent to make it more valuable and usable for downstream purposes including visualization and statistical analysis. The tidyverse is an R package that has the purpose to extend R's functionality for data wrangling and visualization.
+
+The tidyverse also presents an opportunity to introduce the concept of installing and loading packages in R. All we have done in R prior to this section can be done with the base R software that comes with the initial download of R. But if we want to extend what we can do with R, we need to install new packages that contain that new functionality. All we need is the name of the package we want to install, and then we can pass that name as a character into the `install.packages()` function. Use the `?` to learn more about it. Installing the tidyverse package would look like this: install.packages('tidyverse'). No need to do this here, I have done it for you.
+
+### Important
+
+* *You only need to install a package once*.
+* *But, with each new R session, you must load the package*. This is achieved using the `library()` function, where you just pass in the name of the installed package into the function. So, to load the tidyverse package, you would need to run this code:
+
+```{r demo_load, exercise = TRUE}
+
+#load the tidyverse package
+library(tidyverse)
+
+```
+
+### Tidy Basics
+
+The tidyverse is built around the idea of organizing data according to "tidy" principles:
+
+* Every variable is a column
+* Every observation is a row
+* Every value is a cell
+
+Together, this creates a data table (tabular data) in rectangular form. In the tidyverse, dataframes take the form of `tibbles` which are special types of dataframes. The tidy data paradigm is the paradigm within which the tidyverse functions were built. This tutorial is focused on tidyverse functions that originate from a package called "dplyr" (a riff on data pliers). Note that to the left of these functions there will typically be "dplyr::". The `::` operator is used to access specific functions, data, or other objects from a specific package to avoid any conflicts or confusion. This is telling R to take the function being used from that specific package, here the dplyr package (which is one the many packages within the broader tidyverse package). *The first argument in all these functions is the name of the dataframe*.
+
+Now you are ready to work with tidyverse functions!
+
+## The mutate() function
+
+The `mutate()` function calculates a new variable (or, adds a new column) in a dataframe. The first argument is the name of the dataframe (or tibble), and the second argument is the full calculation, including the name of the new variable/column. If we wanted to calculate the ratio of Sepal.Width to Sepal.Length in the iris dataframe, it would look as such:
+
+```{r demo_mutate, exercise = TRUE}
+
+#create a new variable called ratio using mutate:
+iris <- dplyr::mutate(iris,ratio = Sepal.Width/Sepal.Length)
+head(iris,1)
+
+```
+
+The analog using an extraction operator would be:
+```{r demo_mutate_2, exercise = TRUE}
+
+#create a new variable called ratio using an extraction operator
+iris$ratio <- iris$Sepal.Width/iris$Sepal.Length
+head(iris,1)
+```
+
+## The filter() function
+
+The `filter()` function excludes (subsets) data according to a set criteria that is specified using a comparison operator. The first argument is the name of the dataframe (or tibble), the second argument is the condition. If we wanted to filter the iris dataframe to include only rows with the setosa species, it would look as such:
+
+```{r demo_filter_1, exercise = TRUE}
+
+#filter iris dataframe to just setosa using filter function
+setosa_tidy <- dplyr::filter(setosa,Species == "setosa")
+head(setosa_tidy,5)
+```
+
+The analog using extraction operators would be:
+```{r demo_filter_2, exercise = TRUE}
+
+#filter iris dataframe to just setosa using extraction operator
+setosa_extraction <- iris[iris$Species == "setosa",]
+head(setosa_extraction,5)
+
+```
+
+## The select() function
+
+The select() function selects a specific column from the dataframe. The first argument of the function is the name of the dataframe (or tibble), while the second argument is the name (or a vector of names) of the column. There is no need for placing names in quotations here. If we wanted to select the Petal.Width column from the iris dataframe, it would look as such:
+
+```{r demo_select_1, exercise = TRUE}
+
+#select Petal.Width column using the select function
+petal_width_tidy <- dplyr::select(iris,Petal.Width)
+head(petal_width_tidy,5)
+
+```
+
+The analog using an extraction operator would be:
+```{r demo_select_2, exercise = TRUE}
+
+#select Petal.Width using an extraction operator
+petal_width_extraction <- iris$Petal.Length
+head(petal_width_extraction,5)
+
+#could also do this:
+petal_width_extraction_2 <- iris[,"Petal.Length"]
+head(petal_width_extraction_2,5)
+
+```
+
+Note how the tidy version automatically returns a dataframe, while the extraction operator returns a vector. There are workarounds using when operators, but the implicit expectation from tidy is that you'd like to continue working in a dataframe, which is usually the case.
+
+## The arrange() function
+
+Finally, a nice addition to our data wrangling tool is the ability to  order rows in a dataframe according to ascending or descending values in a variable/column. The `arrange()` function allows us to do this; the first argument is the name of the dataframe (or tibble), the second argument is the variable to arrange rows by. The default is ascending, and we can specify if we want the order to be descending. If we wanted to order rows in the iris dataframe according to ascending values of Petal.Length, it would look as such:
+
+```{r demo_arrange_1, exercise = TRUE}
+
+#arrange rows in the iris dataframe by low to high values of Petal.Length
+petal_length_low_high <- dplyr::arrange(iris,Petal.Length)
+head(petal_length_low_high,5)
+
+```
+
+If we wanted to order rows according to descending values (high to low) of Petal.Length, we need to specify this further using the `desc()` function which we can nest in the arrange() function:
+
+```{r demo_arrange_2, exercise = TRUE}
+
+#arrange rows in the iris dataframe by high to low values of Petal.Length
+petal_length_high_low <- dplyr::arrange(iris,desc(Petal.Length))
+head(petal_length_high_low,5)
+
+```
+
+## Problem Set
+
+### Mutate it
+
+First, use the mutate() function to calculate (and add) a new variable in the iris dataframe called Petal.Area that is calculated by multiplying Petal.Width by Petal.Length.
+```{r problem_mutate, exercise=TRUE}
+
+```
+
+```{r problem_mutate-solution}
+
+iris <- dplyr::mutate(iris,Petal.Area = Petal.Length*Petal.Width)
+
+```
+
+```{r problem_mutate-code-check}
+grade_code()
+```
+
+### Filter it
+
+Second, use the filter() function to filter to rows that are above the average Petal.Area.
+```{r problem_filter-setup}
+iris <- dplyr::mutate(iris, Petal.Area = Petal.Length * Petal.Width)
+```
+
+```{r problem_filter, exercise=TRUE}
+
+```
+
+```{r problem_filter-solution}
+iris <- dplyr::filter(iris,Petal.Area > mean(Petal.Area))
+```
+
+```{r problem_filter-code-check}
+grade_code()
+```
+
+### Select it
+
+Third, use the select() function to select only the Species and Petal.Area columns.
+```{r problem_select-setup}
+iris <- dplyr::mutate(iris, Petal.Area = Petal.Length * Petal.Width)
+iris <- dplyr::filter(iris, Petal.Area > mean(Petal.Area))
+```
+
+```{r problem_select, exercise=TRUE}
+
+```
+
+```{r problem_select-solution}
+iris <- dplyr::select(iris,c(Species,Petal.Area))
+```
+
+```{r problem_select-code-check}
+grade_code()
+```
+
+### Arrange it
+
+Finally, use the arrange() function to order the rows by descending value of Petal.Area and then use the head() function to preview the first three rows.
+
+```{r problem_arrange-setup}
+iris <- dplyr::mutate(iris, Petal.Area = Petal.Length * Petal.Width)
+iris <- dplyr::filter(iris, Petal.Area > mean(Petal.Area))
+iris <- dplyr::select(iris, c(Species, Petal.Area))
+```
+
+```{r problem_arrange, exercise=TRUE}
+
+```
+
+```{r problem_arrange-solution}
+iris <- dplyr::arrange(iris,desc(Petal.Area))
+head(iris,3)
+```
+
+```{r problem_arrange-code-check}
+grade_code()
+```
+
+
+```{r quiz_tidy}
+quiz(
+  question(
+    "What is always the first argument in the dplyr tidy functions",
+    answer("The formula"),
+    answer("The dataframe name",correct = TRUE),
+    answer("The variable name"),
+    answer("The comparison")),
+  question(
+    "What tidy function corresponds to this code: data[data&variable > 2,]?",
+    answer("filter()",correct = TRUE),
+    answer("arrange()"),
+    answer("mutate()"),
+    answer("select()")),
+  question(
+    "What tidy function corresponds to this code: data$variable3 <- data$variable1 + data$variable2?",
+    answer("filter()"),
+    answer("arrange()"),
+    answer("mutate()",correct = TRUE),
+    answer("select()"))
+)
+```
+
+## Submitting tutorial results
+
+Great job!  You've completed the assignment!  Now it's time to turn it in...
+
+In the console, enter the following (case sensitive):
+
+```{r, echo=TRUE, eval=FALSE}
+ENSC311::submit_ENSC311()
+```
+
+Your should see something like this:
+
+```{r}
+"Week_7_tidy_functions_311_<Posit_Cloud_ID>"
+```
+
+where the end of the character string is an ID that Posit Cloud assigned you. As you do more tutorials, this list of tutorials you have run will get longer. You must pass the number that corresponds to this assignments. For example, *if* you wanted to turn in the first item on the list, you would enter: ENSC311::submit_ENSC311(1).
+
+A "submit_ENSC311_..." file will appear under the "Files" tab in the lower right pane of RStudio.  Check the box next to the submit file and choose "Export..." from the "More" dropdown on the bar at the top of the tab.  Download the file and sumbit it to D2L.
+
+That's it!  You're all done!
