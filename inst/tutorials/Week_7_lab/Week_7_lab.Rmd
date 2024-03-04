@@ -26,7 +26,7 @@ options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~")
 
 For over 400,000 years, bison were the dominant herbivores throughout mid-latitude North America, including the vast Northern Great Plains that cover much of Montana. Pre-colonization population estimates of bison range from 30 to 60 million individuals, with their geographic range and density on par with the world's largest ungulate populations. Following the near extinction of bison in the 20th century, their numbers in North America dwindled to the thousands. The rapidity of the extirpation of bison precluded systematic assessment of their ecological role in the Great Plains, though a widespread assumptions is that they served as a 'keystone species', one that has a disproportionately large impact on ecosystem structure and function and thus a species that can engineer habitat for other species and shape rates of ecosystem processes.
 
-Beginning in the early 1990s, researchers at the Konza Prairie Biological Station, located in the flint hills of eastern Kansas - the largest remnant of intact tallgrass prairie in North America - reintroduced bison as part of a long-term effort to understand their role in the tallgrass prairie ecoregion of the Great Plains. The study continues to this day, and efforts to conduct comparitive work in the mixed-grass prairie ecoregion of Montana are underway, led by researchers at MSU.
+Beginning in the early 1990s, researchers at the Konza Prairie Biological Station, located in the flint hills of eastern Kansas - the largest remnant of intact tallgrass prairie in North America - reintroduced bison as part of a long-term effort to understand their role in the tallgrass prairie ecoregion of the Great Plains. The study continues to this day, and efforts to conduct comparative work in the mixed-grass prairie ecoregion of Montana are underway, led by researchers at MSU.
 
 This lab will focus on using tidy functions to analyze a long-term dataset of bison population dynamics in tallgrass prairie. 
 
@@ -54,7 +54,7 @@ Q1: Use the summarise() function with `%>%` to calculate the standard deviation 
 ```
 
 ```{r practice_1-solution}
-iris %>% dplyr::summarise(average_Pepal.Width = mean(Petal.Width))
+iris %>% dplyr::summarise(sd_Petal.Width = sd(Petal.Width))
 ```
 
 ```{r practice_1-code-check}

@@ -1,0 +1,318 @@
+---
+title: "Grouping Data"
+tutorial:
+  id: "week_8_grouping"
+output: 
+  learnr::tutorial:
+    progressive: true
+runtime: shiny_prerendered
+description: "Using tidy functions across groups in data"
+---
+<!-- File created by tutorialize.  Do not edit by hand. -->
+
+```{r setup, include=FALSE}
+library(learnr)
+library(lterdatasampler)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+gradethis::gradethis_setup()
+options(tutorial.event_recorder = tutorialize::recorder)
+options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
+```
+
+## Summarizing data
+
+Another important data wrangling function in the tidyverse is `summarise()`. Like other tidy functions, the function does as the name says; it summarizes your data! Specifically, it will produce different summary statistics of a variable of interest. A key contrast of `summarise()` with `mutate()` is that summarise() collapses the entire dataframe to one row, whereas mutate() adds a column and preserves the number of rows. Indeed, if you use `?` to look at the summarise() function's documentation, it clearly states that it summarizes each 'group' down to one row. We will get to grouping in a moment...
+
+The form of summarise() takes on a very similar form as mutate(), where we have a name-value pair combination as the second argument. In other words, to the left of `=` we have the name of the new summarized variable, and to the right we have the actual calculation being done. For instance, if we wanted to calculate the average Sepal.Width in the iris dataframe, it would look as such:
+```{r demo_1, exercise = TRUE}
+#calculate the average Sepal.Width across the entire dataset
+dplyr::summarise(iris, average_Sepal.Width = mean(Sepal.Width))
+```
+
+The first argument is the dataframe we aim to summarize, and the second argument is the name-value pair designating the new name of the summarized variable (to the left of `=`) and the summary calculation (to the right of `=`), which will generally entail nesting a summary statistic function, such as mean(), within the summarise() function. 
+
+..And with piping it would look like this:
+```{r demo_2, exercise = TRUE}
+#calculate the average Sepal.Width across the entire dataset
+iris %>% dplyr::summarise(average_Sepal.Width = mean(Sepal.Width))
+```
+
+Q1: Use the summarise() function *without* `%>%` to calculate the minimum Petal.Width in the iris dataframe, naming the summarized variable "min_Petal.Width".
+
+```{r practice_1, exercise=TRUE}
+
+```
+
+```{r practice_1-solution}
+iris %>% dplyr::summarise(min_Petal.Width = min(Petal.Width))
+```
+
+```{r practice_1-code-check}
+grade_code()
+```
+
+Q2: Use the summarise() function *with* `%>%` to calculate the minimum Petal.Width in the iris dataframe, again naming the summarized variable "min_Petal.Width".
+
+```{r practice_2, exercise=TRUE}
+
+```
+
+```{r practice_2-solution}
+iris %>% dplyr::summarise(min_Petal.Width = min(Petal.Width))
+```
+
+```{r practice_2-code-check}
+grade_code()
+```
+
+You can calculate multiple summary statistics within the summarise() function, in the form of adding another name-value pair argument. For example, if we wanted to also calculate the maximum Petal.Width along with calculating the minimum, It would look like this:
+
+```{r demo_3, exercise = TRUE}
+dplyr::summarise(iris,min_Petal.Width = min(Petal.Width),
+                 max_Petal.Width = max(Petal.Width))
+```
+
+Now we have two columns, yet still one row. Because summarise() is calculating these summary statistics across the entire column, treating the entire dataframe as one group.
+
+Finally, summarise() will also work with custom functions. Say we wanted to calculate the range of Petal.Width in addition to its minimum and maximum. Remember how to create a custom function? Let's create one called "range()" that calculates (and *returns*) the range of a variable (or, vector) by subtracting the maximum value from the minimum value:
+
+```{r demo_4, exercise=TRUE}
+
+```
+
+```{r demo_4-solution}
+range <- function(x){
+  
+  return(max(x) - min(x))
+  
+}
+```
+
+```{r demo_4-code-check}
+grade_code()
+```
+
+Q3: Now, use this custom function to add a third summary statistic in addition to the minimum and maximum Petal.Width that calculates the range of Petal.Width and call this new summarized variable 'range_Petal.Width'. No need for piping here.
+
+```{r practice_3-setup}
+range <- function(x) {
+    return(max(x) - min(x))
+}
+```
+
+```{r practice_3, exercise=TRUE}
+
+```
+
+```{r practice_3-solution}
+dplyr::summarise(iris,min_Petal.Width = min(Petal.Width),
+                 max_Petal.Width = max(Petal.Width),
+                 range_Petal.Width = range(Petal.Width))
+```
+
+```{r practice_3-code-check}
+grade_code()
+```
+
+The limitation with using summarise() on its own is that it will always summarize down to one row, at least for each 'group' in our data, which is the entire dataset when using summarise() on its own. To take our analyses further we need a way to designate groups in our data to summarize across.
+
+Note: *summarize() will also work (the American way!). I have chosen to be European for this demo and, for the purposes of grading, will suggest you use the European summarise(), at least for now.
+
+## Grouping Data
+
+In the prior tutorials, we have been using tidy functions to perform operations across the entire dataset. Yet it is often the case that we will want to make comparisons across distinct groups in our dataset. For the penguins data, there are groups of species and islands we may wish to compare. For the bison data, there is the groups of animal sex, and for the iris data, there is the group of species.
+
+In the tidyverse, there is an important function that helps us designate which groups we want to perform our functions across. This function is called `group_by()` and, like all the other tidy functions we have seen, it does as the name it applies; it *groups* your data *by* the unique combinations of variables you pass into the function, which can be more than one. In that case, thr groups would be all the *unique* combinations of the variables passed into the function.
+
+Like most tidy functions, the first argument in group_by() is a dataframe, while the second (and so on, designated by `...` in the documentation) argument is the variable we want to group our data by. You can use many different variables to group the data; what the group_by() function will do is group the dataframe (or tibble) according to all the *unique combinations* of the variables specified. 
+
+If we turn back to the iris dataframe, we can use the distinct() function to show us the unique species in the data:
+
+```{r demo_5, exercise = TRUE}
+iris %>% dplyr::distinct(Species)
+```
+
+Okay, great. Now, let's say we want to calculate the average Petal.Length in the iris dataframe. This would look something like this:
+
+```{r demo_6, exercise = TRUE}
+iris %>% dplyr::summarise(mean_Petal.Length = mean(Petal.Length))
+```
+
+Because the iris dataframe is essentially ungrouped (or, the whole dataset is a single group), it summarizes the entire Petal.Length column. However, it might be of interest to calculate this summary statistic across different Species. We can use group_by() to group our data across the distinct value of Species. It would look like this:
+
+```{r demo_7, exercise = TRUE}
+iris %>% group_by(Species) %>%
+  dplyr::summarise(mean_Petal.Length = mean(Petal.Length)) 
+```
+
+Because we first grouped the iris dataframe across the distinct Species values, the following summarise() function performs the calculation across each distinct group. Underneath the hood, R is 'splitting' the dataframe into each unique group, 'applying' the summarise() function to each group, and then combining them back together to one dataframe.
+
+Q4: Repeat your workflow in Q3, but this time first group the iris dataframe by Species. Use the %>% to do all this within a pipeline.
+
+```{r practice_4-setup}
+range <- function(x) {
+    return(max(x) - min(x))
+}
+```
+
+```{r practice_4, exercise=TRUE}
+
+```
+
+```{r practice_4-solution}
+iris %>% group_by(Species) %>%
+  dplyr::summarise(min_Petal.Width = min(Petal.Width),
+                 max_Petal.Width = max(Petal.Width),
+                 range_Petal.Width = range(Petal.Width))
+```
+
+```{r practice_4-code-check}
+grade_code()
+```
+
+## Problem Set
+
+For the problem set, we will work with the knz_bison dataframe again.
+
+First, load the lterdatasampler library
+```{r practice_5, exercise=TRUE}
+
+```
+
+```{r practice_5-solution}
+library(lterdatasampler)
+```
+
+```{r practice_5-code-check}
+grade_code()
+```
+
+Q5: Create a pipeline that first groups the data according data animal_sex *and then* calculates the mean bison weight, naming the summarized variable 'mean_weight'. Hint: you will have to use the na.rm=T again to tell R to ignore rows with missing values (such is the nature of real data...)!
+```{r practice_6, exercise=TRUE}
+
+```
+
+```{r practice_6-solution}
+knz_bison %>% dplyr::group_by(animal_sex) %>%
+  dplyr::summarise(mean_weight = mean(animal_weight,na.rm=T))
+```
+
+```{r practice_6-code-check}
+grade_code()
+```
+
+Q6: Linking back to the lab, let's calculate the average bison age according to sex. Create a pipeline that first calculates a new variable called 'age' (as you did in the lab) *and then* groups the data according to animal_sex *and then* calculates the average bison age.
+
+```{r practice_7, exercise=TRUE}
+
+```
+
+```{r practice_7-solution}
+knz_bison %>% dplyr::mutate(age = rec_year - animal_yob) %>%
+  dplyr::group_by(animal_sex) %>%
+  dplyr::summarise(mean_age = mean(age,na.rm=T))
+```
+
+```{r practice_7-code-check}
+grade_code()
+```
+
+So, female Bison are, on average, much older (and slightly heavier) than male Bison. Interesting! *But do you think this age pattern is consistent for every year?*. To answer this question, we need to group by every unique animal_sex-year combination.
+
+Q7: Use the distinct() and length() function to find out how many unique animal_sex-rec_year combinations there are in the knz_bison dataframe. Build a pipeline that first identifies the distinct combinations *and then* summarizes how many there are (by summarizing rec_year). Name the summarized variable 'unique_combos'.
+
+```{r practice_8, exercise=TRUE}
+
+```
+
+```{r practice_8-solution}
+knz_bison %>% dplyr::distinct(rec_year,animal_sex) %>%
+  dplyr::summarise(unique_combos = length(rec_year))
+```
+
+```{r practice_8-code-check}
+grade_code()
+```
+
+*You should have calculated 52 unique combinations.*
+
+Q8: Now, build a pipeline that first calculates bison age *and then* groups the data according to rec_year *and* animal_sex *and then* calculates the average bison age and names this summarized variable 'average_age' *and then* creates an x-y plot with age as the dependent variable (Y axis) and year as the independent variable (X axis).
+
+```{r practice_9, exercise=TRUE}
+
+```
+
+```{r practice_9-solution}
+knz_bison %>% dplyr::mutate(age = rec_year - animal_yob) %>%
+  dplyr::group_by(rec_year,animal_sex) %>%
+  dplyr::summarise(average_age = mean(age)) %>%
+  plot(average_age ~ rec_year,.)
+```
+
+```{r practice_9-code-check}
+grade_code()
+```
+
+The problem here, as you may have noticed, is that the base R plot() function does not distinguish between males and females, which is what we are interested in (visually) analyzing. We have to do that ourselves and, again, we must do that manually by creating a color pallet. Let's use the same approach as in the previous lab, using the case_when() function nested in the mutate() function to assign males the color blue and females the color red.
+
+Q9: Build a pipeline that first calculates bison age *and then* groups the data according to rec_year *and* animal_sex *and then* calculates the average bison age and names this summarized variable 'average_age' *and then* creates a new column called bison_color that designates the color blue for males and the color red for females *and then* creates an x-y plot with age as the dependent variable (Y axis) and year as the independent variable (X axis).
+
+```{r practice_10, exercise=TRUE}
+
+```
+
+```{r practice_10-solution}
+knz_bison %>% dplyr::mutate(age = rec_year - animal_yob) %>%
+  dplyr::group_by(rec_year,animal_sex) %>%
+  dplyr::summarise(average_age = mean(age)) %>%
+  dplyr::mutate(bison_color = case_when(
+    animal_sex == "M" ~ "blue",
+    animal_sex == 'F' ~ "red")) %>%
+  plot(average_age ~ rec_year,.,col=bison_color)
+```
+
+```{r practice_10-code-check}
+grade_code()
+```
+
+It looks as though females are consistently older than males through time. Instead of depicting every year, we can compare their ages using a boxplot. Boxplots are useful because they are way to compare how the distribution of data differs among different groups. To this end, replace the last x-y plot with a boxplot using the boxplot() function, which creates a box-and-whisker plot. Use the `?` operator to find out how to use it! Hint: you do not need to color-code for this figure, so you can remove that code from the pipeline.
+
+```{r practice_11, exercise=TRUE}
+
+```
+
+```{r practice_11-solution}
+knz_bison %>% dplyr::mutate(age = rec_year - animal_yob) %>%
+  dplyr::group_by(rec_year,animal_sex) %>%
+  dplyr::summarise(average_age = mean(age)) %>%
+  boxplot(average_age ~ animal_sex,.)
+```
+
+```{r practice_11-code-check}
+grade_code()
+```
+
+Case settled? Do female bison live longer than males?
+
+## Submitting Tutorial Results
+
+Great job!  You've completed the assignment!  Now it's time to turn it in...
+
+In the console, enter the following (case sensitive):
+
+```{r, echo=TRUE, eval=FALSE}
+ENSC311::submit_ENSC311()
+```
+
+Your should see something like this:
+
+```{r}
+"Week_8_grouping_311_<Posit_Cloud_ID>"
+```
+
+where the end of the character string is an ID that Posit Cloud assigned you. As you do more tutorials, this list of tutorials you have run will get longer. You must pass the number that corresponds to this assignments. For example, *if* you wanted to turn in the first item on the list, you would enter: ENSC311::submit_ENSC311(1).
+
+A "submit_ENSC311_..." file will appear under the "Files" tab in the lower right pane of RStudio.  Check the box next to the submit file and choose "Export..." from the "More" dropdown on the bar at the top of the tab.  Download the file and sumbit it to D2L.
+
+That's it!  You're all done!
