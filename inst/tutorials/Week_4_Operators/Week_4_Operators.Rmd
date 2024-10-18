@@ -1,22 +1,31 @@
 ---
-title: "Operators"
+title: "Smooth Operator"
 output: learnr::tutorial
 runtime: shiny_prerendered
-description: "Introduction to using operaters in R"
+description: "Exploring the concept and use of operators in R"
 ---
 
 ```{r setup, include=FALSE}
-# library(remotes)
-# remotes::install_github("rstudio/gradethis")
 library(learnr)
 library(gradethis)
-library(learnrhash)
+library(tutorial.helpers)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Operators and names 
+```{r, include=FALSE}
+#Author: Andrew J. Felton
+#Date: 9/18/2024
+```
 
-`Operators` are symbols that perform logical or mathematical manipulations (or operations) on values or variables in data. Operators that perform calculations, such as addition, are `arithmetic operators'. The symbols for these are intuitive:
+```{r info-section, child = system.file("child_documents/info_section.Rmd", package = "tutorial.helpers")}
+```
+
+```{r copy-code-chunk, child = system.file("child_documents/copy_button.Rmd", package = "tutorial.helpers")}
+```
+
+## Operators 
+
+`Operators` are symbols that perform logical (e.g., true or false) or mathematical (e.g., subtraction or addition) manipulations (also called "operations") on values or variables in data. Operators that perform calculations are called `arithmetic operators`. The symbols for these are (mostly) intuitive:
 
 *Arithmetic operators:*
 
@@ -24,31 +33,33 @@ knitr::opts_chunk$set(echo = FALSE)
 * `-` does subtraction
 * `*` does multiplication
 * `/` does division
-* `^` Does 'to the power of` (e.g., to square or cube a value)
+* `^` Does "to the power of" (e.g., to square or cube a value)
 
-In R, we often will want to `assign` a value (and eventually a dataset!) a `name`. This is useful because once we do this, we can store the value in the `Global Environment`, allowing us to reference this value for later use. We can use an operator called the `assignment operator` to do this.
+In R, you can also `assign` objects (whether a number, vector, or dataset) a `name`. This is useful because once we do this, we can store the `objects` in the `Global Environment`. This ability to store objects in R is important because it will allow you to reference them for later use in your analysis. You can use an operator called the `assignment operator` to give objects names and store them in the global environment for later use, referencing the name assigned to it. The utility of storing named objects in the global environment will become more evident when you starting using R scripts.
 
 *Assignment operator:*
 
-* `<-` assigns a value a name
+* `<-` assigns an object a name
 
-You can think of this as an arrow, pointing to what name a value corresponds to. Pay attention to the sequence of this code:
+You can think of this as an arrow, pointing to what the name of an object is. Pay attention to the sequence of this code:
 
-*If we run this code, R will return the value 75. Go ahead and run the code!*
+*If you run this code, R will return the value 75. Go ahead and run the code!*
 ```{r demo, exercise=TRUE}
 
 75
 
 ```
 
-*We can `assign` this value a name. Typically we want this name to be descriptive of the value or have some 'syntactic sugar'. Run the code and see what (if any) the output is:*
+*You can `assign` this number, 75, a name. Typically, you will want this name to be descriptive or informative and thus have some `syntactic sugar`; coding features that make the code easier or more readable (e.g., descriptive and concise object names) but don't necessarily increase code functionality or performance. Run the code and see what the output is (or is not):*
 ```{r demo_assign, exercise=TRUE}
 
 seventy_five <- 75
 
 ```
 
-*We can also can add more syntactic sugar by `commenting`our data using `#`. Anything following this symbol will not run as code, but will be visible, and is typically used to describe what you are doing.*
+* `Pro tip:` When naming objects, do not use spaces (R will not like this). Instead, use underscores. For example, instead of naming an object "seventy five", you should name it "seventy_five".
+
+*You can also can add more syntactic sugar by `commenting` your code using the `#` operator. Anything following # will not run as code, but will be visible to the reader of your code. This is useful for two reasons: 1) to describe and annotate what your code is doing or 2) to `comment out` a line or block of code so that is doesn't run.*
 ```{r demo_comment, exercise=TRUE}
 
 #I am creating a variable called seventy_five
@@ -56,42 +67,43 @@ seventy_five <- 75
 
 ```
 
-*Notice that R returns nothing when we run the above code. What is happening here is that R has stored the value 75 with the name seventy_five. Now we can reference this name to return the value 75. Naming objects is thus a way we can store them. Run the code and see what happens:*
+*Notice that R returns nothing when we run the above code. What is happening here is that R has stored the value 75 with the name seventy_five. Now we can reference this name to return the value 75. Naming objects is thus a way you can store them in R's memory for later use. Run the code and see what happens:*
 ```{r demo_comment_return, exercise=TRUE}
 
 #I am creating a variable called seventy_five
 seventy_five <- 75
 
-#return the value
+#print the value of the object names seventy_five
 seventy_five
 
 ```
 
 Modify the above blocks of code with different names and values to see for yourself.
 
-## Problem Set
+## Problem Set 
 
-*Let's start out by using arithmetic operators to do some calculations*
+*Let's start by using arithmetic operators to do some calculations*
 
 Write the R code required to add two plus two.
 
-```{r problem_two-plus-two, exercise=TRUE}
+```{r problem_1, exercise=TRUE}
+
 
 ```
 
-```{r problem_two-plus-two-hint-1}
+```{r problem_1-hint-1}
 
 This is just like using a calculator!
 
 ```
 
-```{r problem_two-plus-two-solution}
+```{r problem_1-solution}
 
 2 + 2
 
 ```
 
-```{r problem_two-plus-two-check}
+```{r problem_1-check}
 
 grade_this_code()
 
@@ -99,119 +111,119 @@ grade_this_code()
 
 Write the R code required to calculate 10 divided by 5.
 
-```{r problem_divide, exercise=TRUE}
+```{r problem_2, exercise=TRUE}
 
 
 
 ```
 
-```{r problem_divide-hint}
+```{r problem_2-hint}
 
 Use the slash symbol
 
 ```
 
-```{r problem_divide-solution}
+```{r problem_2-solution}
 
 10/5
 
 ```
 
-```{r problem_divide-check}
+```{r problem_2-check}
 
 grade_this_code()
 
 ```
 
-*Now we want to be able to assign a name to the outputs of our calculations so we can store them*
+Assign the value of your previous calculation the name `two`, then print the output.
 
-Assign the value of your previous calculation to the name `two`, then print the output.
-
-```{r problem_name-divide, exercise=TRUE}
+```{r problem_3, exercise=TRUE}
 
 
 
 ```
 
-```{r problem_name-divide-hint-1}
+```{r problem_3-hint-1}
 
  Can you remember the special operator we use to assign names to objects?
 
 ```
 
-```{r problem_name-divide-solution}
+```{r problem_3-solution}
 two <- 10/5
 two
 ```
 
-```{r problem_name-divide-check}
+```{r problem_3-check}
 
 grade_this_code()
 
 ```
 
-Create another named objected called twenty_five that is 5 squared.
+Create another named object called twenty_five that is 5 squared.
 
-```{r problem_name-square, exercise=TRUE}
+```{r problem_4, exercise=TRUE}
 
 
 
 ```
 
-```{r problem_name-square-hint}
+```{r problem_4-hint}
 
 Use the `^` operator 
 
 ```
 
-```{r problem_name-square-solution}
+```{r problem_4-solution}
 
 twenty_five <- 5^2
 
 ```
 
-```{r problem_name-square-check}
+```{r problem_4-check}
 
 grade_this_code()
 
 ```
 
-*Named objects can interact with each other. Let's calculate a third object.*
+*Named objects can interact with each other. Calculate a third object.*
 
-Finally, multiply `two` by `twenty_five` and name this calculation as a third value called `fifty`. Print it so that the new object returns the value of the calculation. For now, you will have to 're-assign' each value its name, as tutorials do not carry over this type of information across different code chunks.
+Multiply `two` by `twenty_five` and name the result of calculation a third object called `fifty`. Print it so that the new object returns the value of the calculation. 
 
-```{r problem_name-multiply, exercise=TRUE}
+```{r problem_5-setup, include=FALSE}
+
+twenty_five <- 5^2
+two <- 10/5
+
+```
+
+
+```{r problem_5, exercise=TRUE,exercise.setup = "problem_5-setup"}
 
 
 
 ```
 
-```{r problem_name-multiply-hint-1}
+```{r problem_5-hint-1}
 
 Because the named objects are just numbers, they will behave as such
 
 ```
 
-```{r problem_name-multiply-solution}
+```{r problem_5-solution}
 
-two <- 10/5
-twenty_five <- 5^2
 fifty <- two*twenty_five
 fifty
 
 ```
 
-```{r problem_name-multiply-check}
+```{r problem_5-check}
 
 grade_this_code()
 
 ```
 
 ## Quiz
-
-*You can include any number of single or multiple choice questions as a quiz. Use the `question` function to define a question and the `quiz` function for grouping multiple questions together.*
-
-Some questions to verify that you understand the purposes of various base and recommended R packages:
 
 ```{r quiz}
 learnr::quiz(
@@ -225,26 +237,20 @@ learnr::quiz(
     answer("to prevent a line of code from running"),
     answer("add two values"),
     answer("compare two values"),
-    answer("assign a name to a value", correct = TRUE)
-  )
+    answer("assign a name to an object", correct = TRUE)
+  ),
+  question("What is an example of an object in R?",
+    answer("a dataset"),
+    answer("a vector"),
+    answer("an equation"),
+    answer("all the above", correct = TRUE)
+    )
 )
 ```
 
-## Submit
 
-### *Important*: to submit your answers, please press `generate` to create you unique code, copy the code into the box under 'hash to decode', and then press `decode` to turn your code it into a table summarizing your tutorial answers. Please copy the table in a word document, save it, and submit it to the D2L Operators assignment for credit. We are actively working on making this last submission step better and easier, so thanks for bearing with us!
-
-*Ignore the directions below for submitting to the google link (it doesn't go anywhere)!*
-
-```{r context="server"}
-
-learnrhash::encoder_logic()
-learnrhash::decoder_logic()
+```{r download-answers, child = system.file("child_documents/download_answers.Rmd", package = "tutorial.helpers")}
 ```
 
-```{r encode, echo=FALSE}
-learnrhash::encoder_ui()
-learnrhash::decoder_ui()
-```
+All done! Please upload your html file in the correct assignment folder.
 
-All done! Please submit your table in a word document to the D2L assignment.
