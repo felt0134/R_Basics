@@ -1,0 +1,833 @@
+---
+title: "R Basics Exam Review"
+tutorial:
+  id: "Week_6_Exam_Review"
+output: 
+  learnr::tutorial:
+    progressive: true
+runtime: shiny_prerendered
+description: "Practice problems for Exam II focused on the basics of R"
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(tutorial.helpers)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, include=FALSE}
+#Author: Andrew J. Felton
+#Date: 11/X/2024
+```
+
+```{r info-section, child = system.file("child_documents/info_section.Rmd", package = "tutorial.helpers")}
+```
+
+```{r copy-code-chunk, child = system.file("child_documents/copy_button.Rmd", package = "tutorial.helpers")}
+```
+
+## Key Concepts to Review for Exam 2
+
+-   **Atomic Vectors**: be able to define, create, and use them.
+-   **Recycling**: be able to define, identify, and apply this concept to data.
+-   **Operators** including `:`, `<-`, `$`, `[]`, and all arithmetic and comparison operators.
+-   **Functions** including `c()`,`plot()`,`seq()`,`head()`,`str()`,`mean()`, and others covered through the extraction tutorial assignment. *Be able to write a simple custom function.*
+-   **Dataframes** including what they are, the three tidy principles, how to make them, and how to manipulate them.
+-   **Extraction**: be able to define, identify, and apply this concept to data using operators.
+
+**Pro tip**: In addition to the practice problems below, the best way to study for the exam is to review each tutorial and lab assigned throughout this section.
+
+## Vectors Practice Problems
+
+### Q1: Use the `:` operator to create a numeric vector from 1 to 10 that increases by values of 1. Assign this vector the name "vector_1"
+
+```{r problem_1, exercise=TRUE}
+
+
+```
+
+```{r problem_1-hint}
+
+Using a function to do this is unnecessary  
+
+```
+
+```{r problem_1-solution,exercise.reveal_solution = FALSE}
+
+vector_1 <- 1:10
+
+```
+
+```{r problem_1-check}
+
+grade_code()
+
+```
+
+### Q2: Use the `c()` function to create a character vector that spells out BIOME, with each value being its own letter. Assign this vector the name "biome".
+
+```{r problem_2, exercise=TRUE}
+
+
+```
+
+```{r problem_2-hint}
+
+"Use quotations"
+
+```
+
+```{r problem_2-solution,exercise.reveal_solution = FALSE}
+
+biome <- c("B","I","O","M","E")
+
+```
+
+```{r problem_2-check}
+
+grade_code()
+
+```
+
+### Q3: Use recycling to multiply vector_1 by 0.75.
+
+```{r problem_3, exercise=TRUE,exercise.setup="problem_1"}
+
+
+```
+
+```{r problem_3-hint}
+
+Rember 0.75 is a vector of length 1
+
+```
+
+```{r problem_3-solution,exercise.reveal_solution = FALSE}
+
+vector_1*0.75
+
+```
+
+```{r problem_3-check}
+
+grade_code()
+
+```
+
+### Q4: Create a new vector using the `seq()` function which ranges from 10 to 80 and increases by values of 10. Assign this new vector the name "vector_2". Then, on the next line use the `plot()` function to plot vector_1 (created in the previous problem) on the x axis and vector_2 on the y axis.
+
+```{r problem_4, exercise=TRUE,exercise.setup="problem_3"}
+
+
+```
+
+```{r problem_4-hint}
+
+You can pass each vector into the plot() function as an argument.
+
+```
+
+```{r problem_4-solution,exercise.reveal_solution = FALSE}
+
+vector_2 <- seq(from = 8,to = 80,by = 8)
+plot(vector_1,vector_2)
+
+```
+
+```{r problem_4-check}
+
+grade_code()
+
+```
+
+### Multiple Choice Questions
+
+```{r quiz_1}
+
+learnr::quiz( 
+  question("What is the purpose of the `<-` operator?",
+    answer("to prevent a line of code from running"),
+    answer("add two values"),
+    answer("compare two values"),
+    answer("assign a name to an object", correct = TRUE))
+  )
+
+```
+  
+```{r quiz_2} 
+
+learnr::quiz(
+  question("What is the purpose of the `:` operator?",
+           answer("indicate complete equality"),
+           answer("create a sequence of numbers",correct = TRUE),
+           answer("compare two values"),
+           answer("extract a value from a sequence"))
+  )
+```
+
+```{r quiz_3}
+
+learnr::quiz(
+  question("True or False: all values in an atomic vector are composed of the same data type",
+           answer("True",correct = TRUE),
+           answer("False"))
+  )
+
+```
+
+```{r quiz_4}
+
+learnr::quiz(
+  question("What does the c() function do?",
+           answer("prevents a line of code from running"),
+    answer("adds two vectors together"),
+    answer("combines values in a sequence to create a vector",correct = TRUE),
+    answer("creates a sequence of values according to a range and interval"))
+)
+
+```
+
+```{r quiz_5}
+  
+learnr::quiz(
+  question("True or False: you can add two vectors of different lengths together",
+    answer("True",correct = TRUE),
+    answer("False"))
+)
+  
+```
+
+```{r quiz_6}
+
+learnr::quiz(
+  question("What is the question above an example of?",
+    answer("Concatinating"),
+    answer("Recycling",correct = TRUE),
+    answer("An operation"),
+    answer("A function"))
+  )
+
+```
+  
+```{r quiz_7}
+
+learnr::quiz(
+  question("If you want to create a vector from 1 to five million in intervals of 1000, what would be the most efficient way to do so in R?",
+    answer("c() function"),
+    answer(": operator"),
+    answer("seq() function",correct = TRUE),
+    answer("the function() function"))
+  )
+
+```
+
+## Dataframes Practice Problems
+
+### Q5: Create a dataframe using the `data.frame()` function that is composed of 2 variables: 1) a column/variable called "value" that is a numeric vector of length 3 ranging from 3 to 27 in intervals of 9 and 2) a column/variable called "value_2" that is a character vector of length 3 composed of the value a,b, and c (in that order). Assign this dataframe the name "df_1".
+
+```{r problem_5, exercise=TRUE}
+
+df_1 <- data.frame(
+  
+  value = seq(from = 3,to = 27,by = 9),
+  value_2 = c("a","b","c")
+  
+)
+
+```
+
+```{r problem_5-hint}
+
+The creation of each column is an argument within the data.frame() function 
+
+```
+
+```{r problem_5-solution,exercise.reveal_solution = FALSE}
+
+df_1 <- data.frame(
+  
+  value = seq(from = 3,to = 27,by = 9),
+  value_2 = c("a","b","c")
+  
+)
+
+```
+
+```{r problem_5-check}
+
+grade_code()
+
+```
+
+### Q6: Use the `head()` function to look at the first row of the df_1 dataframe
+
+```{r problem_6, exercise=TRUE,exercise.setup="problem_5"}
+
+
+```
+
+```{r problem_6-hint}
+
+The second argument is the number of rows to reveal
+  
+```
+
+```{r problem_6-solution,exercise.reveal_solution = FALSE}
+
+head(x = df_1,n = 1)
+  
+```
+
+```{r problem_6-check}
+
+grade_code()
+
+```
+
+### Q7: Use the `data()` function to load in the iris dataframe that comes with R.
+
+```{r problem_7, exercise=TRUE}
+
+
+```
+
+```{r problem_7-hint}
+
+There is only ONE argument here!
+  
+```
+
+```{r problem_7-solution,exercise.reveal_solution = FALSE}
+
+data(iris)
+  
+```
+
+```{r problem_7-check}
+
+grade_code()
+
+```
+
+### Q8: Use the `head()` function to preview the first three rows of the iris dataframe.
+
+```{r problem_8, exercise=TRUE}
+
+
+```
+
+```{r problem_8-hint}
+
+The first argument is the name of the data.frame
+
+```
+
+```{r problem_8-solution,exercise.reveal_solution = FALSE}
+
+head(x = iris,n = 3)
+
+```
+
+```{r problem_8-check}
+
+grade_code()
+
+```
+
+### Q9: Use the `plot()` function with the `~` operator to create an x-y plot of Sepal.Length as *a response to* Sepal.Width.
+
+```{r problem_9, exercise=TRUE}
+
+
+```
+
+```{r problem_9-hint}
+
+Remember that the "response" variable goes on the Y axis of an X-Y plot
+
+```
+
+```{r problem_9-solution,exercise.reveal_solution = FALSE}
+
+plot(Sepal.Length ~ Sepal.Width,data = iris)
+
+```
+
+```{r problem_9-check}
+
+grade_code()
+
+```
+
+### Q10: Use the `plot()` function with the `$` operator to create an x-y plot of Sepal.Length as *a response to* Sepal.Width.
+
+```{r problem_10, exercise=TRUE}
+
+
+```
+
+```{r problem_10-hint}
+
+With `$`, each variable is a seperate argument int he `plot()` function
+
+```
+
+```{r problem_10-solution,exercise.reveal_solution = FALSE}
+
+plot(iris$Sepal.Width,iris$Sepal.Length)
+
+```
+
+```{r problem_10-check}
+
+grade_code()
+
+```
+
+### Multiple Choice Questions
+
+```{r quiz_8}
+
+learnr::quiz(
+  question(
+    "Which of the characteristics of tidy data is not an atomic vector?",
+    answer("a variable/column"),
+    answer("a row/observation",correct = TRUE),
+    answer("a cell/value"))
+  )
+
+```
+
+```{r quiz_9}
+
+learnr::quiz(
+  question(
+    "What is the R function used to create a data frame from existing vectors?",
+    answer("create.df()"),
+    answer("df()"),
+    answer("data.frame()",correct = TRUE),
+    answer("str()"))
+  )
+
+```
+
+```{quiz_10}
+
+learnr::quiz(
+  question(
+    "What is the R function used to create a frequency distribution of values in a vector, variable, or column?",
+    answer("hist()",correct = TRUE),
+    answer("boxplot()"),
+    answer("plot()"),
+    answer("barplot()"))
+)
+
+
+```
+
+## Extraction Practice Problems
+
+### Q11: Create a numeric vector that is a sequence from 500 to 1000 that increases in intervals of 10. Assign this vector the name "new_vec".
+
+```{r problem_11, exercise=TRUE}
+
+
+```
+
+```{r problem_11-hint}
+
+Which function helps you create a sequence with specific intervals?
+
+```
+
+```{r problem_11-solution,exercise.reveal_solution = FALSE}
+
+new_vec <- seq(from = 500,to = 1000, by = 10)
+
+```
+
+```{r problem_11-check}
+
+grade_code()
+
+```
+
+### Q12: Use the `[]` operator to create a numeric vector that is the result of extracting every other value from "new_vec", starting at its first value. Assign this new vector the name "new_vec_2".
+
+**Pro tip**: Remember to use the help operator `?` in the R console to learn more about how a specific function works (e.g., ?head).
+
+```{r problem_12, exercise=TRUE,exercise.setup="problem_11"}
+
+
+```
+
+```{r problem_12-hint}
+
+Use the `length()` function 
+
+```
+
+```{r problem_12-solution,exercise.reveal_solution = FALSE}
+
+new_vec_2 <- new_vec[seq(from = 1, to = length(new_vec),by = 2)] 
+
+```
+
+```{r problem_12-check}
+
+grade_code()
+
+```
+
+### Q13: Use the `data()` function to load in the iris dataframe.
+
+```{r problem_13, exercise=TRUE}
+
+
+```
+
+```{r problem_13-hint}
+
+You already did this earlier!
+  
+```
+
+```{r problem_13-solution,exercise.reveal_solution = FALSE}
+
+data(iris)
+  
+```
+
+```{r problem_13-check}
+
+grade_code()
+
+```
+
+### Q14: Extract the third column and fourth row from the iris dataframe.
+
+```{r problem_14, exercise=TRUE}
+
+
+```
+
+```{r problem_14-hint}
+
+Row-Column
+
+```
+
+```{r problem_14-solution,exercise.reveal_solution = FALSE}
+
+iris[4,3]
+
+```
+
+```{r problem_14-check}
+
+grade_code()
+
+```
+
+### Q15: Use the `[]` operator to produce the same output that head(iris,1) would produce.
+
+```{r problem_15, exercise=TRUE}
+
+
+```
+
+```{r problem_15-hint}
+
+You may not need to worry about specifying columns here
+
+```
+
+```{r problem_15-solution,exercise.reveal_solution = FALSE}
+
+iris[1,]
+
+```
+
+```{r problem_15-check}
+
+grade_code()
+
+```
+
+### Q16: Use the `$` operator to extract the Petal.Length column.
+
+```{r problem_16, exercise=TRUE}
+
+
+```
+
+```{r problem_16-hint}
+
+Instead of a number you use the name of the column/variable with `$`.
+
+```
+
+```{r problem_16-solution,exercise.reveal_solution = FALSE}
+
+iris$Petal.Length
+
+```
+
+```{r problem_16-check}
+
+grade_code()
+
+```
+
+### Q17: Use the `mean()` function and the `$` operator to calculate the average Sepal.Length.
+
+```{r problem_17, exercise=TRUE}
+
+
+```
+
+```{r problem_17-hint}
+
+The answer to question 16 is now an argument in the `mean()` function
+
+```
+
+```{r problem_17-solution,exercise.reveal_solution = FALSE}
+
+mean(iris$Sepal.Width)
+
+```
+
+```{r problem_17-check}
+
+grade_code()
+
+```
+
+### Q18: Repeat question 7 but "wrap" or "nest" the `mean()` function as an argument *inside* the `round()` function so to round the output to two decimal places.
+
+```{r problem_18, exercise=TRUE}
+
+
+```
+
+```{r problem_18-hint}
+
+The `round()` functions hould have two arguments in it
+
+```
+
+```{r problem_18-solution,exercise.reveal_solution = FALSE}
+
+round(mean(iris$Sepal.Length),2)
+
+```
+
+```{r problem_18-check}
+
+grade_code()
+
+```
+
+### Q19: Use `$` to add a new column named "perc_max_length" to the iris dataframe that calculates each Petal.Length as a percentage of the maximum Petal.Length.
+
+```{r problem_19,exercise=TRUE}
+
+
+```
+
+```{r problem_19-hint}
+
+This will involve using a mix of operators and the `max()` function
+
+```
+
+```{r problem_19-solution,exercise.reveal_solution = FALSE}
+
+iris$perc_max_length <- (iris$Petal.Length/max(iris$Petal.Length))*100
+
+```
+
+```{r problem_19-check}
+
+grade_code()
+
+```
+
+### Q20: Using the `[]` and `$` operators along with a comparison operator to filter to the row(s) that has a "perc_max_length value" of 100.
+
+```{r problem_20, exercise=TRUE,exercise.setup = "problem_19"}
+
+
+```
+
+```{r problem_20-hint}
+
+Remember you are just filtering by row
+
+```
+
+```{r problem_20-solution,exercise.reveal_solution = FALSE}
+
+iris[iris$perc_max_length == 100,]
+
+```
+
+```{r problem_20-check}
+
+grade_code()
+
+```
+
+### Q21: Using the `[]` and `$` operators to filter the iris dataframe to data that is only composed of data from the virginica species
+
+```{r problem_21, exercise=TRUE,exercise.setup="problem_19"}
+
+
+```
+
+```{r problem_21-hint}
+
+Remember you are just filtering by rows with this species
+
+```
+
+```{r problem_21-soluton,exercise.reveal_solution = FALSE}
+
+iris[iris$Species == 'virginica',]
+
+```
+
+```{r problem_21-check}
+
+grade_code()
+
+```
+
+### Multiple Choice Questions
+
+```{r quiz_11}
+
+learnr::quiz(
+  question(
+    "How would you extract the 20th value in a vector named secret_data?",
+    answer("secret_data(20)"),
+    answer("secret_data[20]",correct = TRUE),
+    answer("secret_data.20"),
+    answer("secret_data{20}"))
+)
+  
+```
+
+```{r quiz_12}
+
+learnr::quiz(
+  question(
+    "How would you extract the first column from the iris dataframe?",
+    answer("iris[,1]",correct = TRUE),
+    answer("iris(,1)"),
+    answer("iris[1]"),
+    answer("iris[c(1,)]"))
+  )
+
+```
+
+```{r quiz_13}
+
+learnr::quiz(
+  question(
+    "What is the function of the `$` operator?",
+    answer("Add columns",correct = TRUE),
+    answer("Extract rows"),
+    answer("Extract columns",correct = TRUE),
+    answer("Extract from  avector"))
+)
+
+```
+  
+```{r quiz_14}
+ 
+learnr::quiz( 
+  question(
+    "True or False: the `[]` operator only works on vectors",
+    answer("True"),
+    answer("False",correct = TRUE))
+)
+
+```
+  
+```{r quiz_15}
+
+learnr::quiz(
+  question(
+    "True or False: the `$` operator only works on rows dataframes",
+    answer("True"),
+    answer("False",correct = TRUE))
+)
+
+```
+
+## Custom Functions Practice Problems
+
+### Q22: Create a function named my_range that calculates the differences between the maximum and minimum values in a vector.
+
+```{r problem_22, exercise=TRUE}
+
+
+```
+
+```{r problem_22-hint}
+
+Use the `min()` and `max()` functions in your custom function.
+
+```
+
+```{r problem_22-solution,exercise.reveal_solution = FALSE}
+
+my_range <- function(x){
+  
+  output <- max(x) - min(x)
+  
+  return(output)
+  
+}
+
+```
+
+```{r problem_22-check}
+
+grade_code()
+
+```
+
+### Q23: Use the `my_range()` function you created to calculate the range of the Petal.Length variable within the iris dataframe.
+
+```{r problem_23, exercise=TRUE,exercise.setup = "problem_22"}
+
+my_range(iris$Petal.Length)
+
+```
+
+```{r problem_23-hint}
+
+The column should be the sole argument in the function
+
+```
+
+```{r problem_23-solution,exercise.reveal_solution = FALSE}
+
+The column should be the sole argument in the function
+
+```
+
+```{r problem_23-check}
+
+grade_code()
+
+```
+
+```{r download-answers, child = system.file("child_documents/download_answers.Rmd", package = "tutorial.helpers")}
+```
+
+All done! Please upload your html file in the correct assignment folder.

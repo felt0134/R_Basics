@@ -1,0 +1,540 @@
+---
+title: "Plotting Penguins"
+output: learnr::tutorial
+runtime: shiny_prerendered
+description: "An R learning lab exploring the Palmer Penguines data set.  In this lab, you will build and demonstrate proficiency in working with dataframes and plotting with base R syntax."
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(tutorial.helpers)
+library(palmerpenguins)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, include=FALSE}
+#Author: Andrew J. Felton
+#Date: 11/7/2024
+```
+
+```{r info-section, child = system.file("child_documents/info_section.Rmd", package = "tutorial.helpers")}
+```
+
+```{r copy-code-chunk, child = system.file("child_documents/copy_button.Rmd", package = "tutorial.helpers")}
+```
+
+## Populations of Penguins
+
+### 28 points total.
+
+In this week's lab, we're going to explore properties of penguins -- Palmer Penguins in fact. We are going to do this through using an `R package`, which is an organized collection of R functions and datasets that typically follow a specific theme or purpose. There are thousands of R packages you can install and use for your analyses.
+
+This lab uses the `palmerpenguins` package, which contains a dataframe called `penguins`. The data were collected and made available by [Dr. Kristen Gorman](https://www.uaf.edu/cfos/people/faculty/detail/kristen-gorman.php) and the [Palmer Station, Antarctica LTER](https://pallter.marine.rutgers.edu/), a member of the [Long Term Ecological Research Network](https://lternet.edu/).
+
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png){#id .class width="60%" height="60%"}
+
+### A note about bill dimensions
+
+The culmen is the upper ridge of a bird's bill. In the `penguins` data, culmen length and depth are named `bill_length_mm` and `bill_depth_mm` to be more intuitive.
+
+For this penguin data, the culmen (bill) length and depth are measured as shown below (thanks Kristen Gorman for clarifying!):
+
+![](https://allisonhorst.github.io/palmerpenguins/reference/figures/culmen_depth.png){#id .class width="80%" height="80%"}
+
+SolLet's explore the `penguins` data using your R skills!
+
+## Loading in an R Package
+
+R is an "evolved" programming language; much of its development it driven by its community of users. One feature of this is the development of packages:
+
+-   *Package*: an R package is a collection of functions, datasets, and other code that is bundled together for a specific purpose and thus follows a specific theme. It extends the functionality of the base R software that comes with the initial download of R. One example is the "palmerpenguins" R package, which contains the dataset you will be working with. The package has already been installed for you, so you just need to load it in. To load in an R package, you use the function `library()`. This function accepts the name of the R package(s) as its argument(s). Use the `?` operator in the R console to learn more about this function.
+
+### Q1: Use the `library()` function to load in the `palmerpenguins` R package (1 point)
+
+```{r problem_1, exercise=TRUE}
+
+```
+
+```{r problem_1-hint}
+
+Pass the name of the package into the function; no need for quotations! 
+
+```
+
+```{r problem_1-solution}
+
+library(palmerpenguins)
+
+```
+
+```{r problem_1-check}
+
+grade_code()
+
+```
+
+This package contains a dataframe called `penguins` that you will focus on analyzing.
+
+### Q2: Use the `head()` function to preview the first three rows of the `penguins` dataframe. (1 point)
+
+```{r problem_2, exercise=TRUE}
+
+```
+
+```{r problem_2-hint}
+
+You need two arguments to pass into the function
+
+```
+
+```{r problem_2-solution}
+
+head(x = penguins, n = 3)
+
+```
+
+```{r problem_2-check}
+
+grade_code()
+
+```
+
+### Quiz 1 (1 point)
+
+```{r quiz_1}
+
+learnr::quiz(caption = "",
+             question(
+  "Which of these it not a variable in the penguins dataframe?",
+  answer("island"),
+  answer("species"),
+  answer("body_mass_g"),
+   answer("month", correct = TRUE),
+  allow_retry = FALSE)
+  )
+
+```
+
+**Pro tip**: The data `penguins` is actually a `tibble`. A `tibble` is just a "special" type of dataframe.
+
+## Exploring the data
+
+### Q3: One of the best ways to understand what's in a dataset is to look at its structure. Go ahead and display the "structure summary" of the `penguins` data using the `str()` function. This function accepts the name of the dataset (here a dataframe/tibble) as its main argument. Use the `?` operator in the console to learn more. (1 point)
+
+```{r problem_3, exercise=TRUE}
+
+
+```
+
+```{r problem_3-hint}
+
+The str() function has a very similar behavior as head()
+
+```
+
+```{r problem_3-solution}
+
+str(penguins)
+
+```
+
+```{r problem_3-check}
+
+grade_code()
+
+```
+
+The output provides *a lot* of information include the dimensions of the dataset, all the variable names, what type of data they are, etc...
+
+### Quiz 2 (1 point)
+
+```{r quiz_2}
+
+learnr::quiz(caption = "",
+  question(
+  "What is the data type of the variable year?",
+  answer("Factor"),
+  answer("num"),
+  answer("int",correct = TRUE),
+   answer("chr"),
+  allow_retry = FALSE)
+)
+
+```
+
+### Unique values
+
+When you are first working with a data set, one of the most useful bits of information is to understand the characteristics of the data you are working with. You can explore the data column by column. For instance, run the code below to return a vector of the first 20 values of the species column in the penguins in the data set.
+
+```{r demo_column, exercise=TRUE}
+
+penguins$species[1:20]
+
+```
+
+Wow! Lots of duplicates! The "levels" output, however, suggest there are three unique species. If you wanted to just look at the *unique* values within the species variable, you can use a function called `unique()`. Use the `?` operator in the console to learn more about this function.
+
+### Q4: Use the `unique()` function to return all the unique *species* in the `penguins` dataframe. (1 point)
+
+```{r problem_4, exercise=TRUE}
+
+
+```
+
+```{r problem_4-hint}
+
+The correct argument to pass into the function is a vector
+
+```
+
+```{r problem_4-solution}
+
+unique(penguins$species)
+
+```
+
+```{r problem_4-check}
+
+grade_code()
+
+```
+
+### Of course, R can make your life easier. There's a function called `summary()` that is pretty handy to summarize almost anything in R, including dataframes. Try passing `penguins` to the summary function:
+
+```{r demo_summary, exercise=TRUE}
+
+```
+
+```{r demo_summary-solution}
+
+summary(penguins)
+
+```
+
+```{r demo_summary-check}
+
+grade_code()
+
+```
+
+## Answering questions with data
+
+Now that we have a sense of what's in the data, some questions may come to mind. For instance, **are species segregated on specific islands? Or, are the species distributed across multiple islands?** Let's try to find out!
+
+Before you start writing R code, take a moment and try to think -- conceptually -- about what an answer to these questions would look like, so we know where we are headed with our analysis. In other words, without thinking about R for a moment, try to imagine the characteristics of a data table that would answer the question "*Which species are on which islands?*"
+
+### Quiz 3 (1 point)
+
+```{r quiz_3}
+
+learnr::quiz(caption = "",
+  question(
+    "What combination of columns would need to be in a table if that table were to tell us which species are on which islands?",
+    answer("island and number_of_penguins"),
+    answer("island and species", correct = TRUE),
+    answer("species and number_of_penguins"),
+    answer("number_of_penguins and year"),
+    allow_retry = FALSE)
+  )
+
+
+
+```
+
+### Quiz 4 (1 point)
+
+```{r quiz_4}
+
+learnr::quiz(caption = "",
+  question(
+    "What would it mean if that table had only 5 rows?",
+    answer("The distribution of penguins across islands yields 5 combinations of island and species", correct = TRUE),
+    answer("There are 5 islands where penguins occur"),
+    answer("Penguins were observed over a 5 year period"),
+    answer("There are 5 different species of penguins on each island"),
+    allow_retry = FALSE)
+  )
+
+```
+
+### Wait. What?
+
+All this talk about "combinations of species and island" may seem wonkish -- and unfamiliar. But it's simple, really. Check it out...
+
+If you think about it, the only columns we need in a table that can tells us "*Which islands have which species?*" are `species` and `island.` If Gentoo penguins are on Dream Island, there should be a row in the dataframe that has "Dream" in the `island` column and "Gentoo" in the `species` column, right? If the species isn't on Dream Island, the same row would not be in the dataframe.
+
+If that's still not clear, let's look at an example of such a table. This isn't derived from the `penguins` data -- it is a hypothetical example (using the `data.frame()` function) of what you are trying to generate from the data...
+
+```{r}
+
+data.frame(
+  
+  islands = c("Torgersen", "Biscoe", "Biscoe", "Dream", "Dream"), 
+  species = c("Gentoo", "Chinstrap", "Adelie", "Gentoo", "Adelie")
+  
+)
+
+```
+
+Each row contains a "unique combination" of islands and species. Therefore, if this table had been derived from the `penguins` data, we would conclude that Torgersen Island has one species (Gentoo), Biscoe Island has two species (Chinstrap and Adelie), and Dream Island has two species (Gentoo and Adelie).
+
+You could also read it the other way, concluding Gentoo penguins inhabit Torgersen and Dream Islands, Adelie penguins are on Biscoe and Dream Islands, and Chinstraps are limited to Biscoe Island.
+
+Let's make a table like this, but using the actual data in the `penguins` dataframe!
+
+## Who's where?
+
+If at least one Adelie penguin was observed on on Biscoe Island, then there will be *at least one record* in the `penguins` data set that includes the combination "Adelie" for `species` and "Biscoe" for `island`, right?
+
+If there were *never* a Chinstrap penguin observed on Dream Island, there would not be any record in the data set with the combination of "Chinstrap" for species and "Dream" for island, right?
+
+So think about this next statement carefully until you really understand *why* it's true...
+
+*All you have to do is: 1) extract the `island` and `species` columns from the `penguins` data; and 2) find the unique records across those two columns!*
+
+OK, we've talked about it enough. Let's do it!
+
+*The remaining questions are graded for correctness*
+
+### Q5: Take the following steps to find the unique species-island combinations in the `penguins` data. (5 points)
+
+*   Use indexing (the `[` operator) to select the `island` and `species` *columns* from the `penguins` dataframe.
+*   Pass the result to `unique()`. Do this second step by nesting the indexed data set within `unique()`
+
+
+```{r problem_5,exercise=TRUE}
+
+
+```
+
+```{r problem_5-hint}
+
+You need to treat the indexed columns as an argument in the unique() function!
+
+```
+
+```{r problem_5-solution,exercise.reveal_solution=FALSE}
+
+unique(penguins[ , c("island", "species")])
+
+```
+
+```{r problem_5-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+
+
+### Quiz 5 (1 point)
+
+```{r quiz_5}
+
+learnr::quiz(caption = "",
+  question(
+    "Which Islands do Chinstrap penguins occur on?",
+    answer("All of the islands"),
+    answer("Dream and Biscoe Islands"),
+    answer("Dream and Torgersen Islands"),
+    answer("Torgersen and Biscoe Islands"),
+    answer("only Dream Island", correct = TRUE),
+    answer("only Biscoe Island"),
+    answer("only Torgersen Island"),
+    answer("None of the Islands"),
+    allow_retry = FALSE)
+  )
+  
+```
+
+### Quiz 6 (1 point)
+
+```{r quiz_6}
+
+learnr::quiz(caption = "",
+  question(
+    "Which species occur on Dream Island?",
+    answer("All three species"),
+    answer("Adelie and Gentoo"),
+    answer("Adelie and Chinstrap", correct = TRUE),
+    answer("Chinstrap and Gentoo"),
+    answer("only Adelie"),
+    answer("only Chinstrap"),
+    answer("only Gentoo"),
+    answer("none of the species"),
+    allow_retry = FALSE)
+)
+
+```
+
+## Plotting penguins
+
+Let's dust off the `plot()` function and visualize some of the `penguin` data! Specifically, let's using plotting to explore the question: **is bill length is related to flipper length?** Bigger penguins are presumably likely to have bigger flippers and bigger bills.
+
+**Pro tip**: When you make an x-y plot of "a" *as a response to* "b", "a" is the `dependent variable` (on the vertical "y" axis) and "b" is the `independent variable` (on the horizontal "x" axis).
+
+### Q6: Use the `plot()` function to create an x-y plot of bill length  *as a response to* flipper length using the `penguins` data. (1 point)
+
+```{r problem_6,exercise=TRUE}
+ 
+```
+
+```{r problem_6-hint}
+
+Use $ to pass each column as an argument to plot()
+
+```
+
+```{r problem_6-solution,exercise.reveal_solution=FALSE}
+
+plot(penguins$flipper_length_mm, penguins$bill_length_mm)
+
+```
+
+```{r problem_6-check}
+
+grade_code()
+
+```
+
+Hopefully you were able to get it. There's a pattern there for sure, but a lot of variability. The last part of this lab is going to explore if part of this variability arises due to differences among the species.
+
+### Using color with `plot()`
+
+To color points according to distinct groups in data, you first have to understand what color names are available in R. There are a lot. R has 657 build-in color names! To begin, search the internet (e.g., using google) for a description of the built-in color names in R.
+
+### Quiz 7 (1 point)
+
+```{r quiz_7}
+
+learnr::quiz(caption="",
+  question(
+    "Which of the following colors is NOT a built in color name in R?",
+    answer("green"),
+    answer("teal", correct = TRUE),
+    answer("thistle"),
+    answer("honeydew"), 
+    answer("firebrick"),
+    allow_retry = FALSE)
+  )
+
+```
+
+To add colors to specific groups in a base R `plot()`, you must make a vector of color names -- one color name for each point or group on the graph. Since each point on the graph is represented as a row in a dataframe, a simple solution is to add a column of color names to the data.frame, as shown below:
+
+```{r demo_color,exercise=TRUE}
+
+#adding a color ID for each row
+example_data <- data.frame(x = 1:3, 
+                           y=1:3, 
+                           custom_color = c("red", "gold", "blue"))
+example_data
+
+#plotting it
+plot(example_data$x, example_data$y, col = example_data$custom_color, pch = 20, cex = 3)
+
+```
+
+The above code is creating a color column using a character vector of color names. But how might you do the same thing within an existing dataframe like `penguins`? Let's first look at an example from a different dataset, the iris dataframe, which we know has *three* species. First, let's look at the structure of the iris dataframe sing the `str()` function.
+
+```{r demo_factors,exercise=TRUE}
+
+#look at the structure of the iris dataframe
+str(iris)
+
+```
+
+You should notice that the data type for Species is a `Factor` with three `levels`. Factors are typically used to depict categorical data types, whereas the levels refer to the discrete categories within the variable, here the unique Species. Indeed, if we use the `unique()` function to see how many Species there are in the `iris` dataframe, we should see there are three unique Species.
+
+```{r demo_factors_2}
+
+#How many unique Species are there?
+unique(iris$Species)
+
+```
+
+The above shows three unique Species in the `iris` dataframe expressed as levels. Thus, if you wanted to each species to have its own color in a plot, you would need to create a character vector composed of just three colors.
+
+```{r demo_factors_3,exercise=TRUE}
+
+#create color vector
+iris_colors <- c("red","blue","black")
+
+#connect a color to a Species
+iris$color_id <- iris_colors[iris$Species]
+
+#look at unique color-species combinations to see that this worked
+unique(iris[,c("Species","color_id")])
+
+```
+
+The above code works because R recognizes the three unique levels of the Species variable. You can leverage this same approach to create your own color scale in the `penguins` data to color the points according to each species, of which you should know by now that there are three. Below is your final challenge:
+
+### Q8: Using the `penguins` data, your task is to create an x-y plot depicting bill length as a response to flipper length, with all the points colored according to the species they correspond to. You must use all the functions and operators covered in this class thus far. Follow the steps in the order presented below to create this plot. (10 points)
+
+* First, create a character vector named "color_scale" that will serve as your color scale, composed of the colors "gold", "blue", and "red".
+* Second,add this color scale to the `penguins` data as a new variable named "species_color", ensuring that each unique species is represented by one of the three colors.
+* Last, create an x-y plot in which bill length is a response to flipper length, with each point colored by species
+
+**Pro tip**: Make sure your code returns a result before you submit for grading. You can troubleshoot by running your code many times before officially submitting. If you cannot get your code to return a result, please "comment out" your code by putting the `#` operator in front of the code to enable submission and partial credit. 
+
+```{r problem_8, exercise = TRUE}
+
+
+```
+
+```{r problem_8-hint}
+
+
+```
+
+```{r problem_8-solution, exercise.reveal_solution=FALSE}
+
+
+color_scale <- c("gold", "blue", "red")
+
+penguins$color_scale <- color_scale[penguins$species]
+
+plot(
+  penguins$flipper_length_mm,
+  penguins$bill_length_mm,
+  col = penguins$color_scale)
+
+```
+
+```{r problem_8-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+### Q9: Interpretation (1 point)
+
+```{r problem_9}
+
+question_text(
+  "What do you conclude about the relationship between bill length and flipper length within each species?",
+  answer("", correct = TRUE),
+  allow_retry = FALSE,
+  rows=3,
+  trim = FALSE,
+  answer_fn(learnr::correct),
+  correct = "Your answer has been submitted for grading.",
+  incorrect = "Your answer has been submitted for grading."
+  
+)
+
+
+```
+
+```{r download-answers, child = system.file("child_documents/download_answers.Rmd", package = "tutorial.helpers")}
+```
+
+All done! Please upload your html file in the correct assignment folder.
