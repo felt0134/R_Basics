@@ -1,115 +1,165 @@
 ---
-title: "Lab 5: Bison growth dynamics"
+title: "Bison Growth Dynamics"
 tutorial:
-  id: "week_7_lab5"
+  id: "week_7_lab"
 output: 
   learnr::tutorial:
     progressive: true
 runtime: shiny_prerendered
-description: "Using tidy functions to explore bison growth data"
+description: "Using tidy functions to explore bison growth dynamics"
 ---
-<!-- File created by tutorialize.  Do not edit by hand. -->
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(gradethis)
+library(tutorial.helpers)
 library(lterdatasampler)
 library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE)
-gradethis::gradethis_setup()
-options(tutorial.event_recorder = tutorialize::recorder)
-options(tutorial.storage = learnr::filesystem_storage(file.path(path.expand("~"), "_learnr_storage_")))
 ```
 
-### Points: 30 points total.
+```{r, include=FALSE}
+#Author: Andrew J. Felton
+#Date: October 2024
+```
+
+```{r info-section, child = system.file("child_documents/info_section.Rmd", package = "tutorial.helpers")}
+```
+
+```{r copy-code-chunk, child = system.file("child_documents/copy_button.Rmd", package = "tutorial.helpers")}
+```
 
 ## Long-term ecological research on Bison in the Great Plains
 
-For over 400,000 years, bison were the dominant herbivores throughout mid-latitude North America, including the vast Northern Great Plains that cover much of Montana. Pre-colonization population estimates of bison range from 30 to 60 million individuals, with their geographic range and density on par with the world's largest ungulate populations. Following the near extinction of bison in the 20th century, their numbers in North America dwindled to the thousands. The rapidity of the extirpation of bison precluded systematic assessment of their ecological role in the Great Plains, though a widespread assumptions is that they served as a 'keystone species', one that has a disproportionately large impact on ecosystem structure and function and thus a species that can engineer habitat for other species and shape rates of ecosystem processes.
+### 27 points total
 
-Beginning in the early 1990s, researchers at the Konza Prairie Biological Station, located in the flint hills of eastern Kansas - the largest remnant of intact tallgrass prairie in North America - reintroduced bison as part of a long-term effort to understand their role in the tallgrass prairie ecoregion of the Great Plains. The study continues to this day, and efforts to conduct comparative work in the mixed-grass prairie ecoregion of Montana are underway, led by researchers at MSU.
+For over 400,000 years, bison were the dominant herbivores throughout mid-latitude North America, including the vast Northern Great Plains that cover much of Montana. Pre-colonization population estimates of bison range from 30 to 60 million individuals, with their geographic range and density on par with the world's largest ungulate populations. Following the near extinction of bison in the 20th century, their numbers in North America dwindled to the thousands. The rapidity of the extirpation of bison precluded systematic assessment of their ecological role in the Great Plains. A widespread assumption, however, is that bison were as a "keystone species", one that has a disproportionately large impact on ecosystem structure and function and thus a species that can engineer habitat for other species and shape rates of ecosystem processes.
 
-This lab will focus on using tidy functions to analyze a long-term dataset of bison population dynamics in tallgrass prairie. 
+Beginning in the early 1990s, researchers at the Konza Prairie Biological Station located in the flint hills of eastern Kansas - the largest remnant of intact tallgrass prairie in North America - reintroduced bison as part of a long-term effort to understand their role in the tallgrass prairiea of the Great Plains. The study continues to this day, and efforts to conduct comparative work in the mixed-grass prairies of the Northern Great Plains in Montana are underway, led in part by researchers at MSU.
+
+This lab will focus on using tidy functions to analyze a long-term dataset of bison in tallgrass prairie. 
 
 *But first*, we have to orient ourselves with some new tidy functions.
 
-## Another tidy function: summarise()
+## Another tidy function: `summarise()`
 
-*the beginning of the lab up to the exploring bison section is graded for effort* (9 points)
+*the beginning of the lab up to the exploring bison section is graded for effort*
 
-Another important data wrangling function in the tidyverse is `summarise()`. Like other tidy functions, the function does as the name says; it summarizes your data! Specifically, it will produce different summary statistics of a variable of interest. A key contrast of `summarise()` with `mutate()` is that summarise() collapses the entire dataframe to the single summary statistic of interest: one column and one row, whereas mutate() adds a column and preserves the number of rows. 
+Another important data wrangling function in the tidyverse (located in dplyr) is `summarise()`. Like other tidy functions, the function does as the name says; it summarizes your data! Specifically, it will produce different summary statistics of a variable. A key contrast of `summarise()` with `mutate()` is that `summarise()` collapses the entire dataframe to a single summary statistic: one column and one row. This is in contrast to `mutate()`, which adds a new column while preserving the number of rows. 
 
-For instance, if we wanted to calculate the average Sepal.Width in the iris dataframe, it would look as such:
+For instance, if you wanted to calculate the average Sepal.Width in the iris dataframe, it would look as such:
 
 ```{r demo_1, exercise = TRUE}
+
 #calculate the average Sepal.Width across the entire dataset
 iris %>% dplyr::summarise(average_Sepal.Width = mean(Sepal.Width))
-```
-
-The form of summarise() takes on a very similar form as mutate(), where we have a name-value pair combination as the second argument. In other words, to the left of `=` we have the name of the new summarized variable, and to the right we have the actual calculation being done. The output is a single value.
-
-Q1: Use the summarise() function with `%>%` to calculate the standard deviation of Petal.Width in the iris dataframe.
-
-```{r practice_1, exercise=TRUE}
 
 ```
 
-```{r practice_1-solution}
+The form of `summarise()` takes on a very similar form as `mutate()`, where we have a name-value pair combination as the second argument. In other words, to the left of `=` we have the name of the new summarized variable, and to the right we have the actual calculation being done. The output is a single value.
+
+### Q1: Use the `summarise()` function with `%>%` to calculate the standard deviation of Petal.Width in the iris dataframe. (1 point)
+
+```{r problem_1, exercise = TRUE}
+
 iris %>% dplyr::summarise(sd_Petal.Width = sd(Petal.Width))
+
 ```
 
-```{r practice_1-code-check}
+```{r problem_1-hint}
+
+Use the `sd()` function
+
+```
+
+```{r problem_1-solution}
+
+iris %>% dplyr::summarise(sd_Petal.Width = sd(Petal.Width))
+
+```
+
+```{r problem_1-check}
+
 grade_code()
+
 ```
 
-We will dive deeper into summarise() in the next tutorial, but you will be expected to calculate a couple summary statistics in this lab using the summarise() function.
+We will dive deeper into `summarise()` in the next tutorial, but you will be expected to calculate a couple summary statistics in this lab using the `summarise()` function.
 
 ## Making a color pallete for plotting use tidy functions
 
-If you remember from a previous lab, we can make a custom color pallets by identifying unique groups (factors) in our dataframe and assigning them specific colors that R will recongize inside the plot() function. Let's use the iris dataframe as an example that you can then apply to the bison data.
+You can make a custom color pallets for plotting by identifying unique groups in your dataframe and assigning them specific colors that R will recognize inside the `plot()` function. Let's use the iris dataframe as an example that you can then apply to the knz_bison dataset later in this lab.
 
-A first step is to identify the unique groups we have. If we wanted to see the unique species in the iris dataframe, we can use the dplyr function `distinct()` function to do so. Use the `?` operator to look at the documentation for the distinct() function and see if you can identify each unique species in the iris dataframe.
+A first step is to identify unique groups in your dataset. If you wanted to see the unique species in the iris dataframe, you can use the dplyr function `distinct()` function to do so. Use the `?` operator to look at the documentation for the `distinct()` function and see if you can identify each unique species in the iris dataframe.
 
 ```{r demo_2, exercise = TRUE}
+
 #find each unique species value
 iris %>% dplyr::distinct(Species)
-```
-
-Here, the first argument is the dataframe (like many tidy functions), and the the rest of the arguments (defined as "..." in the documentation) are an (indefinite) amount of variables to help assess unique values or combinations of values depending on how many variables are input as arguments. *The example above uses `%>%` to pass iris into the first argument of distinct()*.
-
-Q2: Use %>% and the distinct() function to find all the unique combinations of Species and Petal.Lengths.
-
-```{r practice_2, exercise=TRUE}
 
 ```
 
-```{r practice_2-solution}
+Here, the first argument is the dataframe (like many tidy functions), and the the remaining arguments (defined as "..." in the documentation) are an indefinite number of variables,
+
+### Q2: Use `%>%` and the `distinct()` function to find all the unique combinations of the variables Species and Petal.Length. (1 point)
+
+```{r problem_2, exercise = TRUE}
+
+
+```
+
+```{r problem_2-hint}
+
+There are three arguments here, but remember what %>% does for you.
+
+```
+
+```{r problem_2-solution}
+
 iris %>% dplyr::distinct(Species,Petal.Length)
+
 ```
 
-```{r practice_2-code-check}
+```{r problem_2-check}
+
 grade_code()
-```
-
-Q3: We can add a function to the above pipeline to calculate how many unique combinations (rows) there are. Do this using the length() function to calculate the number of rows of the Species column there are. Name the summarised variable 'combinations'. use the `?` operator to learn more.
-
-```{r practice_3, exercise=TRUE}
 
 ```
 
-```{r practice_3-solution}
+### Q3: We can add a function to the above pipeline to calculate how many unique combinations (rows) there are. Do this using the `length()` function to calculate the number of rows of the Species column there are. Name the summarised variable "combinations". Use the `?` operator in the R console if you want to learn more. (1 point)
+
+```{r problem_3, exercise = TRUE}
+
 iris %>% dplyr::distinct(Species,Petal.Length) %>%
   dplyr::summarise(combinations = length(Species))
+
 ```
 
-```{r practice_3-code-check}
+```{r problem_3-hint}
+
+Use the summarise function after the distinct function
+
+```
+
+```{r problem_3-solution}
+
+iris %>% dplyr::distinct(Species,Petal.Length) %>%
+  dplyr::summarise(combinations = length(Species))
+
+```
+
+```{r problem_3-check}
+
 grade_code()
+
 ```
 
-We can assign a unique color to each unique Species in iris to prep for plotting them. To do so, let's use a dplyr function called `case_when()`. Take a look at the function documentation using the `?` operator. This function, when used with the mutate() function, allows us to create a new variable (e.g., color) that will explicitly match a color factor with another factor in a  dataframe. It uses conditional statements (commonly referred to as "if", "else", or "ifelse" statements). For example, *if* the Species value is equal to "setosa", then the color value is equal to "red", *else*, on to the next condition...
+You can assign a unique color to each unique Species in iris to prep for plotting them. To do so, let's use a dplyr function called `case_when()`. Take a look at the function documentation using the `?` operator in the R console. This function, when used with the `mutate()` function, allows you to create a new variable (e.g., color) that matches a color factor with another factor in a  dataframe. The function uses conditional statements (commonly referred to as "if", "else", or "ifelse" statements). For example, *if* the Species value is equal to "setosa", *then* the color value is equal to "red", *else*, on to the next condition...
 
 In R, an example implementation looks like this:
 
 ```{r demo_3, exercise = TRUE}
+
 #use the mutate() and case_when() function to assign colors to species
 iris %>%
   dplyr::mutate(color = case_when(
@@ -117,18 +167,27 @@ iris %>%
     Species == 'versicolor' ~ "red",
     Species == "virginica" ~ "gold"
   )) %>%
-  head(5)
-```
-
-The above code has a lot in it. We are first using the mutate() function to add a new column which assigns (or matches) a different color to each *unique* species value, *and then* leveraging the case_when() function to help us do this. The syntax uses the comparison operator `==` to designate exact matches for the species name, and then uses the `~` operator to put in formulaic terms how the exact match on the left of ~ corresponds to a specific value (her, a color R will recognize). *And then* we look at the first five rows to ensure we have added the "color" column.
-
-Q4: Instead of using the head() function in the pipeline, use the distinct() function to affirm that we have a unique color value for each unique species value resulting from the above code.
-
-```{r practice_4, exercise=TRUE}
+  head(n=5)
 
 ```
 
-```{r practice_4-solution}
+The above code chunk has a lot in it. It first uses the `mutate()` function to add a new column which assigns (or matches) a different color to each *unique* species value, *and then* leveraging the case_when() function to help us do this. The syntax uses the comparison operator `==` to designate exact matches for each Species, *and then* uses the `~` operator to put in formula terms how the exact match on the left of `~` corresponds to a specific value, *and then* it previews at the first five rows using the `head()` function to see if the code has done what we think it should do.
+
+### Q4: Instead of using the `head()` function in the pipeline, use the `distinct()` function to affirm that you have a unique color value for each unique Species value resulting from the above code chunk. (1 point)
+
+```{r problem_4,exercise = TRUE}
+
+
+```
+
+```{r problem_4-hint}
+
+You are just swapping head() with distinct()
+
+```
+
+```{r problem_4-solution}
+
 iris %>%
   dplyr::mutate(color = case_when(
     Species == "setosa" ~ "blue",
@@ -136,284 +195,405 @@ iris %>%
     Species == "virginica" ~ "gold"
   )) %>%
  dplyr::distinct(Species, color)
+
 ```
 
-```{r practice_4-code-check}
+```{r problem_4-check}
+
 grade_code()
-```
-
-## Giving %>% some direction when needed
-
-Q5: load in the "tidyverse" package and the "lterdatasampler" package in the same function. Both have been installed for you. The latter R package contains the dataset we will be working with today, called "knz_bison".
-
-```{r practice_5, exercise=TRUE}
 
 ```
 
-```{r practice_5-solution}
+## Giving `%>%` some direction
+
+### Q5: Load in the "tidyverse" package and the "lterdatasampler" package in the *same* function. Both have been installed for you. The latter R package contains the knz_bison dataset you will be working with today. (1 point)
+
+```{r problem_5,exercise = TRUE}
+
+
+```
+
+```{r problem_5-hint}
+
+Use the library() function
+
+```
+
+```{r problem_5-solution}
+
 library(tidyverse,lterdatasampler)
+
 ```
 
-```{r practice_5-code-check}
+```{r problem_5-check}
+
 grade_code()
+
 ```
 
-We have been and will continue to work with `%>%`. The pipe operator has the capacity to pass the output of function into not just the first argument of the next function, but really to any argument in the function. However, to do this requires some direction from you, the coder. To do this, you need to define a placeholder for what argument the output of the function should be passed to. We can do this using the `.` operator, which has different use cases, but for our purposes here it serves as a placeholder to direct `%>%` where to place the output of the previous function. A key example is when we want to place the output of a function into an argument that is not the first argument. This is relevant here for the purposes of plotting using the base R plot() function.
+**Refresher on the dot operator**: You have been and will continue to work with `%>%`. The pipe operator defaults to pass the output of function (typically a dataframe) into the *first* argument of the next function. But it can also pass this output into any argument in the next function. However, to do this requires some direction from you. To do this, you need to define a "placeholder" for what argument the output of the function should be passed to. We can do this using the dot operator `.`, which has different use cases, but for your purposes here it serves as a placeholder to direct `%>%` where to place the output of the previous function. A key example is when we want to place the output of a function into an argument that is not the first argument. This is relevant here for the purposes of plotting using the base R `plot()` function.
 
 ```{r demo_5, exercise = TRUE}
+
 #passing iris into the plot() function without any direction
 iris %>% plot(Sepal.Length ~ Sepal.Width)
+
 ```
 
-R barks at you when you run this code. This will be different if we use a function whose first argument will accept what we pipe into it:
+R returns an error when you run this code. By contrast, if you use a function whose first argument is a dataframe:
 
 ```{r demo_6, exercise = TRUE}
+
 #passing iris into the head() function without any direction
-iris %>% head(1)
+iris %>% head(n=1)
+
 ```
 
-In this case, %>% works well, as the first argument in head() is a dataframe, which is what we are piping into the function. This is not the case for the plot() function, so we need to give R some direction. We can use the `.` operator for this.
+In the above code chunk, using `%>%` on its own works because the first argument in `head()` is a dataframe. This is not the case for the `plot()` function, so you will need to give R some direction using `.`.
 
 ```{r demo_7, exercise = TRUE}
+
 #passing iris into the plot() function with some direction
-iris %>% plot(Sepal.Length ~ Sepal.Width,.)
-```
-
-With some direction in terms of which argument to pass iris into, R can now execute the function and plot the relationship.
-
-Q6: Build on the pipeline in the previous section (specifically from Q4) to, instead of showing the distinct pairs, make an x-y plot that shows the relationship between Petal.Length and Petal Width, with each unique species value assigned to its own color value (you can use the previously assigned colors). Make Petal.Length the dependent variable (Y axis) and Petal.Width the independent variable (X axis). 
-```{r practice_6, exercise=TRUE}
+iris %>% plot(Sepal.Length ~ Sepal.Width,data = .)
 
 ```
 
-```{r practice_6-solution}
+With some direction in terms of which argument of `plot()` iris should be piped into, R can now execute the function and plot the relationship.
+
+### Q6: Build on the pipeline in the previous section (specifically from Q4). Instead of showing the distinct pairs, make an x-y plot that shows the relationship between Petal.Length and Petal Width, with each unique species value assigned to its own color value (use the previously assigned colors). Plot Petal Length *as a response to* Petal.Width; make Petal.Length the dependent variable (Y axis) and Petal.Width the independent variable (X axis). (1 point)
+```{r problem_6, exercise = TRUE}
+
+
+```
+
+```{r problem_6-hint}
+
+Use ? in the R console to see what the "col" argument does int he plot() function
+
+```
+
+```{r problem_6-solution}
+
 iris %>%
   dplyr::mutate(color = case_when(
     Species == "setosa" ~ "blue",
     Species == 'versicolor' ~ "red",
     Species == "virginica" ~ "gold"
   )) %>%
- plot(Petal.Length ~ Petal.Width,.,col=color)
+ plot(Petal.Length ~ Petal.Width,data = .,col=color)
+
 ```
 
-```{r practice_6-code-check}
+```{r problem_6-check}
+
 grade_code()
-```
-
-## Exploring bison
-
-Finally, we can take a look at the bison dataframe.
-
-*The rest of the lab exercises will be graded for correctness.* (21 points)
-
-Q7: Create a pipeline that first adds a new column called 'age' to the knz_bison dataframe that calculates the age of every bison for each year *and then* creates an x-y plot where animal weight is the dependent variable (Y axis) and age is the independent variable (X axis). Hint: you will use *two* variables in the knz_bison dataframe to calculate the new variable, called age. (2 points)
-
-```{r graded_problem_1, exercise=TRUE}
 
 ```
 
-```{r graded_problem_1-solution, exercise.reveal_solution=FALSE}
+## Exploring Bison growth dynamics
+
+Finally, we can take a look at the knz_bison dataframe.
+
+**The rest of the lab exercises will be graded for correctness.** 
+
+### Q7: Create a pipeline that first adds a new column named "age" to the knz_bison dataframe that calculates the age of every bison for each year *and then* creates an x-y plot where the variable animal_weight is the dependent variable (Y axis) and age is the independent variable (X axis). Hint: you will use *two* variables in the knz_bison dataframe to calculate the new variable, called age. (2 points)
+
+```{r problem_7, exercise=TRUE}
+
+```
+
+```{r problem_7-hint}
+
+Use two variables in the knz_bison dataframe to calculate the new variable named age.
+
+```
+
+```{r problem_7-solution, exercise.reveal_solution=FALSE}
+
 knz_bison %>%
   dplyr::mutate(age = rec_year - animal_yob) %>%
   plot(animal_weight ~ age,.)
+
 ```
 
-```{r graded_problem_1-check}
+```{r problem_7-check}
+
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your solution has been submitted for grading.") })
-```
-
-```{r graded_problem_2,exercise.startover = FALSE}
-quiz(caption = 'Interpretation:',
-  question_text(
-    "Q8: Describe the pattern you observe between bison weight and bison age (e.g, is there a positive or negative correlation? Is there no correlation? Is is a saturating or exponential relationship?) (1 point)",
-    answer_fn(tutorialize::submitToTA),
-    rows = 3,
-    correct = "Your answer has been submitted"))  
-```
-
-Q9: Males and females may have different age-growth relationships. To explore that, let's add onto the pipeline you created in Q7. Let's first look at females. Add to the pipeline you created in the previous question by *first* filtering to just female bison *and then* calculating age *and then* plotting the relationship between age and weight as you did in Q7. (3 points)
-
-```{r graded_problem_3, exercise=TRUE}
+    message = "Your answer has been submitted for grading.") })
 
 ```
 
-```{r graded_problem_3-solution, exercise.reveal_solution=FALSE}
+### Q8: Interpretation (1 point)
+
+```{r problem_8}
+
+question_text(
+  "Briefly describe the relationship between bison weight and bison age",
+  answer(" ", correct = TRUE),
+  allow_retry = FALSE,
+  rows=3,
+  trim = FALSE,
+  answer_fn(learnr::correct),
+  correct = "Your answer has been submitted for grading.",
+  incorrect = "Your answer has been submitted for grading."
+  
+)
+
+```
+
+### Q9: Males and females may have different age-growth relationships. To explore that, add onto the pipeline you created in Q7.  First look at females. Add to the pipeline you created in the previous question by *first* filtering to just female bison *and then* calculating age *and then* plotting the relationship between age and weight just as you did in Q7. (3 points)
+
+```{r problem_9, exercise=TRUE}
+
+```
+
+```{r problem_9-hint}
+
+What dplyr function filters data?
+
+```
+
+```{r problem_9-solution, exercise.reveal_solution=FALSE}
+
 knz_bison %>%
   dplyr::filter(animal_sex == "F") %>%
   dplyr::mutate(age = rec_year - animal_yob) %>%
-  plot(animal_weight ~ age,.)
+  plot(animal_weight ~ age,data = .)
+
 ```
 
-```{r graded_problem_3-check}
+```{r problem_9-check}
+
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your solution has been submitted for grading.") })
-```
-
-```{r graded_problem_4,exercise.startover = FALSE}
-quiz(caption = 'Intepretation:',
-  question_text(
-    "Q10: Describe the pattern you observe between bison weight and bison age for females. (1 point)",
-    answer_fn(tutorialize::submitToTA),
-    rows = 3,
-    correct = "Your answer has been submitted"))  
-```
-
-Q11: Repeat the pipeline in Q10, but instead filter the dataframe to male bison. (2 points)
-
-```{r graded_problem_5, exercise=TRUE}
+    message = "Your answer has been submitted for grading.") })
 
 ```
 
-```{r graded_problem_5-solution, exercise.reveal_solution=FALSE}
+### Q10: Interpretation (1 point)
+
+```{r problem_10}
+
+question_text(
+  "Briefly describe the relationship between bison weight and bison age for females",
+  answer(" ", correct = TRUE),
+  allow_retry = FALSE,
+  rows=3,
+  trim = FALSE,
+  answer_fn(learnr::correct),
+  correct = "Your answer has been submitted for grading.",
+  incorrect = "Your answer has been submitted for grading."
+  
+)
+
+```
+
+### Q11: Repeat the pipeline in Q9, but instead filter the dataframe to male bison to compare the relationship between age and weight. (2 points)
+```{r problem_11, exercise=TRUE}
+
+
+```
+
+```{r problem_11-hint}
+
+You should have to replace only ONE letter!
+
+```
+
+```{r problem_11-solution, exercise.reveal_solution=FALSE}
+
 knz_bison %>%
   dplyr::filter(animal_sex == "M") %>%
   dplyr::mutate(age = rec_year - animal_yob) %>%
-  plot(animal_weight ~ age,.)
+  plot(animal_weight ~ age,data = .)
+
 ```
 
-```{r graded_problem_5-check}
+```{r problem_11-check}
+
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your solution has been submitted for grading.") })
-```
-
-```{r graded_problem_6,exercise.startover = FALSE}
-quiz(caption = 'interpretation',
-  question_text(
-    "Q12: Describe the pattern you observe between bison weight and bison age for males; how does it compare to females? (1 point)",
-    answer_fn(tutorialize::submitToTA),
-    rows = 3,
-    correct = "Your answer has been submitted"))  
-```
-
-Much like for the palmers penguins data, knz_bison has natural groups in the dataframe (here male and female, M and F) that might make for an interesting figure, where we can assign a color to each group. 
-
-Q13: First, create a pipeline that calculates the age variable *and then* uses the mutate() and a nested `case_when()` function to assign the color "blue" to males and "red" to females in a new column called 'bison_color' *and then* uses the distinct() function to ensure we have successfully assigned unique colors to each animal sex. (3 points)
-
-```{r graded_problem_7, exercise=TRUE}
+    message = "Your answer has been submitted for grading.") })
 
 ```
 
-```{r graded_problem_7-solution, exercise.reveal_solution=FALSE}
+### Q12: Interpretation (1 point)
+
+```{r problem_12}
+
+question_text(
+  "Briefly describe how the age-weight relationship compares in males versus female bison",
+  answer("", correct = TRUE),
+  allow_retry = FALSE,
+  rows=3,
+  trim = FALSE,
+  answer_fn(learnr::correct),
+  correct = "Your answer has been submitted for grading.",
+  incorrect = "Your answer has been submitted for grading."
+  
+)
+
+```
+
+The knz_bison dataset has groups in the dataframe (here male and female in the animal_sex column, M and F) that might make for an interesting figure where you can assign a color to each group and then plot everything on the same x-y plot.
+
+### Q13: First, create a pipeline that calculates the age variable *and then* uses the `mutate()` and a nested `case_when()` function to assign the color "blue" to males and "red" to females in a new column named "bison_color" *and then* uses the `distinct()` function to ensure you have successfully assigned unique colors to each animal sex. (3 points)
+
+```{r problem_13, exercise=TRUE}
+
+```
+
+```{r problem_13-hint}
+
+Refer to the case_when() examples shown earlier in this lab
+
+```
+
+```{r problem_13-solution, exercise.reveal_solution=FALSE}
+
 knz_bison %>%
   dplyr::mutate(age = rec_year - animal_yob) %>%
   dplyr::mutate(bison_color = case_when(
     animal_sex == "M" ~ "blue",
     animal_sex == 'F' ~ "red")) %>%
   dplyr::distinct(animal_sex,bison_color)
+
 ```
 
-```{r graded_problem_7-check}
+```{r problem_13-check}
+
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your solution has been submitted for grading.") })
-```
-
-Q14: Now, swap out the distinct() function in the pipeline with a function that will create an x-y plot like in Q7, but that color-codes the points according to animal sex. (3 points)
-
-```{r graded_problem_8, exercise=TRUE}
+    message = "Your answer has been submitted for grading.") })
 
 ```
 
-```{r graded_problem_8-solution, exercise.reveal_solution=FALSE}
+### Q14: Now, swap out the `distinct()` function in the pipeline with a function that will create an x-y plot like in Q7, but that color-codes the points according to animal sex. (3 points)
+
+```{r problem_14, exercise=TRUE}
+
+
+```
+
+```{r problem_14-hint}
+
+Remember the "col" argument!
+
+```
+
+```{r problem_14-solution, exercise.reveal_solution=FALSE}
+
 knz_bison %>%
   dplyr::mutate(age = rec_year - animal_yob) %>%
   dplyr::mutate(bison_color = case_when(
     animal_sex == "M" ~ "blue",
     animal_sex == 'F' ~ "red")) %>%
-  plot(animal_weight ~ age,.,col=bison_color)
+  plot(animal_weight ~ age,data = .,col=bison_color)
+
 ```
 
-```{r graded_problem_8-check}
+```{r problem_14-check}
+
 grade_this( {
   pass_if(
     TRUE,
     message = "Your solution has been submitted for grading.") })
+
 ```
 
-Fun: Hmmm...something is missing...perhaps a legend? Legends are important because they will tell you (and others) what group corresponds to what color (duh!). Use this code below to add a legend to your figure, using the `legend()` function. Take a look its documentation using the `?` operator. All you need to do is copy and paste your answer in Q14 to this code chunk, but above the code provided. (0 points)
+**For fun**: Hmmm...something is missing...perhaps a legend? Figure legends are important because they will tell you (and others) what group corresponds to what color (duh!). Use this code below to add a legend to your figure, using the `legend()` function. Take a look its documentation using the `?` operator in the R console. All you need to do is copy and paste your answer in Q14 to this code chunk, but above the code provided. This part is not graded.
 
-```{r graded_problem_9, exercise = TRUE,exercise.setup = "graded_problem_8"}
+```{r demo_legend, exercise = TRUE,exercise.setup = "problem_14"}
+
 legend("topright", legend = c("male", "female"),
        col = c("blue", "red"), lty = c(1, 2), lwd = 2, bty = "n")
-```
-
-Q16: One thing you may have noticed is a potential difference in the age distribution of bison. Use the summarise() function (along with the other necessary tidy functions) and %>% to create a pipeline that calculates the average age of female bison. To do this, create a pipeline that calculates age as you have been doing, *and then* filters to female bison, *and then* calculates the average age; name this summarised variabe "average_age". *Hint: you will need to use the 'na.rm=T' argument within the mean() function to tell R to ingore missing values.* (2 points)
-
-```{r graded_problem_10, exercise = TRUE}
 
 ```
 
-```{r graded_problem_10-solution, exercise.reveal_solution=FALSE}
+### Q16: One thing you may have noticed is a potential difference in the age distribution of bison. Use the `summarise()` function (along with the other necessary tidy functions) and `%>%` to create a pipeline that calculates the *average* age of female bison. To do this, create a pipeline that calculates age as you have been doing, *and then* filters to female bison, *and then* calculates the average age; name this summarised variable "average_age" (2 points).
+
+```{r problem_16, exercise = TRUE}
+
+```
+
+```{r problem_16-hint}
+
+Use the 'na.rm=T' argument within the mean() function to tell R to ignore rows with missing values.
+
+```
+
+```{r problem_16-solution, exercise.reveal_solution=FALSE}
+
 knz_bison %>%
   dplyr::mutate(age = rec_year - animal_yob) %>%
   dplyr::filter(animal_sex == "F") %>%
   dplyr::summarise(average_age = mean(age,na.rm=T))
+
 ```
 
-```{r graded_problem_10-check}
+```{r problem_16-check}
+
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your solution has been submitted for grading.") })
-```
-
-Q17: Repeat this step for male bison. (2 points)
-
-```{r graded_problem_11, exercise = TRUE}
+    message = "Your answer has been submitted for grading.") })
 
 ```
 
-```{r graded_problem_11-solution, exercise.reveal_solution=FALSE}
+### Q17: Repeat this step for male bison. (2 points)
+
+```{r graded_problem_17, exercise = TRUE}
+
+```
+
+```{r graded_problem_17-hint}
+
+You will have to change only ONE letter from the Q16 answer!
+
+```
+
+```{r graded_problem_17-solution, exercise.reveal_solution=FALSE}
+
 knz_bison %>%
   dplyr::mutate(age = rec_year - animal_yob) %>%
   dplyr::filter(animal_sex == "M") %>%
   dplyr::summarise(average_age = mean(age,na.rm=T))
+
 ```
 
-```{r graded_problem_11-check}
+```{r graded_problem_17-check}
+
 grade_this( {
   pass_if(
     TRUE,
-    message = "Your solution has been submitted for grading.") })
+    message = "Your answer has been submitted for grading.") })
+
 ```
 
-```{r graded_problem_12,exercise.startover = FALSE}
-quiz(caption = 'interpretation',
-  question_text(
-    "Q18: How much longer on average do female bison live than male bison? (1 point)",
-    answer_fn(tutorialize::submitToTA),
-    rows = 3,
-    correct = "Your answer has been submitted"))  
+### Q18: Interpretation (1 point)
+
+```{r problem_18}
+
+question_text(
+  "How much longer on average do female bison live than male bison?",
+  answer("", correct = TRUE),
+  allow_retry = FALSE,
+  rows=3,
+  trim = FALSE,
+  answer_fn(learnr::correct),
+  correct = "Your answer has been submitted for grading.",
+  incorrect = "Your answer has been submitted for grading."
+  
+)
+
 ```
 
-All done!
-
-## Submitting tutorial results
-
-Great job!  You've completed the assignment!  Now it's time to turn it in...
-
-In the console, enter the following (case sensitive):
-
-```{r, echo=TRUE, eval=FALSE}
-ENSC311::submit_ENSC311()
+```{r download-answers, child = system.file("child_documents/download_answers.Rmd", package = "tutorial.helpers")}
 ```
 
-Your should see something like this:
-
-```{r}
-"Week_7_lab_311_<Posit_Cloud_ID>"
-```
-
-where the end of the character string is an ID that Posit Cloud assigned you. As you do more tutorials, this list of tutorials you have run will get longer. You must pass the number that corresponds to this assignments. For example, *if* you wanted to turn in the first item on the list, you would enter: ENSC311::submit_ENSC311(1).
-
-A "submit_ENSC311_..." file will appear under the "Files" tab in the lower right pane of RStudio.  Check the box next to the submit file and choose "Export..." from the "More" dropdown on the bar at the top of the tab.  Download the file and sumbit it to D2L.
-
-That's it!  You're all done!
+All done! Please upload your html file in the correct assignment folder.
