@@ -1,0 +1,462 @@
+---
+title: "Black Dog"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(tutorial.helpers)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, include=FALSE}
+#Author: Andrew J. Felton
+#Date: 12/3/2024
+#46 points total
+```
+
+```{r info-section, child = system.file("child_documents/info_section.Rmd", package = "tutorial.helpers")}
+```
+
+```{r copy-code-chunk, child = system.file("child_documents/copy_button.Rmd", package = "tutorial.helpers")}
+```
+
+## Functions, everywhere
+
+This lab is this many points: 
+
+```{r demo_points, exercise = TRUE}
+sum(5,3,4,1,1,10,5,5,1,5,1,5)
+```
+
+R is a programming language powered by `functions`. This tutorial will further explore functions through the context of you *creating your own functions*. In particular, *the goal of this tutorial is for you to create a customized function that will enable you to make predictions of the population growth of an invasive annual plant species*.
+
+### Creating your own custom functions
+
+It is common in data analysis, and programming generally, to create your own functions to complete tasks that are specific to your project. Knowing how to create these custom functions will also enable you also to unlock your creativity in data analysis and programming. Indeed, every function you will ever use is the result of the ingenuity of the people who created them. Custom functions typically leverage existing functions and operators, which further enhances what you can with data analysis in R and other programming languages. 
+
+### Anatomy of a function 
+
+**Below is the basic structure of a custom function:**
+
+function_name <- function(argument(s)){
+
+code to be executed
+
+return(name of object function returns)
+
+}
+
+
+- *function name*: What you name the function. Every good function has a good name that alludes to what the function does. For example, the `mean()` function calculates the mean (or average) of a sequence of numbers, while the `filter()` function filters rows in a dataframe based on a specific condition. Like every other object in R, you assign your custom function a name using the assignment operator `<-`.
+
+- *the `function()` function*: This is a built-in function in R whose purpose is to create user-defined functions. Thus, to create a function in R you use a function called...`function()`!
+
+- *argument(s)*: These are the inputs that your function will accept. A function can have one or many arguments. These arguments become the inputs you pass into them using the `=` operator.
+
+- *the body*: This is the underlying code of the function; what does your function do? When you call (or run) a function, you do not see the code body.
+
+- *return()*: This defines the output of the function; what object does your function return? You can either explicitly define the output value in the body using `return()` or you can omit it and R will automatically return the last value in the function body.
+
+## Warmup
+
+**Please not that if you absolutely cannot find an answer or keep getting an error,
+you can place the `#` operator in front of each line of code and submit it**
+
+Let's start as basic as it gets. The below function `add_one()` adds one to any *number* you pass into it.
+
+```{r demo_function_1, exercise = TRUE}
+
+add_one <- function(x){
+  
+  return(x + 1)
+  
+}
+
+add_one(x = 5)
+
+```
+
+The above code adds one to any number you pass into the `add_one()` function and then *returns* that value. Let's dissect it:
+
+- "add_one" is the function name
+- "x" is the sole argument
+- "x + 1" is the code body
+- the object that the "add_one" function returns is a number
+
+**Pro tip**: Here the code body is nested inside `return()`, but usually this is not the case, as there is typically a lot of code in a code body.
+
+The *body* of a function also acts like its own ephemeral R environment - it will temporarily store objects that are assigned names using `<-` in the body. This becomes more important when you have multiple steps within the body of a function that results in multiple intermediate objects. Below is a function `add_one_2()` with a slightly different code body than the original `add_one()`.
+
+```{r demo_function_2, exercise = TRUE}
+
+add_one_2 <- function(x){
+  
+  added <- x + 1
+  
+  return(added)
+  
+}
+
+add_one_2(x = 8)
+
+```
+
+You should notice that the `add_one_2()` function works the exact same as the original `add_one()` function.
+
+**Pro tip:** If you try to use the object named "added" that was created inside the `add_one_2()` function in any other context, R will not recognize it. Objects assigned names within the code body of functions do not get stored in the global environment - in this way they are ephemeral objects temporarily named and stored within the special environment of a function. This is by design, since functions are ultimately meant to save code and memory.  
+
+Functions can have many different arguments. See if you can create an argument according to the below specification in Q1.
+
+### Q1: Create a function called `add()` that adds any two numbers together, with the arguments being "x" and "y". No need to use the `return()` function or to assign names to any objects in the function in this case. (5 points)
+
+```{r problem_1, exercise = TRUE}
+
+
+
+```
+
+```{r problem_1-solution,exercise.reveal_solution=FALSE}
+
+add <- function(x,y){
+  
+  x + y
+  
+}
+
+```
+
+```{r problem_1-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+
+### Q2: Show that the `add()` function you created works by adding  26.75 (pass into x argument) to 1000.75 (pass into y argument). (3 points)
+
+```{r problem_2, exercise = TRUE,exercise.setup="problem_1-solution"}
+
+
+
+```
+
+```{r problem_2-solution,exercise.reveal_solution=FALSE}
+
+add(x = 26.75,y = 1000.75)
+
+```
+
+```{r problem_2-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+The above task could be executed without a function. Functions become more useful the more data you have, as the automation benefit of functions becomes clearer. For example, *imagine you want to add two long numeric vectors together*.
+
+**Execute this code in the following steps in the below code chunk:**
+
+### Q3: First, create two vectors using the `seq()` function. Name the first vector "vec_1" and have it be a sequence of 10 to 100 that increases by values of five. Name the second vector "vec_2" and have it be a sequence of .01 to .18 that increases by values of .01. (4 points)
+
+```{r problem_3, exercise = TRUE,exercise.setup="problem_1-solution"}
+
+
+
+```
+
+```{r problem_3-solution,exercise.reveal_solution=FALSE}
+
+vec_1 <- seq(from = 10, to = 100,by = 5)
+vec_2 <- seq(from = .01, to = .18,by = .01)
+
+```
+
+```{r problem_3-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+### Q4: Next, use the `add()` function you created in Q3 to add the two vectors together; have "vec_1" be passed into argument x and "vec_2" be passed into argument y. (1 point)
+
+```{r setup_1, include = FALSE}
+
+add <- function(x,y){
+  
+  x + y
+  
+}
+
+vec_1 <- seq(from = 10, to = 100,by = 5)
+vec_2 <- seq(from = .01, to = .19,by = .01)
+
+``` 
+
+```{r problem_4, exercise = TRUE,exercise.setup="setup_1"}
+
+
+
+```
+
+```{r problem_4-solution,exercise.reveal_solution=FALSE}
+
+add(x = vec_1,y = vec_2)
+
+```
+
+```{r problem_4-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+## A brief introduction to iteration using `sapply()`
+
+`Iteration` is the process of repeating a set of operations on data, typically across a sequence of values or inputs. There are a few different ways to do this in R, one of which includes using the *apply* family of functions. In particular, today you will focus on using `sapply()` which allows you to *apply* a function over a sequence of values. `sapply()` has two key arguments: "X", a vector to iterate over, and "FUN", the name of the function you want to use or *apply* to each value of X. Consider this example using the `add_one()` function created earlier:
+
+```{r demo_sapply_1,exercise=TRUE, exercise.setup="demo_function_1"}
+
+sapply(X=1:10,FUN=add_one)
+
+```
+
+You can also use multiple arguments with `sapply()`. Below, the X vector corresponds to the "y" argument of `add()`, but is being passed into the "X" argument of `sapply()` so that you can iterate the`add()` function across different values of "y", while holding x constant at 2.
+```{r demo_sapply_2,exercise=TRUE,exercise.setup="problem_1-solution"}
+
+sapply(X=1:10,FUN=add,x=2)
+
+```
+
+Play around with these examples to get familiar with how this function works and the placement of the arguments in the above examples. Understanding this will be important for the next part of this tutorial. Use the `?` operator in the console if you'd like more information.
+
+### Q5: Intepretation (1 point)
+
+```{r problem_5}
+
+question_text(
+  "Besides iteration, what concept (or, R behavior) is the above example demonstrating?",
+  answer("", correct = TRUE), #recycling 
+  allow_retry = FALSE,
+  rows=3,
+  trim = FALSE,
+  answer_fn(learnr::correct),
+  correct = "Your answer has been submitted for grading.",
+  incorrect = "Your answer has been submitted for grading."
+  
+)
+
+```
+
+## The scenario
+
+Cheatgrass (Bromus tectorum) is a common invasive annual grass in the western US. The grass displaces native and more high quality forage species, disrupts fire cycles that imperil sagebrush steppe ecosystems, and spreads rapidly due to its annual life history strategy. The result is a disruption to ecosystem structure, function, and services across the western US. Land managers are interested in how cheatgrass populations might grow in the near term, such as over the next ten years. Below your task is to create a function that will contain a population growth model that can be used to run different simulations population growth dynamics. Following that, you will explore how variation in population size influences population growth dynamics.
+
+### Bulding the model
+
+Before proceeding, read and review the "density_dependent_growth.doc" document attached in this assignment. Your first task is to turn the model described in that document into a function that you will be able to use to make predictions of population growth.
+
+### Q6 (10 points): Now, create a custom function named `dens_dep_growth()` that turns the density dependence model into a function that returns *dN_dt*, or *the change in population size*, for a given set of inputs. Use a return statement. Arguments in the function include the parameters of the model and should be named as such:
+
+- *N_i*: Initial population size at first time step
+- *r*: Intrinsic population growth rate
+- *K*: Carrying capacity of the population.
+
+*Make it so that the value returned in the output of your function is rounded to zero decimal points, as you cannot have half an individual.*
+
+**Pro tip**: Use the `round()` function. Use the `?`operator in your R console to learn about how to use this function.
+
+
+```{r problem_6, exercise = TRUE}
+
+
+
+```
+
+```{r problem_6-solution,exercise.reveal_solution=FALSE}
+
+#density dependent growth model
+dens_dep_growth <- function(r,N_i,K){
+  
+  #main equation: the must get the basic structure correct
+  dN_dt <- r * N_i * (1 - (N_i / K))
+  
+  dN_dt <- round(dN_dt,0)
+  
+  return(dN_dt)
+  
+}
+
+```
+
+```{r problem_6-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+### Q7 (5 points): Now, use the `dens_dep_growth()` function you just created along with the `sapply()` function to see how variation in *initial population size* influences model predictions of population growth in the next year. Follow these steps in the code chunk below:
+
+- First, create a vector named "pop_size" that is a sequence of 10 to 1000 that increases by values of 1. This is the range of initial population sizes. *Do not use `seq()` to create this vector*.
+
+- Then, use the `sapply()` function to create a new vector named "predictions_1" that returns a range of outputs from `dens_dep_growth()`. Important: *Assume we already have estimates of the other two parameters (arguments) in the model: Make the argument (parameters) "r" equal to 1 and "K" equal to 1000*.
+
+```{r problem_7, exercise = TRUE,exercise.setup="problem_6-solution"}
+
+
+
+```
+
+```{r problem_7-solution,exercise.reveal_solution=FALSE}
+
+pop_size <- 10:1000
+predictions_1 <- sapply(X = pop_size,dens_dep_growth,r = 1,K = 1000)
+
+```
+
+```{r problem_7-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+### Q8: Now, use the `plot()` function to visualize the results of this simulation by showing how population growth is influenced by population size. Specifically, make an x-y plot with "predictions_1" on the Y axis and "pop_size" on the X axis. Make it so the label for the X axis is "Initial population size (individuals)" and the label for the Y axis is "Change in population size". Use `?` in the console to learn more about how to make axis labels in the `plot()` function. (5 points)
+
+```{r setup_2,include = FALSE,exercise.setup="problem_6-solution"}
+
+pop_size <- 10:1000
+predictions_1 <- sapply(X = pop_size,dens_dep_growth,r = 1,K = 1000)
+
+```
+
+```{r problem_8, exercise = TRUE,exercise.setup="setup_2"}
+
+
+
+```
+
+```{r problem_8-solution,exercise.reveal_solution=FALSE}
+
+plot(x=pop_size,y = predictions_1,
+     xlab = 'Initial population size (individuals)',
+     ylab = 'Change in population size')
+
+```
+
+```{r problem_8-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+### Q9: Interpretation (1 point)
+
+```{r problem_9}
+
+question_text(
+  "Describe what you see in the plot you created",
+  answer("", correct = TRUE), #unimodal relationship
+  allow_retry = FALSE,
+  rows=3,
+  trim = FALSE,
+  answer_fn(learnr::correct),
+  correct = "Your answer has been submitted for grading.",
+  incorrect = "Your answer has been submitted for grading."
+  
+)
+
+
+```
+
+### Q10: Now change just one thing. Update the population growth predictions from "predictions_1" by changing K to 10000 and assigning this new vector the name "predictions_2". Then create the same x-y plot you created in Q2 but using predictions_2 instead of predictions 1. Do this all in the same code chunk below. (5 points).
+
+```{r problem_10, exercise = TRUE,exercise.setup="setup_2"}
+
+
+
+```
+
+```{r problem_10-solution,exercise.reveal_solution=FALSE}
+
+predictions_2 <- sapply(X = pop_size,dens_dep_growth,r = 1,K = 10000)
+plot(x=pop_size,y = predictions_2,
+     xlab = 'Initial population size (individuals)',
+     ylab = 'Change in population size')
+
+
+```
+
+```{r problem_10-check}
+
+grade_this( {
+  pass_if(
+    TRUE,
+    message = "Your answer has been submitted for grading.") })
+
+```
+
+### Q11 Interpretation (1 point)
+
+```{r problem_11}
+
+question_text(
+  "Describe what you see in the plot you created",
+  answer("", correct = TRUE), #linear relationship
+  allow_retry = FALSE,
+  rows=3,
+  trim = FALSE,
+  answer_fn(learnr::correct),
+  correct = "Your answer has been submitted for grading.",
+  incorrect = "Your answer has been submitted for grading."
+  
+)
+
+
+```
+
+### Q12 Interpretation (5 points)
+
+```{r problem_12}
+
+question_text(
+  "Propose one ecological explanation for why you think these relationship differ",
+  answer("", correct = TRUE),
+  allow_retry = FALSE,
+  rows=3,
+  trim = FALSE,
+  answer_fn(learnr::correct),
+  correct = "Your answer has been submitted for grading.",
+  incorrect = "Your answer has been submitted for grading."
+  
+)
+
+
+```
+
+```{r download-answers, child = system.file("child_documents/download_answers.Rmd", package = "tutorial.helpers")}
+```
+
+All done! Please upload your html file in the correct assignment folder.
