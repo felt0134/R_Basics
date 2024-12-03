@@ -1,5 +1,5 @@
 ---
-title: "Bison Growth Dynamics"
+title: "Crescendolls"
 tutorial:
   id: "week_7_lab"
 output: 

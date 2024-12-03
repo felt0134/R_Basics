@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r, include=FALSE}
 #Author: Andrew J. Felton
-#Date: 10/X/2024
+#Date: 11/3/2024
 ```
 
 ```{r info-section, child = system.file("child_documents/info_section.Rmd", package = "tutorial.helpers")}
