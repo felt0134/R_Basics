@@ -1,5 +1,5 @@
 ---
-title: "Vectors and Functions"
+title: "Physical Grafitti"
 output: learnr::tutorial
 runtime: shiny_prerendered
 description: "Introduction to the use of vectors and functions in R"
