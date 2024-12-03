@@ -1,5 +1,5 @@
 ---
-title: "R Basics Exam Review"
+title: "When the levee breaks"
 tutorial:
   id: "Week_6_Exam_Review"
 output: 
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r, include=FALSE}
 #Author: Andrew J. Felton
-#Date: 11/X/2024
+#Date: 12/3/2024
 ```
 
 ```{r info-section, child = system.file("child_documents/info_section.Rmd", package = "tutorial.helpers")}
