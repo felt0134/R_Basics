@@ -1,5 +1,5 @@
 ---
-title: "Tidy Functions"
+title: "Rock and Roll"
 output: learnr::tutorial
 runtime: shiny_prerendered
 description: "Introducing key tidyverse-based data wrangling functions"
