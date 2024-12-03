@@ -1,8 +1,8 @@
 ---
-title: "Plotting Penguins"
+title: "Going to California"
 output: learnr::tutorial
 runtime: shiny_prerendered
-description: "An R learning lab exploring the Palmer Penguines data set.  In this lab, you will build and demonstrate proficiency in working with dataframes and plotting with base R syntax."
+description: "Building and demonstrating proficiency in working with dataframes and plotting with base R syntax."
 ---
 
 ```{r setup, include=FALSE}
