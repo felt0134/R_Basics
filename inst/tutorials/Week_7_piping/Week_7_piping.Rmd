@@ -1,5 +1,5 @@
 ---
-title: "Piping"
+title: "Face to Face"
 output: learnr::tutorial
 runtime: shiny_prerendered
 description: "Using the pipe operator to chain functions together"
