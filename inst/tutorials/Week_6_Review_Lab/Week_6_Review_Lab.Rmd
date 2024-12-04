@@ -1,5 +1,5 @@
 ---
-title: "When the levee breaks"
+title: "When the Levee Breaks"
 tutorial:
   id: "Week_6_Exam_Review"
 output: 

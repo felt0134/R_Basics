@@ -1,8 +1,8 @@
 ---
-title: "Dataframes"
+title: "Digital Love"
 output: learnr::tutorial
 runtime: shiny_prerendered
-description: "Introducing the basics of dataframes in R"
+description: "Introducing the basics of extraction in R"
 ---
 ```{r setup, include=FALSE}
 library(learnr)

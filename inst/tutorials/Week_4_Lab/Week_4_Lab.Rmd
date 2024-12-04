@@ -2,6 +2,7 @@
 title: "Black Dog"
 output: learnr::tutorial
 runtime: shiny_prerendered
+description: "A deeper dive into functions by creating your own"
 ---
 
 ```{r setup, include=FALSE}
@@ -28,7 +29,8 @@ knitr::opts_chunk$set(echo = FALSE)
 This lab is this many points: 
 
 ```{r demo_points, exercise = TRUE}
-sum(5,3,4,1,1,10,5,5,1,5,1,5)
+points <- c(5,3,4,1,1,10,5,5,1,5,1,5)
+sum(points)
 ```
 
 R is a programming language powered by `functions`. This tutorial will further explore functions through the context of you *creating your own functions*. In particular, *the goal of this tutorial is for you to create a customized function that will enable you to make predictions of the population growth of an invasive annual plant species*.
