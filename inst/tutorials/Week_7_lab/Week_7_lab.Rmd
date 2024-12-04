@@ -268,7 +268,7 @@ With some direction in terms of which argument of `plot()` iris should be piped 
 
 ```{r problem_6-hint}
 
-Use ? in the R console to see what the "col" argument does int he plot() function
+Use ? in the R console to see what the "col" argument does in the plot() function
 
 ```
 
