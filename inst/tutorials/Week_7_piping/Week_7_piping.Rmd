@@ -10,6 +10,7 @@ library(learnr)
 library(gradethis)
 library(tutorial.helpers)
 library(tidyverse)
+library(lterdatasampler)
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
@@ -363,7 +364,7 @@ tree_traits <- hbr_maples %>%
 
 ### Q9: Now, make an x-y plot depicting the relationship betyouen stem dry mass and leaf mass per area. Create it without the dot operator. How does LMA change as a function of stem dry mass?
 
-```{r problem_9, exercise = TRUE}
+```{r problem_9, exercise = TRUE,exercise.setup = "problem_8-solution"}
 
 
 ```
