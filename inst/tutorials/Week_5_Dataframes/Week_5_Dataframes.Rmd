@@ -232,7 +232,7 @@ grade_code()
 ```{r quiz_1}
 quiz(
   question(
-    "Which of the characteristics of tidy data is always an atomic vector?",
+    "Which of two characteristics of tidy data are always an atomic vector?",
     answer("a variable/column",correct = TRUE),
     answer("a row/observation"),
     answer("a cell/value",correct = TRUE),
