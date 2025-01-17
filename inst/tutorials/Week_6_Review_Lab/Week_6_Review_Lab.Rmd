@@ -92,14 +92,14 @@ grade_code()
 
 ### Q3: Use recycling to multiply vector_1 by 0.75.
 
-```{r problem_3, exercise=TRUE,exercise.setup="problem_1"}
+```{r problem_3, exercise=TRUE,exercise.setup="problem_1-solution"}
 
 
 ```
 
 ```{r problem_3-hint}
 
-Rember 0.75 is a vector of length 1
+Remember 0.75 is a vector of length 1
 
 ```
 
@@ -115,9 +115,9 @@ grade_code()
 
 ```
 
-### Q4: Create a new vector using the `seq()` function which ranges from 10 to 80 and increases by values of 10. Assign this new vector the name "vector_2". Then, on the next line use the `plot()` function to plot vector_1 (created in the previous problem) on the x axis and vector_2 on the y axis.
+### Q4: Create a new vector using the `seq()` function which ranges from 10 to 80 and increases by values of 10. Assign this new vector the name "vector_2". Then, on the next line use the `plot()` function to plot vector_1 (created in Q1 on the x axis and vector_2 on the y axis.
 
-```{r problem_4, exercise=TRUE,exercise.setup="problem_3"}
+```{r problem_4, exercise=TRUE,exercise.setup="problem_1-solution"}
 
 
 ```
@@ -457,7 +457,7 @@ grade_code()
 
 **Pro tip**: Remember to use the help operator `?` in the R console to learn more about how a specific function works (e.g., ?head).
 
-```{r problem_12, exercise=TRUE,exercise.setup="problem_11"}
+```{r problem_12, exercise=TRUE,exercise.setup="problem_11-solution"}
 
 
 ```
@@ -589,13 +589,13 @@ grade_code()
 
 ```{r problem_17-hint}
 
-The answer to question 16 is now an argument in the `mean()` function
+The answer to question 17 is now an argument in the `mean()` function
 
 ```
 
 ```{r problem_17-solution,exercise.reveal_solution = FALSE}
 
-mean(iris$Sepal.Width)
+mean(iris$Sepal.Length)
 
 ```
 
@@ -605,7 +605,7 @@ grade_code()
 
 ```
 
-### Q18: Repeat question 7 but "wrap" or "nest" the `mean()` function as an argument *inside* the `round()` function so to round the output to two decimal places.
+### Q18: Repeat question 17 but "wrap" or "nest" the `mean()` function as an argument *inside* the `round()` function so to round the output to two decimal places.
 
 ```{r problem_18, exercise=TRUE}
 
@@ -682,7 +682,7 @@ grade_code()
 
 ### Q21: Using the `[]` and `$` operators to filter the iris dataframe to data that is only composed of data from the virginica species
 
-```{r problem_21, exercise=TRUE,exercise.setup="problem_19"}
+```{r problem_21, exercise=TRUE,exercise.setup="problem_19-solution"}
 
 
 ```
@@ -787,9 +787,7 @@ Use the `min()` and `max()` functions in your custom function.
 
 my_range <- function(x){
   
-  output <- max(x) - min(x)
-  
-  return(output)
+ max(x) - min(x)
   
 }
 
@@ -803,7 +801,7 @@ grade_code()
 
 ### Q23: Use the `my_range()` function you created to calculate the range of the Petal.Length variable within the iris dataframe.
 
-```{r problem_23, exercise=TRUE,exercise.setup = "problem_22"}
+```{r problem_23, exercise=TRUE,exercise.setup = "problem_22-solution"}
 
 my_range(iris$Petal.Length)
 
@@ -811,13 +809,13 @@ my_range(iris$Petal.Length)
 
 ```{r problem_23-hint}
 
-The column should be the sole argument in the function
+The column (or really, vector) should be the sole argument in the function
 
 ```
 
 ```{r problem_23-solution,exercise.reveal_solution = FALSE}
 
-The column should be the sole argument in the function
+my_range(iris$Petal.Length)
 
 ```
 

@@ -315,11 +315,11 @@ grade_code()
 
 ```
 
-* **pro tip:** You can use  the `round()` function to round outputs of calculations to a specific number of decimal places.
+**Pro tip:** You can use  the `round()` function to round outputs of calculations to a specific number of decimal places.
 
 Q5: Use the `$` operator to add a new column (variable) to the iris dataframe that is calculated as the ratio of Petal.Length to Petal.Width. Name this new variable "petal_ratio".
 
-```{r problem_5, exercise = TRUE, exercise.setup = "problem_2"}
+```{r problem_5, exercise = TRUE,exercise.setup = "problem_2"}
 
 
 ```
