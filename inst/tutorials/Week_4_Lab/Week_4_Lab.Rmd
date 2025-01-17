@@ -64,7 +64,7 @@ return(name of object function returns)
 
 ## Warmup
 
-**Please not that if you absolutely cannot find an answer or keep getting an error,
+**Please note that if you absolutely cannot find an answer or keep getting an error,
 you can place the `#` operator in front of each line of code and submit it**
 
 Let's start as basic as it gets. The below function `add_one()` adds one to any *number* you pass into it.
