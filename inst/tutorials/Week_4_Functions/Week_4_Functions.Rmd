@@ -1,6 +1,10 @@
 ---
 title: "Physical Grafitti"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
+tutorial:
+  id: "Week_4_Functions"
 runtime: shiny_prerendered
 description: "Introduction to the use of vectors and functions in R"
 
