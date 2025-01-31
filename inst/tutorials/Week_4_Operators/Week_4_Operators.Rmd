@@ -1,6 +1,10 @@
 ---
 title: "Nightvision"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
+tutorial:
+  id: "Week_4_Operators"
 runtime: shiny_prerendered
 description: "Exploring the concept and use of operators in R"
 ---
