@@ -1,6 +1,10 @@
 ---
 title: "Rock and Roll"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
+tutorial:
+  id: "Week_7_Tidy_Functions"
 runtime: shiny_prerendered
 description: "Introducing key tidyverse-based data wrangling functions"
 ---

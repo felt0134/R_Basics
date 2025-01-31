@@ -1,6 +1,10 @@
 ---
 title: "Kashmir"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
+tutorial:
+  id: "Week_8_Grouping"
 runtime: shiny_prerendered
 description: "Using tidy functions across groups in data"
 ---

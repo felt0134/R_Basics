@@ -1,6 +1,10 @@
 ---
 title: "Face to Face"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
+tutorial:
+  id: "Week_7_Piping"
 runtime: shiny_prerendered
 description: "Using the pipe operator to chain functions together"
 ---
