@@ -1,6 +1,10 @@
 ---
 title: "Digital Love"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
+tutorial:
+  id: "Week_5_Extraction"
 runtime: shiny_prerendered
 description: "Introducing the basics of extraction in R"
 ---
