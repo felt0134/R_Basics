@@ -1,6 +1,10 @@
 ---
 title: "Black Dog"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
+tutorial:
+  id: "Week_4_Lab"
 runtime: shiny_prerendered
 description: "A deeper dive into functions by creating your own"
 ---
