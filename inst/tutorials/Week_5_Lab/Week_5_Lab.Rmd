@@ -1,6 +1,10 @@
 ---
 title: "Going to California"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
+tutorial:
+  id: "Week_5_Lab"
 runtime: shiny_prerendered
 description: "Building and demonstrating proficiency in working with dataframes and plotting with base R syntax."
 ---
