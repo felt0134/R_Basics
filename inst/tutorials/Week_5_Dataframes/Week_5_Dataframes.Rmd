@@ -1,6 +1,10 @@
 ---
 title: "One more time"
-output: learnr::tutorial
+output: 
+  learnr::tutorial:
+    progressive: true
+tutorial:
+  id: "Week_5_Dataframes"
 runtime: shiny_prerendered
 description: "Introducing the basics of dataframes in R"
 ---
