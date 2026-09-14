@@ -4,9 +4,9 @@ output:
   learnr::tutorial:
     progressive: true
 tutorial:
-  id: "Week_4_Operators"
+  id: "Week_4_Operators_Vectors"
 runtime: shiny_prerendered
-description: "Exploring the concept and use of operators in R"
+description: "Vectors and Operators in R"
 ---
 
 ```{r setup, include=FALSE}
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r, include=FALSE}
 #Author: Andrew J. Felton
-#Date: 9/18/2024
+#Date: 9/14/2026
 ```
 
 ```{r info-section, child = system.file("child_documents/info_section.Rmd", package = "tutorial.helpers")}
@@ -27,27 +27,54 @@ knitr::opts_chunk$set(echo = FALSE)
 ```{r copy-code-chunk, child = system.file("child_documents/copy_button.Rmd", package = "tutorial.helpers")}
 ```
 
-## Operators 
+## Vectors
+
+Vectors form the building blocks of storing data and are an essential concept towards understanding `tidy data` principles. Here the focus is on what is called an `atomic vector`, which is simply a sequence of values, composed of the same `data type`, of a given `length`.
+
+`length` is the number of values in the sequence. The vector 1,2,3 has length = 3 because it has three values in the sequence, and the vector 1,2,4,8 has length = 4 because it has 4 values in the sequence.
+
+`data type` refers to the type of information a variable is stored as. There are multiple data types that an atomic vector can store (e.g., numbers, text, dates). Importantly, a vector is and must be composed of the *same* data type. Understanding the behavior of atomic vectors is important because they ultimately form the columns - variables - in a data table, which will be the primary data structure you will work with in this class, and likely beyond.
+
+```{r demo_sequence, exercise=TRUE}
+
+#create a vector that is a sequence from 1 to 10 which increases by increments of 1
+1:10
+
+```
+
+*Of course, you can assign this vector a name. Run the code below to see the output.*
+```{r demo_sequence_2, exercise=TRUE}
+
+#create a sequence of 1 to 10 that increases by values of 1
+sequence <- 1:10
+sequence 
+
+```
+
+* Note: The default behavior of `:` is to create a numeric vector that increases by values of 1 ranging from the value to the left of the symbol to the value right of the symbol.
+
+## Operators
 
 `Operators` are symbols that perform logical (e.g., true or false) or mathematical (e.g., subtraction or addition) manipulations (also called "operations") on values or variables in data. Operators that perform calculations are called `arithmetic operators`. The symbols for these are (mostly) intuitive:
 
 *Arithmetic operators:*
 
-* `+` does addition
-* `-` does subtraction
-* `*` does multiplication
-* `/` does division
-* `^` Does "to the power of" (e.g., to square or cube a value)
+-   `+` does addition
+-   `-` does subtraction
+-   `*` does multiplication
+-   `/` does division
+-   `^` Does "to the power of" (e.g., to square or cube a value)
 
-In R, you can also `assign` objects (whether a number, vector, or dataset) a `name`. This is useful because once we do this, we can store the `objects` in the `Global Environment`. This ability to store objects in R is important because it will allow you to reference them for later use in your analysis. You can use an operator called the `assignment operator` to give objects names and store them in the global environment for later use, referencing the name assigned to it. The utility of storing named objects in the global environment will become more evident when you starting using R scripts.
+In R, you can also `assign` objects (whether a number, vector, or dataset) a `name`. This is useful because once we do this, we can store the `objects` in the `Global Environment`. This ability to store objects in R is important because it allows you to reference them for later use in your analysis. You can use an operator called the `assignment operator` to assign objects names and store them in the global environment for later use by referencing the name assigned to it. The value of storing named objects in the global environment will become more evident the more you use R scripts.
 
 *Assignment operator:*
 
-* `<-` assigns an object a name
+-   `<-` assigns an object a name
 
 You can think of this as an arrow, pointing to what the name of an object is. Pay attention to the sequence of this code:
 
 *If you run this code, R will return the value 75. Go ahead and run the code!*
+
 ```{r demo, exercise=TRUE}
 
 75
@@ -55,15 +82,17 @@ You can think of this as an arrow, pointing to what the name of an object is. Pa
 ```
 
 *You can `assign` this number, 75, a name. Typically, you will want this name to be descriptive or informative and thus have some `syntactic sugar`; coding features that make the code easier or more readable (e.g., descriptive and concise object names) but don't necessarily increase code functionality or performance. Run the code and see what the output is (or is not):*
+
 ```{r demo_assign, exercise=TRUE}
 
 seventy_five <- 75
 
 ```
 
-* `Pro tip:` When naming objects, do not use spaces (R will not like this). Instead, use underscores. For example, instead of naming an object "seventy five", you should name it "seventy_five".
+-   `Pro tip:` When naming objects, do not use spaces (R will not like this). Instead, use underscores. For example, instead of naming an object "seventy five", you should name it "seventy_five".
 
-*You can also can add more syntactic sugar by `commenting` your code using the `#` operator. Anything following # will not run as code, but will be visible to the reader of your code. This is useful for two reasons: 1) to describe and annotate what your code is doing or 2) to `comment out` a line or block of code so that is doesn't run.*
+*You can also can add more syntactic sugar by `commenting` your code using the `#` operator. Anything following \# will not run as code, but will be visible to the reader of your code. This is useful for two reasons: 1) to describe and annotate what your code is doing or 2) to `comment out` a line or block of code so that is doesn't run.*
+
 ```{r demo_comment, exercise=TRUE}
 
 #I am creating a variable called seventy_five
@@ -72,6 +101,7 @@ seventy_five <- 75
 ```
 
 *Notice that R returns nothing when we run the above code. What is happening here is that R has stored the value 75 with the name seventy_five. Now we can reference this name to return the value 75. Naming objects is thus a way you can store them in R's memory for later use. Run the code and see what happens:*
+
 ```{r demo_comment_return, exercise=TRUE}
 
 #I am creating a variable called seventy_five
@@ -82,9 +112,20 @@ seventy_five
 
 ```
 
+*Creating an atomic vector using the `:` operator*
+
+-   `:` is synonymous to "through", and will create a sequence of values that increases in increments of one:
+
+```{r demo_comment_colon, exercise=TRUE}
+
+#create a sequence of value from 5 to 10
+5:10
+
+```
+
 Modify the above blocks of code with different names and values to see for yourself.
 
-## Problem Set 
+## Problem Set
 
 *Let's start by using arithmetic operators to do some calculations*
 
@@ -192,7 +233,7 @@ grade_this_code()
 
 *Named objects can interact with each other. Calculate a third object.*
 
-Multiply `two` by `twenty_five` and name the result of calculation a third object called `fifty`. Print it so that the new object returns the value of the calculation. 
+Multiply `two` by `twenty_five` and name the result of calculation a third object called `fifty`. Print it so that the new object returns the value of the calculation.
 
 ```{r problem_5-setup, include=FALSE}
 
@@ -200,7 +241,6 @@ twenty_five <- 5^2
 two <- 10/5
 
 ```
-
 
 ```{r problem_5, exercise=TRUE,exercise.setup = "problem_5-setup"}
 
@@ -227,6 +267,30 @@ grade_this_code()
 
 ```
 
+Use the `:` operator to create a vector that ranges from 10 to 20 in intervals of 1.
+
+```{r problem_6, exercise=TRUE}
+
+```
+
+```{r problem_6-hint}
+
+You can do this in one line of code 
+
+```
+
+```{r problem_6-solution}
+
+10:20
+
+```
+
+```{r problem_6-check}
+
+grade_this_code()
+
+```
+
 ## Quiz
 
 ```{r quiz}
@@ -248,13 +312,17 @@ learnr::quiz(
     answer("a vector"),
     answer("an equation"),
     answer("all the above", correct = TRUE)
+    ),
+  question("What will be the ninth output if you add 1:7 and 1:10 together",
+    answer("4"),
+    answer("8"),
+    answer("17"),
+    answer("11",correct = TRUE)
     )
 )
 ```
-
 
 ```{r download-answers, child = system.file("child_documents/download_answers.Rmd", package = "tutorial.helpers")}
 ```
 
 All done! Please upload your html file in the correct assignment folder.
-
