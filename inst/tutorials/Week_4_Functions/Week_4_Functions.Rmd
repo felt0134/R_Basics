@@ -1,10 +1,10 @@
 ---
-title: "Physical Grafitti"
+title: "Data Types and Functions"
 output: 
   learnr::tutorial:
     progressive: true
 tutorial:
-  id: "Week_4_Functions"
+  id: "Week_4_Functions_Data_Types"
 runtime: shiny_prerendered
 description: "Introduction to the use of vectors and functions in R"
 
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```{r, include=FALSE}
 #Author: Andrew J. Felton
-#Date: 9/24/2024
+#Date: 9/14/2026
 ```
 
 ```{r info-section, child = system.file("child_documents/info_section.Rmd", package = "tutorial.helpers")}
@@ -28,11 +28,11 @@ knitr::opts_chunk$set(echo = FALSE)
 ```{r copy-code-chunk, child = system.file("child_documents/copy_button.Rmd", package = "tutorial.helpers")}
 ```
 
-## Vectors
+## Vectors, not just numbers
 
-Vectors form the building blocks of storing data and are an essential concept towards understanding `tidy data` principles. A `vector` is a sequence of values, composed of the same `data type`, of a given `length`.
+As a reminder, vectors form the building blocks of storing data and are an essential concept towards understanding `tidy data` principles. A `vector` is a sequence of `elements`, composed of the same `data type`, of a given `length`.
 
-`length` is the number of values in the sequence. The vector 1,2,3 has length = 3 because it has three values in the sequence, and the vector 1,2,4,8 has length = 4 because it has 4 values in the sequence.
+`length` is the number of elements (e.g., distinct values) in the sequence. The vector 1,2,3 has length = 3 because it has three elements in the sequence, and the vector 1,2,4,8 has length = 4 because it has 4 elements in the sequence.
 
 `data type` refers to the type of information a variable is stored as. There are multiple data types that a vector can be stored as. Importantly, a vector is and must be  composed of the *same* data type. We call this an `atomic vector`.
 
@@ -44,37 +44,17 @@ Vectors form the building blocks of storing data and are an essential concept to
 
 * logical: one of two values: T (TRUE) or F (FALSE) represent true or false, respectively. You can have logical vectors.
 
-In R, You can use the `:` operator to rapidly create a vector. Run the code below to see the output.
-
-```{r demo_sequence, exercise=TRUE}
-
-#create a vector that is a sequence from 1 to 10 which increases by increments of 1
-1:10
-
-```
-
-*Of course, you can assign this vector a name. Run the code below to see the output.*
-```{r demo_sequence_2, exercise=TRUE}
-
-#create a sequence of 1 to 10 that increases by values of 1
-sequence <- 1:10
-sequence 
-
-```
-
-* Note: The default behavior of `:` is to create a numeric vector that increases by values of 1 ranging from the value to the left of the symbol to the value right of the symbol.
-
 ## Functions
 
-R is a programming language the heavily relies on using `functions`. Almost everything you do in R will require, to some extent, the use of functions. Therefore, functions are really the workhorse of data wrangling and analysis in R; they can import datasets, crunch numbers, filter data, combine datasets together, create diverse data visualizations ranging from simple x-y plots to complex maps, or run statistical models, just to name a few.
+R is a programming language that relies on using `functions`. Almost everything you do in R will require, to some extent, the use of functions. Therefore, functions are really the workhorse of data wrangling and analysis in R; they can import datasets, crunch numbers, filter data, combine datasets together, create diverse data visualizations ranging from simple x-y plots to complex maps, or run statistical models, just to name a few. Eventually, you will even be able to write your own customized functions.
 
-A function has three basic characteristics:
+A function has three basic visual characteristics:
 
 * A function has a name that is descriptive of what it does.
-* A function has bounded parentheses to the right of the name that contain everything that will be "passed" into the function. This is in contrast to operators, where whatever is being "operated on" can be on either side of the symbol - case in point the `:` operator to create a sequence of values (AKA a vector).
-* A function has `arguments` that define what will be fed into the function as inputs, which are needed for the function to *return* an output. All arguments are contained in the bounded parentheses. Once you have the function defined and the arguments provided, you can *call* (execute or run) the function to return an output.
+* A function has bounded parentheses to the right of the name that contain the inputs to be "passed" into the function. This is in contrast to operators, where whatever is being "operated on" can be on either side of the symbol - case in point the `:` operator to create a sequence of values (AKA a vector).
+* A function has `arguments` that defines the inputs to be passed into the function, which are needed for the function to *return* an output. All arguments are contained in the bounded parentheses. Once you have the function defined and the arguments provided, you can *call* (execute or run) the function to return an output. Functions are useful because they work as shorthands for longer blocks of code to execute specific tasks.
 
-One important function that create vectors is the `c()` function. This function "**c**ombines" (or "**c**oncatenates") multiple values to form a single vector. This allows you to create all sorts of vectors. Run the code below to create an (atomic) character vector:
+One important function that creates vectors is the `c()` function. This function "**c**ombines"  multiple values to form a single vector. This allows you to create all sorts of vectors. Run the code below to create an (atomic) character vector:
 
 ```{r demo_combine_2, exercise=TRUE}
 
@@ -82,9 +62,11 @@ c("R","is","the","best")
 
 ```
 
-Notice how each value passed into the `c()` function is separated by a comma. Commas separate each argument in a function, and here each value is treated as an argument. An argument is a value or variable that you "pass" into a function. As such, argument(s) direct the inputs to functions, who then return a desired output(s). Above, the arguments passed into the `c()` function are different characters, and the output *returned* is a character vector of length 4.
+Notice how each value passed into the `c()` function is separated by a comma. Commas separate each argument in a function, and here each value is treated as an argument. An argument is a value or variable that you "pass" into a function. Argument(s) direct the inputs to functions, who then return a desired output(s). Above, the arguments passed into the `c()` function are different characters, and the output *returned* is a character vector of length 4.
 
-You can also add vectors together. Adding two vectors together highlights an important behavior of data (and specifically vectors) in R called `recycling`. If we added two vectors together that had different lengths, what do you think might happen? First let's add two vectors of the same length together. Run the code below:
+### recycling revisted
+
+Adding two vectors together highlights an important behavior of data (and specifically vectors) in R called `recycling`. If we added two vectors together that had different lengths, what do you think might happen? First let's add two vectors of the same length together. Run the code below:
 ```{r demo_recyling, exercise=TRUE}
 
 vector_1 <- c(1,1,1,1)
@@ -106,6 +88,11 @@ vector_3 + vector_4
 ```
 
 Notice anything? What happened is called `recycling` and is an important behavior of vectors in R, in that the values in vector_4 got "recycled". When it came to finding a third value to add to vector_3, vector_4 just went on and circled back to the first value in the sequence, 0. This is also what is happening if you were to simply just add 1 to vector_3; 1 would be added to every value of vector_3 because we are constantly recycling the value of 1 (since it is just a vector of length 1!)
+
+*Coercion: Another behavior of atomic vectors*
+
+You can also use `c()` to combine different types of atomic vectors (e.g., integers and character data types). The dilemma is than an atomic vector can only be composed of a single data type. The result is that R will "coerce" the resulting vector to be composed of the most flexible data type. If you combine an integer and a double vector together, it will become a double vector because real numbers have more flexibility in what they can be than integers (e.g., 1 can be 1.0, but you must round to turn 1.5 into an integer!). The same idea applies to combining a double with a character vector. Characters can basically take on any values, be it a number or letters, but you cannot convert a letter to a double. This results in a "coercion hierarchy" from least to most flexible data type: `NA -> integer -> double -> character`. View and code along in the associated guided practice video for a demonstration of this.
+
 
 *Let's look at some other R functions that use vectors:*
 
@@ -194,30 +181,6 @@ hist(normal_2)
 Ah, that is much better. Now let's do some practice questions.
 
 ## Problem Set
-
-Use the `:` operator to create a vector that ranges from 10 to 20 in intervals of 1.
-
-```{r problem_1, exercise=TRUE}
-
-```
-
-```{r problem_1-hint}
-
-You can do this in one line of code without any functions
-
-```
-
-```{r problem_1-solution}
-
-10:20
-
-```
-
-```{r problem_1-check}
-
-grade_this_code()
-
-```
 
 Write the R code to create a vector that ranges from 0 to 100 in intervals of 25.
 
@@ -320,7 +283,7 @@ Remember that you can insert the name of a vector in the hist() function
 ```{r problem_5-solution}
 
 normal_vector <- rnorm(n = 500,mean = 5000,sd = 50)
-hist(normal_vector)
+hist(x = normal_vector)
 
 ```
 
@@ -354,6 +317,12 @@ learnr:: quiz(
     answer("Recycling",correct = TRUE),
     answer("An operation"),
     answer("A function")
+  ),
+  question("If you combine an integer vector with a character vector, what type of vector will be returned?",
+    answer("integer"),
+    answer("double"),
+    answer("character",correct = TRUE),
+    answer("Nothing: this is not possible because everything must be the same data type")
   )
   
   )
