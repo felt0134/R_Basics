@@ -26,38 +26,38 @@ knitr::opts_chunk$set(echo = FALSE)
 ```{r copy-code-chunk, child = system.file("child_documents/copy_button.Rmd", package = "tutorial.helpers")}
 ```
 
-## Dataframe Basics
+## Data frame basics
 
-Dataframes are a core data structure in R, providing a *tabular* (or, *table-based*) structure for organizing, storing, and analyzing your data; as such, they are also sometimes referred to as "data tables". This tutorial will guide you through the fundamentals of dataframes in R.
+The data table is the primary data structure you will use to store and analyze data. In base R, this is realized through the data frame. Data frames are a core data structure in R, providing a *tabular* (or, *table-based*) structure for organizing, storing, and analyzing your data; as such, they are R's original version of a data table. This tutorial will guide you through the fundamentals of data frames in R.
 
-Often, the best way to structure dataframes is by following the `tidy data` approach. Do you remember the three "rules" of tidy data?
+Often, the best way to structure data frames is by following the `tidy data` approach. Do you remember the three "rules" of tidy data?
 
 * Every *column* is a *variable*.
-* Every *observation* is a *row*.
-* Every *value* is a *cell*.
+* Every *row* is an *observation*.
+* Every *cell* is a *value*.
 
-Think for a second about what a column in a dataframe really is. If we were to look at one variable (or column) in a tidy data frame, what we are really doing is looking at an atomic vector, or, a sequence of values composed of the same data type. Think about the tabular data you have seen so far; is a column ever composed of different data types?
+Think for a second about what a column in a data frame really is. If we were to look at one variable (or column) in a tidy data frame, what we are really doing is looking at an atomic vector, or, a sequence of values composed of the same data type. Think about the tabular data you have seen so far; is a column ever composed of different data types?
 
 How about a row in a data frame? Is this an atomic vector?
 
-```{r quiz_row}
+```{r quiz_1}
 quiz(
   question(
-    "Is a row in a dataframe always an atomic vector?",
+    "Is a row in a data frame an atomic vector?",
     answer("Yes"),
     answer("No",correct = TRUE)
 ))
 ```
 
-## Building a dataframe
+## Building a data frame
 
-In reference to the quiz question, a row (observation) is not *always* an atomic vector, because the sequence of values across a row can be composed of different data types (think of categories versus numbers). Depending on the dataset, a row might turn out to be an atomic vector, but for the purposes of this class **a column is always an atomic vector, but a row is not**. *Ultimately, what this means is that tidy-based dataframes are just combinations of atomic vectors defined by their columns*.
+In reference to the quiz question, a row (observation) is not *always* an atomic vector, because the sequence of values across a row can be composed of different data types (think of categories versus numbers). Depending on the dataset, a row might turn out to be an atomic vector, but for the purposes of this class **a column is always an atomic vector, but a row is not**. *Ultimately, what this means is that tidy-based data frames are just combinations of different atomic vectors defined by their columns*. By definition, this means that a data frame is a type of `recursive vector`, a `list`. But in effect, a data frame stands on its own as a data structure and is arguably the primary data structure you will use.
 
-Let's belabor the point even more. You can create a dataframe from scratch in R using a (you guessed it) *function* called `data.frame()`. The fundamental argument in the `data.frame()` function is one or more vectors, which define the variables and thus columns of the dataframe. Run the code below.
+Let's belabor the point even more. You can create a data frame from scratch in R using a (you guessed it) *function* called `data.frame()`. The fundamental argument in the `data.frame()` function is one or more vectors, which define the variables and thus columns of the data frame. Run the code below.
 
 ```{r demo_dataframe, exercise = TRUE}
 
-#create a dataframe using two vectors as arguments
+#create a data frame using two vectors as arguments
 toy_data <- data.frame(
   
   var_1 =  1:10,
@@ -69,11 +69,11 @@ toy_data
 
 ``` 
 
-Notice that in the above dataframe that the code returns, it provides the *type* of data each variable is being stored as below the column (variable) name: "int" means an *integer* or whole number (no decimals), while "dbl" means *double* or a real number (decimals). We can create the same dataframe in a different way by first creating and assigning the vectors names outside of the function and then just passing their names into the `data.frame()` function as arguments. Run the code below.
+Notice that in the above data frame that the code returns, it provides the *type* of data each variable is being stored as below the column (variable) name: "int" means an *integer* or whole number (no decimals), while "dbl" means *double* or a real number (decimals). We can create the same data frame in a different way by first creating and assigning the vectors names outside of the function and then just passing their names into the `data.frame()` function as arguments. Run the code below.
 
 ```{r demo_dataframe_2, exercise = TRUE}
 
-#create a dataframe using two vectors already assigned names
+#create a data frame using two vectors already assigned names
 var_1 <-  1:10
 var_2 <- seq(from = 10, to = 100, by = 10)
 
@@ -83,11 +83,11 @@ toy_data
 
 ```
 
-Both variables in the above dataframe are numbers. We can add character vectors into this to create a categorical variable in a dataframe. Run the code below.
+Both variables in the above data frame are numbers. We can add character vectors into this to create a categorical variable in a data frame. Run the code below to create a hypothetical data frame containing data on carbon uptake and biome type.
 
 ```{r demo_dataframe_3, exercise = TRUE}
 
-#create a dataframe with both numeric and character vectors
+#create a data frame with both numeric and character vectors
 mean_C_uptake <-  c(700,400,200)
 biome <- c("forest",'grassland','desert')
 
@@ -99,14 +99,14 @@ biome_data
 
 Notice how the data type for the biome variable is "chr", which means *character*, and refers to data stored as text (strings).
 
-## Plotting and viewing dataframes
+## Plotting and viewing data frames
 
-When you create or import dataframes you will typically want to preview them first. A key function that allows us to do so is the `head()` function, which allows you to preview the "head" or "top" of the dataframe by looking at the first X number of rows (while retaining the column header/variable names).
+When you create or import data frames you will typically want to preview them. A key function that allows us to do so is the `head()` function, which previews the "head" or "top" of the data frame by looking at the first X number of rows (while retaining the column header/variable names).
 
-Let's say you have created a dataframe. Run the code below.
+Let's say you have created a data frame. Run the code below.
 ```{r demo_dataframe_4, exercise = TRUE}
 
-#create a dataframe using two numeric vectors
+#create a data frame using two numeric vectors
 var_1 <-  1:10
 var_2 <- seq(from = 10, to = 100, by = 10)
 
@@ -114,11 +114,11 @@ toy_data <- data.frame(var_1,var_2)
 
 ```
 
-You might want to take a quick look at this dataframe before working with it. You can use the `head()` function to *preview* the first **n** number of rows. This function accepts a dataframe,"x", and a number of rows, "n", as its arguments. Run the code below to see for yourself.
+You might want to take a quick look at this data frame before working with it. You can use the `head()` function to *preview* the first **n** number of rows. This function accepts a data frame,"x", and a number of rows, "n", as its arguments. Run the code below to see for yourself.
 
 ```{r demo_dataframe_5, exercise = TRUE,exercise.setup = "demo_dataframe_4"}
 
-#look at the first two rows of the dataframe
+#look at the first two rows of the data frame
 head(x = toy_data,n = 2)
 
 ```
@@ -138,11 +138,11 @@ plot(x = toy_sequence, y = toy_sequence_halved)
 
 ```
 
-We can then combine the two vectors into a dataframe, and plot them as well, though in a slightly different way when drawing from a dataframe:
+We can then combine the two vectors into a data frame, and plot them as well, though in a slightly different way when drawing from a data frame:
 
 ```{r demo_dataframe_7, exercise = TRUE,exercise.setup = "demo_dataframe_6"}
 
-#combine the two vectors we previously created into a dataframe:
+#combine the two vectors we previously created into a data frame:
 toy_data_2 <- data.frame(vector_1 = toy_sequence,
                          vector_2 = toy_sequence_halved)
 
@@ -153,14 +153,15 @@ Notice how the arguments in the plot function have changed slightly to look more
 
 ## Problem set
 
-### Q1: Create a dataframe that has two columns. One column should be called `Letter` that is a character vector spelling out ENSC311, with a letter for each value. The other column should be called `Number` and should be a numeric vector ranging from 1 to 7, increasing by values of 1, and thus have a length of 7. Assign this dataframe the name `ENSC311`.
+### Q1: Create a data frame that has two columns. One column should be called `Letter` that is a character vector spelling out ENSC311, with a letter for each element of the vector. The other column should be called `Number` and should be a numeric vector ranging from 1 to 7, increasing by values of 1, and thus have a length of 7. Assign this data frame the name `ENSC311`.
 ```{r problem_1, exercise=TRUE}
 
 ```
 
 ```{r problem_1-hint}
 
-Remember how to create an atomic vector?
+Do not create the atomic vectors outside the data.frame() function, 
+just do it all within, treating the vectors (columns) as arguments.
 
 ```
 
@@ -179,23 +180,23 @@ ENSC311 <- data.frame(
 grade_code()
 ```
 
-### Q2: Below is code that will load a built-in dataset of the waiting time between eruptions and the duration of the eruption for the Old Faithful geyser in Yellowstone National Park, Wyoming, USA. The dataset is called called 'faithful'. R has this dataset (and many others) stored in its base software, which can be accessed by using the `data()` function and passing the name of the dataset into the function as the argument. Run the code below to load in the dataset.
+### Q2: Below is code that will load a built-in data frame of the waiting time between eruptions and the duration of the eruption for the Old Faithful geyser in Yellowstone National Park, Wyoming, USA. The dataset is called called 'faithful'. R has this dataset (and many others) stored in its base software, which can be accessed by using the `data()` function and passing the name of the dataset into the function as the argument. Run the code below to load in the dataset.
 
-```{r setup_problem_2, exercise = TRUE}
+```{r setup_2, exercise = TRUE}
 
 data(faithful)
 
 ```
 
-Q2A: Use the `head()` function to preview the first three rows of the faithful dataframe.
+Q2A: Use the `head()` function to preview the first three rows of the faithful data frame.
 
-```{r problem_2, exercise=TRUE,exercise.setup="setup_problem_2"}
+```{r problem_2, exercise=TRUE,exercise.setup="setup_2"}
 
 ```
 
 ```{r problem_2-hint}
 
-Remember this function has two arguments: the name of the dataframe and the number of rows.
+Remember this function has two arguments: the name of the data frame and the number of rows.
 
 ```
 
@@ -209,7 +210,7 @@ head(x = faithful,n = 3)
 grade_code()
 ```
 
-Q2B: Use the `plot()` function and your understanding of the variables in the faithful dataframe to make an x-y plot that will answer this question: *How does the time between eruptions (the predictor variable) influence the duration of eruptions (the response variable)?*
+Q2B: Use the `plot()` function and your understanding of the variables in the faithful data frame to make an x-y plot that will answer this question: *How does the time between eruptions (the predictor variable) influence the duration of eruptions (the response variable)?*
 
 ```{r problem_3, exercise=TRUE}
 
@@ -233,18 +234,20 @@ grade_code()
 
 ## Quiz 
 
-```{r quiz_1}
+```{r quiz_2}
+
+#R does not like that there are two answers - need to revise this moving forward
 quiz(
   question(
-    "Which of two characteristics of tidy data are always an atomic vector?",
-    answer("a variable/column",correct = TRUE),
-    answer("a row/observation"),
-    answer("a cell/value",correct = TRUE),
-    answer("none"))
+    "Which two characteristics of tidy data are always an atomic vector?",
+    answer("a variable and value",correct = TRUE),
+    answer("a variable and observation"),
+    answer("a value and observation"),
+    answer("none of the above"))
 )
 ```
 
-```{r quiz_2}
+```{r quiz_3}
 quiz(
   question(
     "What is the R function used to create a data frame from atomic vectors?",
@@ -256,7 +259,7 @@ quiz(
 )
 ```
 
-```{r quiz_3}
+```{r quiz_4}
 quiz(
   question(
     "What code would you write to view the first three rows of a data frame called df?",
@@ -268,7 +271,7 @@ quiz(
 )
 ```
 
-```{r quiz_4}
+```{r quiz_5}
 quiz(
   question(
     "How does the time between Old Faithful eruptions influence the eruption duration?",
@@ -279,10 +282,20 @@ quiz(
 )
 ```
 
-* **pro tip**: `view()`, `summary()`, and `str()` are all real R functions that are also great for understanding a dataframe. Here is a short description of each:
+```{r quiz_6}
+quiz(
+  question(
+    "True or false: A data frame is a list",
+    answer("True",correct = TRUE),
+    answer("False"))
+  
+)
+```
 
-* `view()` allows you to see the *entire* dataframe
-* `summary` provides a broader overview of the variables and basic *summary statistics* of them in a dataframe
+* **pro tip**: `view()`, `summary()`, and `str()` are all real R functions that are also great for understanding a data frame. Here is a short description of each:
+
+* `view()` allows you to see the *entire* data frame
+* `summary()` provides a broader overview of the variables and basic *summary statistics* of them in a data frame
 * `str()` provides information on the *structure* of an R object, including its dimensions, the type of data structure,variables, and data types.
 
 ```{r download-answers, child = system.file("child_documents/download_answers.Rmd", package = "tutorial.helpers")}
