@@ -23,16 +23,16 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Extraction Basics
 
-A core part of data exploration and analysis is the ability to subset (or filter) your data into smaller units. Key to this is the idea of data *extraction*, which focuses on retrieving specific subsets of your data. These subsets may be a single or multiple values that meet a specific criteria of interest. You may additionally want to extract entire columns (variables) from a dataframe. You can further use extraction to *add new data* to your dataframe.
+A core part of data exploration and analysis is the ability to subset (or filter) your data into smaller units. Key to this is the idea of data *extraction*, which focuses on retrieving specific subsets of your data. These subsets may be a single or multiple values that meet a specific criteria of interest. You may additionally want to extract entire columns (variables) from a data frame. You can further use extraction to *add new data* to your data frame.
 
-There are two key operators useful for extracting data from a dataframe:
+There are two key operators useful for extracting data from a data frame:
 
-* The `$` operator allows you to extract or *add* entire columns (variables).
-* The `[]` operator allows you to extract specific values based on a reference to a row, column, or both.
+* `[]` extract specific values based on a reference to a row, column, or both.
+* `$` extract or *add* entire columns (variables).
 
 ## Extracting data
 
-Remember that dataframes are just special data structures composed of different atomic vectors (columns). The `[]` operator works on vectors and thus works on columns in a dataframe. To start, run the code below to create a toy vector:
+Remember that data frames are just special data structures (lists) composed of different atomic vectors (columns) or the same length. The `[]` operator works on vectors and thus works on columns in a data frame. To start, run the code below to create a toy vector:
 
 ```{r demo_extraction, exercise = TRUE}
 
@@ -55,14 +55,14 @@ Notice two things. First, the operator comes *after* the object it is operating 
 
 ```{r demo_extraction_2_5, exercise = TRUE,exercise.setup='demo_extraction'}
 
-#extract multople values from the vector
+#extract multiple values from the vector
 toy_vector[c(3,5,7)]
 
 ```
 
-Now let's say you are creating a dataframe. When you do this, you are moving from a one-dimensional data structure (vector) to a two-dimensional data structure that has both rows and columns. The `[]` operator enables you to find specific rows *and* columns in a dataframe. In this way, we can extract from more than just atomic vectors.
+Now let's say you are creating a data frame. When you do this, you are moving from a one-dimensional data structure (vector) to a two-dimensional data structure that has both rows and columns. The `[]` operator enables you to find specific rows *and* columns in a data frame. In this way, we can extract from more than just atomic vectors.
 
-First, create a toy dataframe using the code below. The two variables are the type of biome ("biome") and average carbon uptake (photosynthesis; "mean_C_uptake").
+First, create a toy data frame using the code below. The two variables are the type of biome ("biome") and average carbon uptake (photosynthesis; "mean_C_uptake").
 
 ```{r demo_extraction_3, exercise = TRUE}
 
@@ -70,15 +70,15 @@ First, create a toy dataframe using the code below. The two variables are the ty
 mean_C_uptake <-  c(700,400,200)
 biome <- c("forest",'grassland','desert')
 
-#create dataframe from vectors
+#create data frame from vectors
 biome_data <- data.frame(mean_C_uptake,biome)
 
-#print dataframe
+#print data frame
 biome_data
 
 ```
 
-Now let's say you want to *extract* the value in the third row in the second column of the biome_data dataframe you created. You can use the `[]` operator to do this. Run the code below.
+Now let's say you want to *extract* the value in the third row in the second column of the biome_data data frame you created. You can use the `[]` operator to do this. Run the code below.
 
 ```{r demo_extraction_4, exercise = TRUE,exercise.setup='demo_extraction_3'}
 
@@ -87,7 +87,7 @@ biome_data[3,2]
 
 ```
 
-**The first value inside the brackets always refers to the row number, whereas the second value inside the brackets always refers to the column number**. By providing the row and column number, the `[]` operator can map to a specific value (cell) in the biome_data dataframe.
+**The first value inside the brackets always refers to the row number, whereas the second value inside the brackets always refers to the column number**. By providing the row and column number, the `[]` operator can map to a specific value (cell) in the biome_data data frame.
 
 *In the code chunk below, play around with what happens if you add [2,] or [2] or [,2] to the end of biome_data; what do you notice?*
 
@@ -98,7 +98,7 @@ biome_data[]
 
 ```
 
-The `$` operator is particularly good if you want to extract or reference specific columns (variables). This operator gets "sandwiched" in between the dataframe name and column name we are referencing. Run the example code below.
+The `$` operator is particularly good if you want to extract or reference specific columns (variables). This operator gets "sandwiched" in between the data frame name and column name we are referencing. Run the example code below.
 
 ```{r demo_extraction_6, exercise = TRUE,exercise.setup='demo_extraction_3'}
 
@@ -109,7 +109,7 @@ biome_data$biome
 
 Change the value of biome to mean_C_uptake in the code chunk above to see what happens.
 
-Note that the `$` operator is less flexible than the `[]` operator and is specific to working with dataframes. However, the `$` operator can be quite useful if you want to quickly calculate a summary statistic on a particular variable. Consider the `max()` function, which finds the maximum value across a numeric vector. If you wanted to quickly find the maximum carbon uptake in the entire biome_data dataframe, it would like like this.
+Note that the `$` operator is less flexible than the `[]` operator and is specific to working with data frames. However, the `$` operator can be quite useful if you want to quickly calculate a summary statistic on a particular variable. Consider the `max()` function, which finds the maximum value across a numeric vector. If you wanted to quickly find the maximum carbon uptake in the entire biome_data data frame, it would like like this.
 
 ```{r demo_extraction_6_5, exercise = TRUE,exercise.setup='demo_extraction_3'}
 
@@ -118,7 +118,7 @@ max(biome_data$mean_C_uptake)
 
 ```
 
-Why does this work? It works because you are performing a calculation (using a function) on an atomic vector (a column), albeit one that has been *extracted* from a dataframe. To reaffirm this, you can use the `is.atomic()` function on the extracted column to assess whether or not it is 'true' that what is being passed into the function is an atomic vector. The function returns a logical TRUE or FALSE. Run the code below.
+Why does this work? It works because you are performing a calculation (using a function) on an atomic vector (a column), albeit one that has been *extracted* from a data frame. To reaffirm this, you can use the `is.atomic()` function on the extracted column to assess whether or not it is 'true' that what is being passed into the function is an atomic vector. The function returns a logical TRUE or FALSE. Run the code below.
 
 ```{r demo_extraction_6_75, exercise = TRUE,exercise.setup='demo_extraction_3'}
 
@@ -127,17 +127,17 @@ is.atomic(biome_data$mean_C_uptake)
 
 ```
 
-Looks like it is "TRUE", which means that that column is indeed an atomic vector like we would expect for a tidy dataframe.
+Looks like it is "TRUE", which means that that column is indeed an atomic vector like we would expect for a tidy data frame.
 
-## Adding new variables to a dataframe
+## Adding new variables to a data frame
 
-In addition to extracting a column (variable) from a dataframe, you can also use the `$` operator to add new columns to a dataframe.
+In addition to extracting a column (variable) from a data frame, you can also use the `$` operator to add new columns to a data frame.
 
-Let's go back to the biome_data dataframe you created in the previous section. Below is a refresher of what that looks like; run the code below.
+Let's go back to the biome_data data frame you created in the previous section. Below is a refresher of what that looks like; run the code below.
 
 ```{r demo_extraction_7, exercise = TRUE,exercise.setup='demo_extraction_3'}
 
-#view the dataframe
+#view the data frame
 head(x = biome_data)
 
 ```
@@ -148,27 +148,27 @@ Now let's say we want to add a column that will provide additional information p
 #add a plant variable
 biome_data$dominant_plants <- c("tree","grass","shrub")
 
-#print the dataframe
+#print the data frame
 biome_data
 
 ```
 
-More often you will want to calculate a new variable using existing variables in the dataframe. You can do this in the same way you would do it for any numeric vector. Let's say you want to convert the mean_C_uptake column from grams (the units it is in) to kg. You can do this by 1) following the basic approach of the previous code chunk and 2) simply multiplying the mean_C_uptake column by 0.001 (which, in essence, is a vector of 1). This is just recycling like you have seen for vectors but now just within a column in a dataframe. Run the code below
+More often you will want to calculate a new variable using existing variables in the data frame. You can do this in the same way you would do it for any numeric vector. Let's say you want to convert the mean_C_uptake column from grams (the units it is in) to kg. You can do this by 1) following the basic approach of the previous code chunk and 2) simply multiplying the mean_C_uptake column by 0.001 (which, in essence, is a vector of 1). This is just recycling like you have seen for vectors but now just within a column in a data frame. Run the code below
 
 ```{r demo_dataframe_9, exercise = TRUE,exercise.setup = "demo_extraction_8"}
 
 #convert from grams to kg
 biome_data$mean_C_uptake_kg <- biome_data$mean_C_uptake*0.001
 
-#print dataframe
+#print data frame
 biome_data
 ```
 
-Calculating new variables from existing variable can also include equations that include using many variables in a dataframe, such as calculating the difference between or ratio of two numeric variables.
+Calculating new variables from existing variable can also include equations that include using many variables in a data frame, such as calculating the difference between or ratio of two numeric variables.
 
 ## Filter data by a condition
 
-Finally, we can bring the `[]` and `$` operators together to filter data. Both "filter" and "subset" are often used interchangeably and tend to imply a reduction in the number of rows in a dataframe. Filtering data involves excluding data (rows) according to a set criteria or condition. In R, there are `comparison operators` that can help define relationships and establish filtering criteria.
+Finally, we can bring the `[]` and `$` operators together to filter data. Both "filter" and "subset" are often used interchangeably and tend to imply a reduction in the number of rows in a data frame. Filtering data involves excluding data (rows) according to a set criteria or condition. In R, there are `comparison operators` that can help define relationships and establish filtering criteria.
 
 * `==`	Denotes complete equality (exact match). For example,	x == y.
 * `!=`	Denotes "is not equal to". For example,	x != y.
@@ -181,19 +181,19 @@ You can use these comparison operators with extraction operators to filter data 
 
 ```{r demo_extraction_10, exercise=TRUE,exercise.setup='demo_extraction_8'}
 
-#filter dataframe to just the forest group
+#filter data frame to just the forest group
 biome_data[biome_data$biome == 'forest', ]
 
 ```
 
-Beginning from the inside out, the code first extracted the entire biome column using the `$` operator. It then designated an *exact* match via the `==` operator. All of this is occurring within the brackets of the `[]` operator, which if you remember has both a rows and column designation for extracting from dataframes. Because the code is setting the filtering criteria only for rows, it will return the entire row that meets that criteria, along with all columns (since no criteria was set for columns). Think about why it would be most useful to return all rows (and thus a smaller version of the initial dataframe) instead of just a single column or a single value. A plain language version of the code is: *filter the biome_data dataframe down to rows where the biome variable is "forest".*
+Beginning from the inside out, the code first extracted the entire biome column using the `$` operator. It then designated an *exact* match via the `==` operator. All of this is occurring within the brackets of the `[]` operator, which if you remember has both a rows and column designation for extracting from data frames. Because the code is setting the filtering criteria only for rows, it will return the entire row that meets that criteria, along with all columns (since no criteria was set for columns). Think about why it would be most useful to return all rows (and thus a smaller version of the initial data frame) instead of just a single column or a single value. A plain language version of the code is: *filter the biome_data data frame down to rows where the biome variable is "forest".*
 
-*Note that it might be the case that you will want to create a new, filtered dataframe from another dataframe, while retaining the original dataframe. To do this, you can assign the new, filtered dataframe a different name using the `<-` operator.*
+*Note that it might be the case that you will want to create a new, filtered data frame from another data frame, while retaining the original data frame. To do this, you can assign the new, filtered data frame a different name using the `<-` operator.*
 
 In the same way, you can filter according to a numeric criteria. 
 ```{r demo_extraction_11, exercise=TRUE,exercise.setup='demo_extraction_8'}
 
-#filter dataframe to just the maximum 
+#filter data frame to just the maximum 
 biome_data[biome_data$mean_C_uptake > 200, ]
 
 ```
@@ -202,7 +202,7 @@ biome_data[biome_data$mean_C_uptake > 200, ]
 A final operator you can use is the `%in%` operator, which assess whether elements in one vector are present in another, and will return a logical TRUE or FALSE whether or not that is the case. You can use it to quickly filter data according to a set criteria. 
 ```{r demo_extraction_12, exercise=TRUE,exercise.setup='demo_extraction_8'}
 
-#filter dataframe to rows with grasslands and desert biomes
+#filter data frame to rows with grasslands and desert biomes
 biome_data[biome_data$biome %in% c('grassland','desert'),]
 
 ```
@@ -244,7 +244,7 @@ grade_code()
 
 ```
 
-### Q's 2-6: Now you are going to work with another built-in R dataset called iris. This dataset contains information about different leaf traits for different species of iris plants. In the code chunk below, use the `data()` function to load in the iris dataset. Hint: Once loaded in, R will automatically assign the name "iris" to the dataframe, so use that name to reference it in subsequent questions.
+### Q's 2-6: Now you are going to work with another built-in R dataset called iris. This dataset contains information about different leaf traits for different species of iris plants. In the code chunk below, use the `data()` function to load in the iris dataset. Hint: Once loaded in, R will automatically assign the name "iris" to the data frame, so use that name to reference it in subsequent questions.
 
 ```{r problem_2, exercise = TRUE}
 
@@ -253,7 +253,7 @@ grade_code()
 
 ```{r problem_2-hint}
 
-Review the example for how the "faithful" dataframe was loaded in
+Review the example for how the "faithful" data frame was loaded in
 
 ```
 
@@ -269,7 +269,7 @@ grade_code()
 
 ```
 
-Q3: Use the `head()` function to look at the first 3 rows of the iris dataframe
+Q3: Use the `head()` function to look at the first 3 rows of the iris data frame
 
 ```{r problem_3,exercise=TRUE,excercise.setup = "problem_2"}
 
@@ -279,7 +279,7 @@ Q3: Use the `head()` function to look at the first 3 rows of the iris dataframe
 
 ```{r problem_3-hint}
 
-R has automatically assigned the name "iris" to the iris dataframe
+R has automatically assigned the name "iris" to the iris data frame
 
 ```
 
@@ -295,7 +295,7 @@ grade_code()
 
 ```
 
-Q4: Use the the `$` operator and the `mean()` function to calculate the average of the "Petal.Width" variable in the iris dataframe.
+Q4: Use the the `$` operator and the `mean()` function to calculate the average of the "Petal.Width" variable in the iris data frame.
 
 ```{r problem_4, exercise = TRUE, exercise.setup = "problem_2"}
 
@@ -321,7 +321,7 @@ grade_code()
 
 **Pro tip:** You can use  the `round()` function to round outputs of calculations to a specific number of decimal places.
 
-Q5: Use the `$` operator to add a new column (variable) to the iris dataframe that is calculated as the ratio of Petal.Length to Petal.Width. Name this new variable "petal_ratio".
+Q5: Use the `$` operator to add a new column (variable) to the iris data frame that is calculated as the ratio of Petal.Length to Petal.Width. Name this new variable "petal_ratio".
 
 ```{r problem_5, exercise = TRUE,exercise.setup = "problem_2"}
 
@@ -346,7 +346,7 @@ grade_code()
 
 ```
 
-### Q6: Filter the iris dataframe down to the rows of data that contain petal_ratio values *greater than* the *average* of all petal_ratio values.
+### Q6: Filter the iris data frame down to the rows of data that contain petal_ratio values *greater than* the *average* of all petal_ratio values.
 
 ```{r problem_6, exercise = TRUE, exercise.setup = "problem_5-solution"}
 
@@ -413,7 +413,7 @@ quiz(
 ```{r quiz_2}
 quiz(
   question(
-    "How would you extract the third column and fifth row from the iris dataframe?",
+    "How would you extract the third column and fifth row from the iris data frame?",
     answer("iris[5,3]",correct = TRUE),
     answer("iris(5,3)"),
     answer("iris[3,5]"),
@@ -423,13 +423,30 @@ quiz(
 ```
 
 ```{r quiz_3}
+
+#Changed to one correct answer 9/21
 quiz(
   question(
-    "What does the `$` operator do?",
-    answer("Add columns",correct = TRUE),
-    answer("Extract rows"),
-    answer("Extract columns",correct = TRUE),
-    answer("Extract from  avector"))
+    "What does the `$` operator not do?",
+    answer("Add columns"),
+    answer("Extract rows",correct = TRUE),
+    answer("Extract columns"),
+    answer("Extract an element from a list"))
+  
+)
+```
+
+
+```{r quiz_4}
+
+#Added 9/21/26
+quiz(
+  question(
+    "What is the correct code to return a data frame filtered all column_1 values above 4",
+    answer("df[df$column_1 > 4,]",correct = TRUE)),
+    answer("df[,df$column_1 > 4]"),
+    answer("column_1 > 4"),
+    answer("df$column_1 > 4"))
   
 )
 ```
