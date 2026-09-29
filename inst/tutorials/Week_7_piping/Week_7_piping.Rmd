@@ -31,123 +31,126 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## The Pipe Operator
 
-It is often the case that, in data wrangling and analysis, you will need to perform multiple tasks and perform them in a sequential way, where each step builds on the previous step to get to an end product. For example, you may first want to calculate a new variable in a dataframe, *and then* filter the rows of that dataframe by a certain condition, *and then* remove unwanted columns, *and then* create a data summary or visualization, and so on...
+It is often the case that, in data wrangling and analysis, you will need to perform multiple tasks and perform them in a sequential way, where each step builds on the previous step to get to an end product. For example, you may first want to calculate a new variable in a data frame, *and then* filter the rows of that data frame by a certain condition, *and then* remove unwanted columns, *and then* create a data summary or visualization, and so on...
 
-There is an operator that makes doing the *and then* of data wrangling much easier, faster, and less prone to mistakes. It is called the `pipe operator` and it enables you to sequentially "chain" functions together in a process aptly named `piping`. The pipe operator is this symbol:
+There is an operator that makes doing the *and then* of data wrangling easy, fast, and less prone to mistakes. It is called the `pipe operator` and it enables you to sequentially "chain" functions together in a process aptly named `piping`. The pipe operator is this symbol:
 
-### `%>%`
+### `|>`
 
-What `%>%` does is *place the output of a function into the first argument of the next function*. It unlocks the ability to "chain" functions together and build a data analysis "pipeline". The pipe operator is especially useful with many tidy functions (e.g., `filter()`) because the first argument you pass into these functions is a dataframe.
+What `|>` does is *place the output of a function (to the left of |>) into the first argument of the next function (to the right of |>)*. It unlocks the ability to "chain" functions together and build a data wrangling and analysis "pipeline". The pipe operator is especially useful with many dplyr functions (e.g., `filter()`) because the first argument you pass into these functions is a data frame.
 
 ### Highlighting the utility of the pipe operator
 
-In the previous tutorial, you performed manipulations on the iris dataframe in a sequential way. You will often need to do sequential manipulations on dataframes and there are a couple ways to do this in practice. Before showing the optimal way to do this with `%>%`, let's look at a few bad ways to do this. First, load in the iris dataframe.
+In the previous tutorial, you performed manipulations on the iris data frame in a sequential way. You will often need to do sequential manipulations on data frames and there are a couple ways to do this in practice. Before showing the optimal way to do this with `|>`, let's look at a few bad ways to do this. First, load in the iris data frame.
 
 ```{r demo_0_5, exercise = TRUE}
 data(iris)
 ```
 
-One approach to doing sequential manipulations on a dataframe is to assign a new name to each intermediate dataframe created:
+One approach to doing sequential manipulations on a data frame is to assign a new name to each intermediate data frame created:
 
 ```{r demo_1, exercise = TRUE,exercise.setup = "demo_0_5"}
 
-#create a new dataframe for each manipulation
-iris_1 <- dplyr::mutate(iris,Petal.Area = Petal.Length*Petal.Width)
-iris_2 <- dplyr::filter(iris_1,Petal.Area > mean(Petal.Area))
-iris_3 <- dplyr::select(iris_2,c(Species,Petal.Area))
-iris_4 <- dplyr::arrange(iris_3,desc(Petal.Area))
-head(iris_4,2)
+#create a new data frame for each manipulation
+iris_1 <- mutate(iris, Petal.Area = Petal.Length*Petal.Width)
+iris_2 <- filter(iris_1, Petal.Area > mean(Petal.Area))
+iris_3 <- select(iris_2, c(Species, Petal.Area))
+iris_4 <- arrange(iris_3, desc(Petal.Area))
+head(iris_4, 2)
 
 ```
 
-The code above works, but you will be left with a bunch of useless of junk in your global environment: intermediate dataframes that you don't really need and that will eat up memory. In addition, you have to keep track of which dataframe name goes into which function. This is tedious, increases the risk of errors, and is sloppy. The less "junk" the better.
+The code above works, but you will be left with a bunch of useless junk in your global environment: intermediate data frames that you don't really need and that will eat up memory and storage. In addition, you have to keep track of which data frame name goes into which function. This is tedious, increases the risk of making mistakes, and is sloppy. The less "junk" the better.
 
-Well, to get rid of the "junk" you could alternatively just assign every intermediate dataframe the same name, *but this is also sloppy*; it becomes too easy to lose track of which version of the dataframe is which, especially when you inevitably need to troubleshoot your code. This enhances the risk of mistakes.
+To get rid of the "junk", you could alternatively just assign every intermediate data frame the same name, *but this is also sloppy*; it becomes too easy to lose track of which version of the data frame is which, especially when you inevitably need to troubleshoot your code. This enhances the risk of mistakes.
 
 ```{r demo_2, exercise = TRUE,exercise.setup = "demo_0_5"}
 
-#create a new dataframe for each manipulation, but keep the name the same
-iris <- dplyr::mutate(iris,Petal.Area = Petal.Length*Petal.Width)
-iris <- dplyr::filter(iris,Petal.Area > mean(Petal.Area))
-iris <- dplyr::select(iris,c(Species,Petal.Area))
-iris <- dplyr::arrange(iris,desc(Petal.Area))
-head(iris,2)
+#create a new data frame for each manipulation, but keep the name the same
+iris <- mutate(iris, Petal.Area = Petal.Length*Petal.Width)
+iris <- filter(iris, Petal.Area > mean(Petal.Area))
+iris <- select(iris, c(Species, Petal.Area))
+iris <- arrange(iris, desc(Petal.Area))
+head(iris, 2)
 
 ```
 
-Finally, you could in theory get rid of named dataframe intermediates by "nesting" or "wrapping" functions within each other, such that the functions follow an order of operations from inside to outside. In this case, the full function goes inside the first argument of the function it is "nested" or "wrapped" in. The code below does the same thing as the previous two code chunks and it works, but it is effectively unreadable and therefore sloppy. You want people (including your future self!) to understand your code, just like you want people to understand your writing in an essay or lab report.
+Finally, you could in theory get rid of named data frame intermediates by "nesting" or "wrapping" functions within each other, such that the functions follow an order of operations from inside to outside. In this case, the full function goes inside the first argument of the function it is "nested" or "wrapped" in. The code below does the same thing as the previous two code chunks and it works, but it is effectively unreadable and therefore sloppy. You want people (including your future self!) to understand your code, just like you want people to understand your writing in an essay or lab report.
 
 ```{r demo_2_5, exercise = TRUE,exercise.setup = "demo_0_5"}
 
-#nest or wrap functions in eachother
+#nest or wrap functions in each other
 iris <- 
-  dplyr::arrange(
-    dplyr::select(
-      dplyr::filter(
-        dplyr::mutate(iris,Petal.Area = Petal.Length*Petal.Width),Petal.Area > mean(Petal.Area)),c(Species,Petal.Area)),desc(Petal.Area))
+  arrange(
+    select(
+      filter(
+        mutate(iris, Petal.Area = Petal.Length*Petal.Width), Petal.Area > mean(Petal.Area)), c(Species, Petal.Area)), desc(Petal.Area))
    
-head(iris,2)
+head(iris, 2)
 
 ```
 
-Using `%>%` avoids the pitfalls of the above coding approaches to sequential data manipulations. Remember, this operator automatically places the output of a function (e.g., a dataframe) into the first argument of the next function.
+Using `|>` avoids the pitfalls of the above coding approaches to sequential data manipulations. Remember, this operator automatically places the output of a function (e.g., a data frame) into the first argument of the next function.
 
 If you wanted to "chain" the first two functions of the previous examples together, it would look as such:
 
 ```{r demo_3, exercise = TRUE}
 
-#use %>% to chain functions together
-iris_filtered <- iris %>%  #places iris dataframe into first argument of mutate()
-  dplyr::mutate(Petal.Area = Petal.Length*Petal.Width) %>% #calculate new variable
-  dplyr::filter(Petal.Area > mean(Petal.Area)) #filter rows according to new variable
+#use |> to chain functions together
+iris_filtered <- iris |>  #places iris data frame into first argument of mutate()
+  mutate(Petal.Area = Petal.Length*Petal.Width) |> #calculate new variable
+  filter(Petal.Area > mean(Petal.Area)) #filter rows according to new variable
 
 #take a look
-head(iris_filtered,2)
+head(iris_filtered, 2)
 
 ```
 
-Notice how there is now no longer a dataframe name passed into the first argument of *any* of the functions used; `%>%` is automatically doing that for you! Importantly, `%>%` is feeding each function (here, on the next line) whatever dataframe has been created previously. So, the `mutate()` function was supplied the original iris dataframe, whereas the `filter()` function was supplied the dataframe that the `mutate()` function produced (a dataframe with Petal.Area added as a column/variable). Thus, the pipe operator is allowing you to "chain" functions together and to perform their operations sequentially.
+Notice how there is now no longer a data frame name passed into the first argument of *any* of the functions used; `|>` is automatically doing that for you! Importantly, `|>` is feeding each function (here, on the next line) whatever data frame has been created previously. So, the `mutate()` function was supplied the original iris data frame, whereas the `filter()` function was supplied the data frame that the `mutate()` function produced (a data frame with Petal.Area added as a column/variable). Thus, the pipe operator is allowing you to "chain" functions together and to perform their operations sequentially.
 
 And to produce the same product as the sloppy examples would look like this:
 
 ```{r demo_4, exercise = TRUE}
 
-#Use %>% to chain functions together
+#Use |> to chain functions together
 iris %>% 
-  dplyr::mutate(Petal.Area = Petal.Length*Petal.Width) %>% 
-  dplyr::filter(Petal.Area > mean(Petal.Area)) %>%
-  dplyr::select(c(Species,Petal.Area)) %>%
-  dplyr::arrange(desc(Petal.Area)) %>% #places the final product in head() function
+  mutate(Petal.Area = Petal.Length*Petal.Width) |> 
+  filter(Petal.Area > mean(Petal.Area)) |>
+  select(c(Species, Petal.Area)) |>
+  arrange(desc(Petal.Area)) |> #places the final product in head() function
   head(2)
   
 ```
 
-**Remember**: *the pipe operator `%>%` places the output of a function (e.g., a dataframe) into the first argument of the next function!*.
+**Remember**: *the pipe operator `|>` places the output of a function (e.g., a data frame) into the first argument of the next function!*
 
-## The Dot Operator
+**pro-tip**: *Press enter and start a new line of code after each `|>` like in the example above.*
 
-You can use `%>%` with other functions that do not automatically have the dataframe as the first argument. However, to do this you need to provide R some direction in terms of where to place the dataframe within the function. This can be achieved using the `dot operator`, which is literally a dot, `.`. This operator serves as a placeholder for the dataframe passed along the pipeline into the function of interest. An example is with using the base R `plot()` function.
+## The Placeholder Operator
 
-Below is an example of how to create an x-y plot (scatterplot) using the `plot()` function using the `~` approach. The plot below correlates Petal.Length as a response to Sepal.Length without using `%>%`.
+You can use `|>` with other functions that do not automatically have the data frame as the first argument. However, to do this you need to provide R some direction in terms of where to place the data frame within the function. This can be achieved using the `placeholder operator`, which when using `|>` is an underscore, `_`. This operator serves as a placeholder for the data frame passed along the pipeline into the function of interest. An example is with using the base R `plot()` function.
+
+Below is an example of how to create an x-y plot (scatter plot) using the `plot()` function using the `~` approach. The plot below correlates Petal.Length as a response to Sepal.Length without using `|>`.
 ```{r demo_5, exercise = TRUE}
 
-plot(Petal.Length ~ Sepal.Length,data = iris)
+plot(Petal.Length ~ Sepal.Length, data = iris)
 
 ```
 
-We can create the same plot within the context of a pipeline using `%>%`. Yet because the first argument of `plot()` is essentially a formula defining the relationship to plot, we need to give R some direction in terms of which argument the dataframe should be passed to.
+We can create the same plot within the context of a pipeline using `|> `. Yet because the first argument of `plot()` is essentially a formula defining the relationship to plot, we need to give R some direction in terms of which argument the data frame should be passed to.
 
 ```{r demo_6, exercise = TRUE}
 
-iris %>% plot(Petal.Length ~ Sepal.Length,data = .)
+iris |> 
+  plot(Petal.Length ~ Sepal.Length, data = _)
 
 ```
 
-The above code "piped" the iris dataframe into the `plot()` function but, importantly, not automatically into the first argument. Rather, the iris dataframe was piped into where it was directed to by using the dot operator. In this case, `.` serves as a placeholder for iris. Knowing this trick will allow you to incorporate a broader set of functions into your data analysis pipelines using `%>%` and, specifically, functions that don't automatically have the dataframe name as the first argument. 
+The above code "piped" the iris data frame into the `plot()` function but, importantly, not automatically into the first argument. Rather, the iris data frame was piped into where it was directed to by using the dot operator. In this case, `.` serves as a placeholder for iris. Knowing this trick will allow you to incorporate a broader set of functions into your data analysis pipelines using `|>` and, specifically, functions that don't automatically have the data frame name as the first argument. 
 
 ## Problem Set
 
-### Q1: Use `%>%` and the `head()` function to preview the first five rows of the faithful dataframe. R will automiatically recognize and load in the faithful dataframe just by typing its name, just like it does for the iris dataframe.
+### Q1: Use `|>` and the `head()` function to preview the first five rows of the `faithful` data frame. R will automatically recognize and load in the faithful data frame just by typing its name, just like it does for the iris data frame.
 
 ```{r problem_1, exercise = TRUE}
 
@@ -162,7 +165,8 @@ You do not need to write in the first argument in `head()`
 
 ```{r problem_1-solution}
 
-faithful %>% head(5)
+faithful |>
+  head(5)
 
 ```
 
@@ -172,7 +176,7 @@ grade_code()
 
 ```
 
-### Q2: Use `%>%` and the `summary()` function to produce a summary of the faithful dataframe.
+### Q2: Use `|>` and the `summary()` function to produce a summary of the faithful data frame.
 
 ```{r problem_2, exercise = TRUE}
 
@@ -187,7 +191,8 @@ You do not need to write in the first argument in `summary()`
 
 ```{r problem_2-solution}
 
-faithful %>% summary()
+faithful |>
+  summary()
 
 ```
 
@@ -197,7 +202,7 @@ grade_code()
 
 ```
 
-### Q3: Use `%>%` and the `plot()` function to make an x-y plot of the relationship between eruptions (y axis) and waiting (x axis). Use the `~` to define the relationship as: eruptions *as a response to* waiting.
+### Q3: Use `|>` and the `plot()` function to make an x-y plot of the relationship between eruptions (y axis) and waiting (x axis). Use the `~` operator to define the relationship as: eruptions *as a response to* waiting.
 
 ```{r problem_3, exercise = TRUE}
 
@@ -206,13 +211,14 @@ grade_code()
 
 ```{r problem_3-hint}
 
-Remember the dot operator!
+Remember the placheolder operator!
 
 ```
 
 ```{r problem_3-solution}
 
-faithful %>% plot(eruptions ~ waiting,data = .)
+faithful |> 
+  plot(eruptions ~ waiting, data = _)
 
 ```
 
@@ -222,7 +228,7 @@ grade_code()
 
 ```
 
-### Q4: Use `%>%` to first filter the faithful dataframe (using the `filter()` function) to eruption values *above* the mean eruption value *and then* create an x-y plot of eruptions *as a response to* waiting using the `plot()` function with the `~` approach.
+### Q4: Use `|>` to first filter the faithful dataframe (using the `filter()` function) to eruption values *above* the mean eruption value *and then* create an x-y plot of eruptions *as a response to* waiting using the `plot()` function with the `~` approach.
 
 ```{r problem_4, exercise = TRUE}
 
@@ -243,9 +249,9 @@ Remember the dot operator!
 
 ```{r problem_4-solution}
 
-faithful %>% 
-  dplyr::filter(eruptions > mean(eruptions)) %>%
-  plot(eruptions ~ waiting,data = .)
+faithful |> 
+  filter(eruptions > mean(eruptions)) |>
+  plot(eruptions ~ waiting, data = _)
 
 ```
 
@@ -271,9 +277,9 @@ You only need to change the direction of a comparison operator
 
 ```{r problem_5-solution}
 
-faithful %>% 
-  dplyr::filter(eruptions < mean(eruptions)) %>%
-  plot(eruptions ~ waiting,data = .)
+faithful |> 
+  filter(eruptions < mean(eruptions)) |>
+  plot(eruptions ~ waiting, data = _)
 
 ```
 
@@ -283,7 +289,7 @@ grade_code()
 
 ```
 
-### Q6: Now build a larger pipeline. First, use the `library()` function to load in an R package called "lterdatasampler", which has already been installed for you. This package contains the hbr_maples dataframe in addition to many other ecological datasets from the Long-Term Ecological Research Network (LTER).
+### Q6: Now build a larger pipeline. First, use the `library()` function to load in an R package called "lterdatasampler", which has already been installed for you. This package contains the `hbr_maples` data frame in addition to many other ecological datasets from the Long-Term Ecological Research Network (LTER).
 
 ```{r problem_6, exercise = TRUE}
 
@@ -292,13 +298,13 @@ grade_code()
 
 ```{r problem_6-hint}
 
-Use the library() function
+Pass the name of the package into package argument 
 
 ```
 
 ```{r problem_6-solution}
 
-library(lterdatasampler)
+library(package = lterdatasampler)
 
 ```
 
@@ -308,7 +314,7 @@ grade_code()
 
 ```
 
-### Q7: Then, use `%>%` to take a look at the hbr_maples dataframe using the summary() function.
+### Q7: Then, use `|>` to take a look at the hbr_maples dataframe using the `summary()` function.
 
 ```{r problem_7, exercise = TRUE,exercise.setup="problem_6"}
 
@@ -317,13 +323,14 @@ grade_code()
 
 ```{r problem_7-hint}
 
-No need to use the dot operator here!
+No need to use the placeolder operator here!
 
 ```
 
 ```{r problem_7-solution}
 
-hbr_maples %>% summary()
+hbr_maples |>
+  summary()
 
 ```
 
@@ -335,12 +342,12 @@ grade_code()
 
 *How does investment in leaf mass versus area vary as a function of stem mass?*
 
-### Q8: Use the pipe operator and tidy functions to create a pipeline that performs these operations, in the order list, that will create a new dataframe with the *assigned* name 'tree_traits':
+### Q8: Use the `hbr_maples` data frame, the pipe operator, and dplyr functions to create a pipeline that performs these operations, in the order listed, that will create a new data frame with the *assigned* name 'tree_traits':
 
--   convert the corrected_leaf_area variable from units of meters to centimeters by dividing by 1000
--   reduce the columns to year,watershed,stem_dry_mass,leaf_dry_mass,corrected_leaf_area
--   filter the data to just the year 2003
--   create a new variable called LMA that calculates leaf mass per area by dividing leaf_dry_mass by corrected_leaf_area. This metric describes an evolutionary trade off betyouen long-lived, rigid, stress tolerant leaves (e.g., a conifer tree) versus fast-growing, flimsy, and resource acquisitive leaves (e.g., an annual grass).
+-   convert the corrected_leaf_area variable from units of meters to centimeters by dividing by 1000 *and then*
+-   reduce the columns to year,watershed,stem_dry_mass,leaf_dry_mass,corrected_leaf_area *and then*
+-   filter the data to just the year 2003 *and then*
+-   create a new variable called LMA that calculates leaf mass per area by dividing leaf_dry_mass by corrected_leaf_area. This metric describes an evolutionary trade off between long-lived, rigid, stress tolerant leaves (e.g., a conifer tree) versus fast-growing, flimsy, and resource acquisitive leaves (e.g., an annual grass). *and then*
 -   there is a clear LMA outlier; remove this by filtering out the *maximum* LMA value
 
 ```{r problem_8, exercise = TRUE,exercise.setup="problem_6"}
@@ -357,16 +364,16 @@ Use the tidyverse functions mutate(),select(),filter(). Some of them twice!
 
 ```{r problem_8-solution}
 
-tree_traits <- hbr_maples %>%
-  dplyr::mutate(corrected_leaf_area = corrected_leaf_area/1000) %>%
-  dplyr::select(year,watershed,stem_dry_mass,leaf_dry_mass,corrected_leaf_area) %>%
-  dplyr::filter(year == 2003) %>% 
-  dplyr::mutate(LMA = leaf_dry_mass/corrected_leaf_area) %>%
-  dplyr::filter(LMA < max(LMA))
+tree_traits <- hbr_maples |>
+  mutate(corrected_leaf_area = corrected_leaf_area/1000) |>
+  select(year, watershed, stem_dry_mass, leaf_dry_mass, corrected_leaf_area) |>
+  filter(year == 2003) |> 
+  mutate(LMA = leaf_dry_mass/corrected_leaf_area) |>
+  filter(LMA < max(LMA))
 
 ```
 
-### Q9: Now, make an x-y plot depicting the relationship betyouen stem dry mass and leaf mass per area. Create it without the dot operator. How does LMA change as a function of stem dry mass?
+### Q9: Now, make an x-y plot depicting the relationship betyouen stem dry mass and leaf mass per area. How does LMA change as a function of stem dry mass?
 
 ```{r problem_9, exercise = TRUE,exercise.setup = "problem_8-solution"}
 
@@ -375,13 +382,13 @@ tree_traits <- hbr_maples %>%
 
 ```{r problem_9-hint}
 
-Use the tree_traits dataframe you just created.
+Use the tree_traits data frame you just created.
 
 ```
 
 ```{r problem_9-solution}
 
-plot(LMA~stem_dry_mass,data = tree_traits)
+plot(LMA ~ stem_dry_mass, data = tree_traits)
 
 ```
 
@@ -397,7 +404,7 @@ grade_code()
 
 quiz(
   question(
-    "What is the primary purpose of the %>% operator? ",
+    "What is the primary purpose of the |> operator?",
     answer("Mathematical operations"),
     answer("Extraction"),
     answer("Comparison"),
@@ -411,7 +418,7 @@ quiz(
 
 quiz(
 question(
-    "Where does %>% place the output of a function in the tidyverse?",
+    "Where does |> place the output of a function in the tidyverse?",
     answer("The second argument of the next function"),
     answer("The first argument of the next function",correct = TRUE),
     answer("The third argument of the next function"),
@@ -424,10 +431,36 @@ question(
 
 quiz(
   question(
-    "True or False: %>% works on data sequentially",
+    "True or False: |> works on data sequentially",
     answer("True",correct = TRUE),
     answer("False"))
 )
+
+```
+
+```{r quiz_4}
+
+quiz(
+  question(
+    "What is the relationship between LMA and stem dry mass?",
+    answer("higher stem dry mass = higher LMA",correct = TRUE),
+    answer("higher stem dry mass = lower LMA"),
+    answer("no relationship"))
+)
+
+```
+
+```{r quiz_5}
+
+quiz(
+  question(
+    "What is the primary purpose of the _ operator?",
+    answer("Mathematical operations"),
+    answer("Extraction"),
+    answer("Placeholding piped outputs",correct = TRUE),
+    answer("Filtering"),
+    answer("Chaining functions together"))
+  )
 
 ```
 
